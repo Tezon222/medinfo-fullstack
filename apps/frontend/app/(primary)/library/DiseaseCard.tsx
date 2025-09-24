@@ -10,11 +10,11 @@ import { cnJoin } from "@/lib/utils/cn";
 import { tipPlaceHolder } from "@/public/assets/images/landing-page";
 
 export type DiseaseCardProps = {
-	type: "list" | "grid";
 	disease: Disease;
+	type: "grid" | "list";
 };
 
-export function DiseaseCard({ type, disease }: DiseaseCardProps) {
+export function DiseaseCard({ disease, type }: DiseaseCardProps) {
 	return (
 		<Card.Root
 			as="li"
@@ -52,7 +52,7 @@ export function DiseaseCard({ type, disease }: DiseaseCardProps) {
 				<div>
 					<h4
 						className={cnJoin(
-							"text-medinfo-primary-main text-[18px]",
+							"text-[18px] text-medinfo-primary-main",
 							type === "grid" && "font-medium lg:text-[22px]",
 							type === "list" && "lg:text-[32px] lg:font-bold"
 						)}
@@ -61,21 +61,21 @@ export function DiseaseCard({ type, disease }: DiseaseCardProps) {
 					</h4>
 
 					{type === "list" && (
-						<p className="text-medinfo-dark-1 mt-[16px] hidden text-sm lg:block">
+						<p className="mt-[16px] hidden text-sm text-medinfo-dark-1 lg:block">
 							{disease.Description}
 						</p>
 					)}
 				</div>
 
 				{type === "grid" && (
-					<p className="text-medinfo-dark-1 hidden text-sm lg:block">
+					<p className="hidden text-sm text-medinfo-dark-1 lg:block">
 						{disease.Description.slice(0, 40)}...
 					</p>
 				)}
 
 				<NavLink
 					href={`/library/disease/${disease.Disease}`}
-					className="text-medinfo-primary-main inline-flex w-fit items-center gap-[14px] lg:gap-4
+					className="inline-flex w-fit items-center gap-[14px] text-medinfo-primary-main lg:gap-4
 						lg:text-[20px] lg:font-medium"
 				>
 					See more
@@ -88,20 +88,20 @@ export function DiseaseCard({ type, disease }: DiseaseCardProps) {
 
 type AlternateDiseaseCardProps =
 	| {
-			type: "list";
-			linkToAd: string;
 			className?: string;
-			disease?: null;
+			disease: Disease;
+			linkToAd?: null;
+			type: "grid";
 	  }
 	| {
-			type: "grid";
-			disease: Disease;
 			className?: string;
-			linkToAd?: null;
+			disease?: null;
+			linkToAd: string;
+			type: "list";
 	  };
 
 export function AlternateDiseaseCard(props: AlternateDiseaseCardProps) {
-	const { type, disease, linkToAd, className } = props;
+	const { className, disease, linkToAd, type } = props;
 
 	return (
 		<Card.Root
@@ -175,7 +175,7 @@ export function AlternateDiseaseCard(props: AlternateDiseaseCardProps) {
 				{type === "grid" && (
 					<NavLink
 						href={`/library/disease/${disease.Disease}`}
-						className="text-medinfo-primary-main inline-flex w-fit items-center gap-[14px] lg:gap-4
+						className="inline-flex w-fit items-center gap-[14px] text-medinfo-primary-main lg:gap-4
 							lg:text-[20px]"
 					>
 						Read post
@@ -192,7 +192,7 @@ export function ScrollableAlternateDiseaseCards({
 }: {
 	diseases: DiseasesResponse["data"]["diseases"];
 }) {
-	const { getRootProps, getItemProps } = useDragScroll<HTMLUListElement>({
+	const { getItemProps, getRootProps } = useDragScroll<HTMLUListElement>({
 		classNames: {
 			base: "flex justify-between gap-5 lg:mt-10",
 		},

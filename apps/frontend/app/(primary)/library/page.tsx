@@ -20,7 +20,7 @@ async function LibraryPage() {
 	return (
 		<Main className="flex w-full flex-col gap-6 max-lg:max-w-[400px] md:px-6 lg:gap-9 lg:px-[100px]">
 			<section className="grid gap-3 text-center lg:gap-6">
-				<h1 className="text-medinfo-primary-darker text-[22px] font-medium lg:text-[48px] lg:font-bold">
+				<h1 className="text-[22px] font-medium text-medinfo-primary-darker lg:text-[48px] lg:font-bold">
 					Ailment Archive
 				</h1>
 
@@ -36,7 +36,7 @@ async function LibraryPage() {
 				<NavLink
 					href="#"
 					transitionType="regular"
-					className="text-medinfo-primary-main inline-block text-center lg:text-[20px] lg:font-medium"
+					className="inline-block text-center text-medinfo-primary-main lg:text-[20px] lg:font-medium"
 				>
 					More results ...({allDiseases.data.data.totalDiseases})
 				</NavLink>

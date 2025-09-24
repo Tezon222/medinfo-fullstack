@@ -7,17 +7,17 @@ import { isString } from "@zayne-labs/toolkit-type-helpers";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const isRelativeLink = (value: UrlObject | string | undefined | null): value is string => {
+const isRelativeLink = (value: string | UrlObject | null | undefined): value is string => {
 	return isString(value) && !value.startsWith("/");
 };
 
 function NavLink(
 	props: InferProps<typeof Link> & {
-		transitionType?: "navbar" | "regular" | "no-transition";
 		relative?: boolean;
+		transitionType?: "navbar" | "no-transition" | "regular";
 	}
 ) {
-	const { children, className, transitionType = "no-transition", href, ...restOfProps } = props;
+	const { children, className, href, transitionType = "no-transition", ...restOfProps } = props;
 
 	const pathname = usePathname();
 

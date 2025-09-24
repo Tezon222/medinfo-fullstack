@@ -6,34 +6,34 @@ import { Main } from "../../-components";
 
 const pricing = [
 	{
-		title: "FREE",
-		banner: { title: "active", className: tw`bg-medinfo-primary-subtle` },
-		prices: null,
+		banner: { className: tw`bg-medinfo-primary-subtle`, title: "active" },
 		features: [
 			"Limited comments in community chat",
 			"No direct messages to doctors",
 			"No appointments with doctors",
 		],
+		prices: null,
+		title: "FREE",
 	},
 	{
-		title: "TIER 2",
 		banner: null,
-		prices: ["₦54, 000/year", "₦4, 600/month"],
 		features: [
 			"Unlimited comments in community chat",
 			"Direct messages to doctors",
 			"Limited appointments",
 		],
+		prices: ["₦54, 000/year", "₦4, 600/month"],
+		title: "TIER 2",
 	},
 	{
-		title: "TIER 3",
-		banner: { title: "recommended", className: tw`border-medinfo-light-1 border bg-white` },
-		prices: ["₦82, 000/year", "₦7, 000/month"],
+		banner: { className: tw`border-medinfo-light-1 border bg-white`, title: "recommended" },
 		features: [
 			"Unlimited comments in community chat",
 			"Direct messages to doctors and video calls",
 			"Unlimited appointments",
 		],
+		prices: ["₦82, 000/year", "₦7, 000/month"],
+		title: "TIER 3",
 	},
 ] satisfies PricingCardProps[];
 
@@ -43,11 +43,11 @@ function PricingPage() {
 	return (
 		<Main className="w-full gap-8 max-md:mx-auto max-md:max-w-[400px] md:gap-12">
 			<header className="flex flex-col gap-3">
-				<h1 className="text-medinfo-dark-1 text-[32px] font-semibold">
+				<h1 className="text-[32px] font-semibold text-medinfo-dark-1">
 					Go Premium. Choose your plan!
 				</h1>
 
-				<p className="text-medinfo-dark-4 text-[18px] font-medium">
+				<p className="text-[18px] font-medium text-medinfo-dark-4">
 					Go premium and get access to more medical goodies.
 				</p>
 			</header>
@@ -63,14 +63,14 @@ function PricingPage() {
 }
 
 type PricingCardProps = {
-	title: string;
-	prices: [yearly: string, monthly: string] | null;
-	banner: { title: "active" | "recommended"; className: string } | null;
+	banner: { className: string; title: "active" | "recommended"; } | null;
 	features: string[];
+	prices: [yearly: string, monthly: string] | null;
+	title: string;
 };
 
 function PricingCard(props: PricingCardProps) {
-	const { title, prices, banner, features } = props;
+	const { banner, features, prices, title } = props;
 
 	const [For] = getElementList("base");
 
@@ -79,8 +79,8 @@ function PricingCard(props: PricingCardProps) {
 	return (
 		<Card.Root
 			className={cnJoin(
-				`border-medinfo-light-1 relative flex min-h-[436px] max-w-[342px] flex-col justify-between
-				rounded-[16px] border bg-white p-6
+				`relative flex min-h-[436px] max-w-[342px] flex-col justify-between rounded-[16px]
+				border border-medinfo-light-1 bg-white p-6
 				shadow-[0_4px_4px_hsl(152,17%,79%,0.12),_0_4px_4px_hsl(152,17%,79%,0.12)]`,
 				banner
 					&& `max-md:mt-(--half-banner-height) [--banner-height:29px]
@@ -90,8 +90,8 @@ function PricingCard(props: PricingCardProps) {
 			{banner && (
 				<span
 					className={cnJoin(
-						`text-medinfo-primary-main absolute top-[calc(var(--half-banner-height)*-1)] inline-block
-						w-fit self-center rounded-[32px] px-3 py-1 text-[14px]`,
+						`absolute top-[calc(var(--half-banner-height)*-1)] inline-block w-fit
+						self-center rounded-[32px] px-3 py-1 text-[14px] text-medinfo-primary-main`,
 						banner.className
 					)}
 				>
@@ -101,14 +101,14 @@ function PricingCard(props: PricingCardProps) {
 
 			<div className="flex flex-col gap-9">
 				<Card.Header className="flex justify-between">
-					<Card.Title className="text-medinfo-primary-main text-[18px] font-medium">
+					<Card.Title className="text-[18px] font-medium text-medinfo-primary-main">
 						{title}
 					</Card.Title>
 
 					{prices && (
 						<Card.Description
-							className="text-medinfo-primary-main flex flex-col items-end gap-0.5 text-[20px]
-								font-medium"
+							className="flex flex-col items-end gap-0.5 text-[20px] font-medium
+								text-medinfo-primary-main"
 						>
 							<For each={prices} renderItem={(item) => <span key={item}>{item}</span>} />
 						</Card.Description>

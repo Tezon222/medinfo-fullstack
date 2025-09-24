@@ -72,7 +72,7 @@ function SignUpPage(props: { searchParams: Promise<Record<string, string | strin
 	return (
 		<Main className="w-full px-0 max-md:max-w-[400px] md:flex md:flex-col md:items-center">
 			<div
-				className="border-medinfo-light-2 rounded-[16px] border-[1.4px]
+				className="rounded-[16px] border-[1.4px] border-medinfo-light-2
 					shadow-[0_0_0_2px_hsl(0,0%,0%,0.25)] md:flex md:max-w-fit"
 			>
 				<section
@@ -83,9 +83,9 @@ function SignUpPage(props: { searchParams: Promise<Record<string, string | strin
 
 					<div className="mt-3 flex flex-col items-center gap-8">
 						<h1
-							className="text-medinfo-primary-darker max-w-[186px] text-center text-[24px]
-								font-semibold leading-[32px] md:mx-[42px] md:max-w-[375px] md:text-[48px]
-								md:font-bold md:leading-[56px]"
+							className="max-w-[186px] text-center text-[24px] leading-[32px]
+								font-semibold text-medinfo-primary-darker md:mx-[42px] md:max-w-[375px] md:text-[48px]
+								md:leading-[56px] md:font-bold"
 						>
 							Join MedInfo Nigeria
 						</h1>
@@ -98,13 +98,13 @@ function SignUpPage(props: { searchParams: Promise<Record<string, string | strin
 							<Form.Field
 								control={control}
 								name="firstName"
-								className="font-roboto gap-1 font-medium"
+								className="gap-1 font-roboto font-medium"
 							>
 								<Form.Label className="md:text-[20px]">First name</Form.Label>
 
 								<Form.InputGroup
-									className="border-medinfo-primary-main h-[48px] gap-4 rounded-[8px]
-										border-[1.4px] px-4 py-3 md:h-[64px] md:py-5"
+									className="h-[48px] gap-4 rounded-[8px] border-[1.4px]
+										border-medinfo-primary-main px-4 py-3 md:h-[64px] md:py-5"
 								>
 									<Form.InputLeftItem className="size-5 md:size-6">
 										<IconBox icon="majesticons:user-line" className="size-full" />
@@ -121,13 +121,13 @@ function SignUpPage(props: { searchParams: Promise<Record<string, string | strin
 							<Form.Field
 								control={control}
 								name="lastName"
-								className="font-roboto gap-1 font-medium"
+								className="gap-1 font-roboto font-medium"
 							>
 								<Form.Label className="md:text-[20px]">Last name</Form.Label>
 
 								<Form.InputGroup
-									className="border-medinfo-primary-main h-[48px] gap-4 rounded-[8px]
-										border-[1.4px] px-4 py-3 md:h-[64px] md:py-5"
+									className="h-[48px] gap-4 rounded-[8px] border-[1.4px]
+										border-medinfo-primary-main px-4 py-3 md:h-[64px] md:py-5"
 								>
 									<Form.InputLeftItem className="size-5 md:size-6">
 										<IconBox icon="majesticons:user-line" className="size-full" />
@@ -141,12 +141,12 @@ function SignUpPage(props: { searchParams: Promise<Record<string, string | strin
 								</Form.InputGroup>
 							</Form.Field>
 
-							<Form.Field control={control} name="email" className="font-roboto gap-1 font-medium">
+							<Form.Field control={control} name="email" className="gap-1 font-roboto font-medium">
 								<Form.Label className="md:text-[20px]">Email</Form.Label>
 
 								<Form.InputGroup
-									className="border-medinfo-primary-main h-[48px] gap-4 rounded-[8px]
-										border-[1.4px] px-4 py-3 md:h-[64px] md:py-5"
+									className="h-[48px] gap-4 rounded-[8px] border-[1.4px]
+										border-medinfo-primary-main px-4 py-3 md:h-[64px] md:py-5"
 								>
 									<Form.InputLeftItem className="size-5 md:size-6">
 										<IconBox icon="mynaui:envelope" className="size-full" />
@@ -160,7 +160,7 @@ function SignUpPage(props: { searchParams: Promise<Record<string, string | strin
 								</Form.InputGroup>
 							</Form.Field>
 
-							<Form.Field control={control} name="gender" className="font-roboto gap-1 font-medium">
+							<Form.Field control={control} name="gender" className="gap-1 font-roboto font-medium">
 								<Form.Label className="md:text-[20px]">Gender</Form.Label>
 
 								<Form.FieldController
@@ -192,18 +192,18 @@ function SignUpPage(props: { searchParams: Promise<Record<string, string | strin
 											>
 												<Select.Item
 													value="Male"
-													className="bg-medinfo-light-3 text-medinfo-dark-4
-														focus:bg-medinfo-light-1 focus:text-medinfo-body-color
-														data-[state=checked]:bg-medinfo-light-1 h-[48px] font-medium
+													className="h-[48px] bg-medinfo-light-3
+														font-medium text-medinfo-dark-4
+														focus:bg-medinfo-light-1 focus:text-medinfo-body-color data-[state=checked]:bg-medinfo-light-1
 														md:h-[64px] md:text-base"
 												>
 													Male
 												</Select.Item>
 												<Select.Item
 													value="Female"
-													className="bg-medinfo-light-3 text-medinfo-dark-4
-														focus:bg-medinfo-light-1 focus:text-medinfo-body-color
-														data-[state=checked]:bg-medinfo-light-1 h-[48px] font-medium
+													className="h-[48px] bg-medinfo-light-3
+														font-medium text-medinfo-dark-4
+														focus:bg-medinfo-light-1 focus:text-medinfo-body-color data-[state=checked]:bg-medinfo-light-1
 														md:h-[64px] md:text-base"
 												>
 													Female
@@ -217,7 +217,7 @@ function SignUpPage(props: { searchParams: Promise<Record<string, string | strin
 							<Form.Field
 								control={control}
 								name="country"
-								className="font-roboto gap-1 font-medium"
+								className="gap-1 font-roboto font-medium"
 							>
 								<Form.Label className="md:text-[20px]">Country</Form.Label>
 
@@ -250,9 +250,9 @@ function SignUpPage(props: { searchParams: Promise<Record<string, string | strin
 												<Select.Item
 													withIndicator={false}
 													value="Nigeria"
-													className="bg-medinfo-light-3 text-medinfo-dark-4
-														focus:bg-medinfo-light-1 focus:text-medinfo-body-color
-														data-[state=checked]:bg-medinfo-light-1 h-[48px] font-medium
+													className="h-[48px] bg-medinfo-light-3
+														font-medium text-medinfo-dark-4
+														focus:bg-medinfo-light-1 focus:text-medinfo-body-color data-[state=checked]:bg-medinfo-light-1
 														md:h-[64px] md:text-base"
 												>
 													Nigeria
@@ -260,9 +260,9 @@ function SignUpPage(props: { searchParams: Promise<Record<string, string | strin
 												<Select.Item
 													withIndicator={false}
 													value="Ghana"
-													className="bg-medinfo-light-3 text-medinfo-dark-4
-														focus:bg-medinfo-light-1 focus:text-medinfo-body-color
-														data-[state=checked]:bg-medinfo-light-1 h-[48px] font-medium
+													className="h-[48px] bg-medinfo-light-3
+														font-medium text-medinfo-dark-4
+														focus:bg-medinfo-light-1 focus:text-medinfo-body-color data-[state=checked]:bg-medinfo-light-1
 														md:h-[64px] md:text-base"
 												>
 													Ghana
@@ -277,7 +277,7 @@ function SignUpPage(props: { searchParams: Promise<Record<string, string | strin
 								<Form.Field
 									control={control}
 									name="specialty"
-									className="font-roboto gap-1 font-medium"
+									className="gap-1 font-roboto font-medium"
 								>
 									<Form.Label className="md:text-[20px]">Specialty</Form.Label>
 
@@ -310,9 +310,9 @@ function SignUpPage(props: { searchParams: Promise<Record<string, string | strin
 													<Select.Item
 														withIndicator={false}
 														value="steeze"
-														className="bg-medinfo-light-3 text-medinfo-dark-4
-															focus:bg-medinfo-light-1 focus:text-medinfo-body-color
-															data-[state=checked]:bg-medinfo-light-1 h-[48px] font-medium
+														className="h-[48px] bg-medinfo-light-3
+															font-medium text-medinfo-dark-4
+															focus:bg-medinfo-light-1 focus:text-medinfo-body-color data-[state=checked]:bg-medinfo-light-1
 															md:h-[64px] md:text-base"
 													>
 														Steeze
@@ -320,9 +320,9 @@ function SignUpPage(props: { searchParams: Promise<Record<string, string | strin
 													<Select.Item
 														withIndicator={false}
 														value="cooking"
-														className="bg-medinfo-light-3 text-medinfo-dark-4
-															focus:bg-medinfo-light-1 focus:text-medinfo-body-color
-															data-[state=checked]:bg-medinfo-light-1 h-[48px] font-medium
+														className="h-[48px] bg-medinfo-light-3
+															font-medium text-medinfo-dark-4
+															focus:bg-medinfo-light-1 focus:text-medinfo-body-color data-[state=checked]:bg-medinfo-light-1
 															md:h-[64px] md:text-base"
 													>
 														Cooking
@@ -338,7 +338,7 @@ function SignUpPage(props: { searchParams: Promise<Record<string, string | strin
 								<Form.Field
 									control={control}
 									name="license"
-									className="font-roboto gap-1 font-medium"
+									className="gap-1 font-roboto font-medium"
 								>
 									<Form.Label className="md:text-[20px]">
 										Upload medical license/certificate
@@ -358,21 +358,21 @@ function SignUpPage(props: { searchParams: Promise<Record<string, string | strin
 													</span>
 
 													<p
-														className="text-medinfo-primary-darker text-[18px] font-medium
+														className="text-[18px] font-medium text-medinfo-primary-darker
 															md:text-[20px]"
 													>
 														Drag files to upload
 													</p>
 
-													<p className="text-medinfo-dark-2 text-sm">
+													<p className="text-sm text-medinfo-dark-2">
 														Files supported: JPG, PNG, PDF{" "}
 													</p>
 
-													<p className="text-medinfo-dark-2 text-sm">or</p>
+													<p className="text-sm text-medinfo-dark-2">or</p>
 
 													<Button size="large">Choose File</Button>
 
-													<p className="text-medinfo-dark-2 text-sm">Maximum size: 4mb</p>
+													<p className="text-sm text-medinfo-dark-2">Maximum size: 4mb</p>
 												</DropZone.Area>
 
 												<DropZoneInputImagePreview
@@ -387,14 +387,14 @@ function SignUpPage(props: { searchParams: Promise<Record<string, string | strin
 							</Show.Root>
 
 							<Show.Root when={user === "patient"}>
-								<Form.Field control={control} name="dob" className="font-roboto gap-1 font-medium">
+								<Form.Field control={control} name="dob" className="gap-1 font-roboto font-medium">
 									<Form.Label className="md:text-[20px]">Date of Birth</Form.Label>
 
 									<Form.FieldController
 										render={({ field }) => (
 											<DateTimePicker
-												className="border-medinfo-primary-main h-[48px] gap-4 rounded-[8px]
-													border-[1.4px] px-4 py-3 text-[14px] md:h-[64px] md:py-5
+												className="h-[48px] gap-4 rounded-[8px] border-[1.4px]
+													border-medinfo-primary-main px-4 py-3 text-[14px] md:h-[64px] md:py-5
 													md:text-base"
 												dateValueString={field.value}
 												placeholder="DD/MM/YYYY"
@@ -408,13 +408,13 @@ function SignUpPage(props: { searchParams: Promise<Record<string, string | strin
 							<Form.Field
 								control={control}
 								name="password"
-								className="font-roboto gap-1 font-medium"
+								className="gap-1 font-roboto font-medium"
 							>
 								<Form.Label className="md:text-[20px]">Password</Form.Label>
 
 								<Form.InputGroup
-									className="border-medinfo-primary-main h-[48px] gap-4 rounded-[8px]
-										border-[1.4px] px-4 py-3 md:h-[64px] md:py-5"
+									className="h-[48px] gap-4 rounded-[8px] border-[1.4px]
+										border-medinfo-primary-main px-4 py-3 md:h-[64px] md:py-5"
 								>
 									<Form.InputLeftItem className="size-5 md:size-6">
 										<IconBox icon="mynaui:lock-password" className="size-full" />
@@ -431,13 +431,13 @@ function SignUpPage(props: { searchParams: Promise<Record<string, string | strin
 							<Form.Field
 								control={control}
 								name="confirmPassword"
-								className="font-roboto gap-1 font-medium"
+								className="gap-1 font-roboto font-medium"
 							>
 								<Form.Label className="md:text-[20px]">Confirm password</Form.Label>
 
 								<Form.InputGroup
-									className="border-medinfo-primary-main h-[48px] gap-4 rounded-[8px]
-										border-[1.4px] px-4 py-3 md:h-[64px] md:py-5"
+									className="h-[48px] gap-4 rounded-[8px] border-[1.4px]
+										border-medinfo-primary-main px-4 py-3 md:h-[64px] md:py-5"
 								>
 									<Form.InputLeftItem className="size-5 md:size-6">
 										<IconBox icon="mynaui:lock-password" className="size-full" />
@@ -523,8 +523,8 @@ function SignUpPage(props: { searchParams: Promise<Record<string, string | strin
 				</section>
 
 				<section
-					className="bg-medinfo-primary-main flex w-[432px] flex-col items-center justify-center
-						rounded-r-[16px] px-[35px] text-center text-white max-md:hidden xl:shrink-0"
+					className="flex w-[432px] flex-col items-center justify-center rounded-r-[16px]
+						bg-medinfo-primary-main px-[35px] text-center text-white max-md:hidden xl:shrink-0"
 				>
 					<h2 className="text-[32px] font-semibold">Hello friend!</h2>
 

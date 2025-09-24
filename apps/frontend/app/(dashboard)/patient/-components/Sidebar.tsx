@@ -12,7 +12,7 @@ const Sidebar = () => {
 	return (
 		<nav className="text-center">
 			<ul className="mt-[8px] leading-[4rem]">
-				{menuItems.map(({ href, title, icon: Icon }) => {
+				{menuItems.map(({ href, icon: Icon, title }) => {
 					const isActive = pathname === href;
 					const iconFill = { fill: isActive ? "#FFFFFF" : "#344E41" };
 					return (

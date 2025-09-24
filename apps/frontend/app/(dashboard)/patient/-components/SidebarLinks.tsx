@@ -6,34 +6,34 @@ import SettingsIcon from "@/components/icons/SettingsIcon";
 
 type MenuItem = {
 	href: string;
-	title: string;
 	icon: (props: React.SVGProps<SVGSVGElement>) => React.JSX.Element;
+	title: string;
 };
 
 export const menuItems: MenuItem[] = [
 	{
 		href: "/patient",
-		title: "Dashboard",
 		icon: DashboardIcon,
+		title: "Dashboard",
 	},
 	{
 		href: "/patient/messages",
-		title: "Messages",
 		icon: MessageIcon,
+		title: "Messages",
 	},
 	{
 		href: "/patient/community",
-		title: "Community",
 		icon: CommunityIcon,
+		title: "Community",
 	},
 	{
 		href: "/patient/profile",
-		title: "Profile",
 		icon: ProfileIcon,
+		title: "Profile",
 	},
 	{
 		href: "/patient/settings",
-		title: "Settings",
 		icon: SettingsIcon,
+		title: "Settings",
 	},
 ];

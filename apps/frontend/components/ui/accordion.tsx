@@ -28,9 +28,9 @@ function AccordionTrigger(
 			<AccordionPrimitive.Trigger
 				data-slot="accordion-trigger"
 				className={cnMerge(
-					`focus-visible:border-shadcn-ring focus-visible:ring-shadcn-ring/50 flex flex-1 items-start
-					justify-between gap-4 rounded-md text-left text-[14px] font-medium outline-none
-					transition-all focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50
+					`flex flex-1 items-start justify-between gap-4
+					rounded-md text-left text-[14px] font-medium transition-all outline-none focus-visible:border-shadcn-ring
+					focus-visible:ring-[3px] focus-visible:ring-shadcn-ring/50 disabled:pointer-events-none disabled:opacity-50
 					[&[data-state=open]>[data-icon]>svg]:rotate-180 [&[data-state=open]>svg]:rotate-180`,
 					className,
 					classNames?.base
@@ -43,7 +43,7 @@ function AccordionTrigger(
 					<IconBox
 						icon="radix-icons:chevron-down"
 						className={cnMerge(
-							`text-shadcn-muted-foreground pointer-events-none size-4 shrink-0 translate-y-0.5
+							`pointer-events-none size-4 shrink-0 translate-y-0.5 text-shadcn-muted-foreground
 							transition-transform duration-200`,
 							classNames?.icon
 						)}
@@ -60,8 +60,8 @@ function AccordionContent(props: InferProps<typeof AccordionPrimitive.Content>) 
 	return (
 		<AccordionPrimitive.Content
 			data-slot="accordion-content"
-			className="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down
-				overflow-hidden text-[14px]"
+			className="overflow-hidden text-[14px]
+				data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
 			{...restOfProps}
 		>
 			<div className={className}>{children}</div>

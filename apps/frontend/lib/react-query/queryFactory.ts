@@ -11,39 +11,39 @@ export const matchDoctorsQuery = (
 
 	return queryOptions({
 		enabled: Boolean(formData),
-		// eslint-disable-next-line tanstack-query/exhaustive-deps
-		queryKey: ["appointments", "match-doctors", formData],
 		queryFn: () => {
 			return callBackendApiForQuery<MatchDoctorsResponse>("/appointments/match-doctors", {
-				method: "POST",
 				body: formData,
+				method: "POST",
 				onError,
 			});
 		},
+		// eslint-disable-next-line tanstack-query/exhaustive-deps
+		queryKey: ["appointments", "match-doctors", formData],
+		refetchOnReconnect: false,
 		refetchOnWindowFocus: false,
 		retry: false,
-		refetchOnReconnect: false,
 		staleTime: Infinity,
 	});
 };
 
 export const bookAppointmentQuery = (
-	options?: Pick<CallApiExtraOptions, "onSuccess" | "onError"> & { doctorId?: string }
+	options?: Pick<CallApiExtraOptions, "onError" | "onSuccess"> & { doctorId?: string }
 ) => {
-	const { doctorId = "", onSuccess, onError } = options ?? {};
+	const { doctorId = "", onError, onSuccess } = options ?? {};
 
 	return queryOptions({
 		enabled: Boolean(doctorId),
-		// eslint-disable-next-line tanstack-query/exhaustive-deps
-		queryKey: ["appointments", "book-appointment", doctorId],
 		queryFn: () => {
 			return callBackendApiForQuery("/appointments/:doctorId", {
 				method: "POST",
-				params: { doctorId },
-				onSuccess,
 				onError,
+				onSuccess,
+				params: { doctorId },
 			});
 		},
+		// eslint-disable-next-line tanstack-query/exhaustive-deps
+		queryKey: ["appointments", "book-appointment", doctorId],
 		retry: false,
 		staleTime: Infinity,
 	});

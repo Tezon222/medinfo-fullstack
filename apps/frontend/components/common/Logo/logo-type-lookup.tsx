@@ -53,8 +53,8 @@ const LogoForFooter = (props: React.SVGProps<SVGSVGElement>) => (
 );
 
 const LOGO_TYPE_LOOKUP = {
-	header: LogoForHeader,
 	footer: LogoForFooter,
+	header: LogoForHeader,
 };
 
 export { LOGO_TYPE_LOOKUP };

@@ -3,11 +3,11 @@ import { LOGO_TYPE_LOOKUP } from "./logo-type-lookup";
 
 const Logo = (
 	props: React.SVGProps<SVGSVGElement> & {
-		type?: "header" | "footer";
 		href?: "none" | (string & NonNullable<unknown>);
+		type?: "footer" | "header";
 	}
 ) => {
-	const { type = "header", href = "/", ...restOfProps } = props;
+	const { href = "/", type = "header", ...restOfProps } = props;
 
 	const { [type]: LogoType } = LOGO_TYPE_LOOKUP;
 

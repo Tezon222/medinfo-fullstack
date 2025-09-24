@@ -2,9 +2,13 @@ import { zayne, allowedNextJsExportNames } from "@zayne-labs/eslint-config";
 
 export default zayne(
 	{
-		ignores: [".next/**", "eslint.config.js"],
+		ignores: [".next/**", "eslint.config.js", "apps/frontend/next-env.d.ts"],
 		react: {
-			nextjs: true,
+			nextjs: {
+				overrides: {
+					"nextjs/no-html-link-for-pages": ["error", "apps/frontend"],
+				},
+			},
 		},
 		tailwindcssBetter: {
 			settings: { entryPoint: "apps/frontend/tailwind.css" },
