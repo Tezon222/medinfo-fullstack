@@ -18,21 +18,21 @@ function LibraryFilter({ diseases }: { diseases: DiseasesResponse["data"]["disea
 			<section className="flex h-[48px] justify-center gap-5 lg:h-[64px] lg:gap-8">
 				<DropdownMenu.Root>
 					<DropdownMenu.Trigger
-						className="group flex h-full w-[116px]
-							items-center justify-between gap-2 rounded-[8px] border-[1.4px] border-medinfo-primary-main px-4 font-medium
-							data-placeholder:text-medinfo-dark-4 lg:w-[220px]"
+						className="border-medinfo-primary-main data-placeholder:text-medinfo-dark-4 group flex
+							h-full w-[116px] items-center justify-between gap-2 rounded-[8px] border-[1.4px] px-4
+							font-medium lg:w-[220px]"
 					>
 						<p className="text-sm font-medium md:text-base">{filter}</p>
 
 						<IconBox
 							icon="lucide:chevron-down"
-							className="size-5 text-medinfo-body-color group-data-[state=open]:rotate-180
+							className="text-medinfo-body-color size-5 group-data-[state=open]:rotate-180
 								md:size-6"
 						/>
 					</DropdownMenu.Trigger>
 
 					<DropdownMenu.Content
-						className="grid gap-1 border-[1.4px] border-medinfo-primary-main bg-white/90
+						className="border-medinfo-primary-main grid gap-1 border-[1.4px] bg-white/90
 							backdrop-blur-lg"
 						align="start"
 					>
@@ -43,8 +43,8 @@ function LibraryFilter({ diseases }: { diseases: DiseasesResponse["data"]["disea
 							<DropdownMenu.RadioItem
 								withIndicator={false}
 								value="grid"
-								className="h-[48px] bg-medinfo-light-3 font-medium
-									text-medinfo-dark-4 focus:text-base focus:text-medinfo-body-color data-[state=checked]:bg-medinfo-light-1
+								className="bg-medinfo-light-3 text-medinfo-dark-4 focus:text-medinfo-body-color
+									data-[state=checked]:bg-medinfo-light-1 h-[48px] font-medium focus:text-base
 									md:h-[64px] md:text-base md:focus:text-[18px]"
 							>
 								grid
@@ -52,8 +52,8 @@ function LibraryFilter({ diseases }: { diseases: DiseasesResponse["data"]["disea
 							<DropdownMenu.RadioItem
 								withIndicator={false}
 								value="list"
-								className="h-[48px] bg-medinfo-light-3 font-medium
-									text-medinfo-dark-4 focus:text-base focus:text-medinfo-body-color data-[state=checked]:bg-medinfo-light-1
+								className="bg-medinfo-light-3 text-medinfo-dark-4 focus:text-medinfo-body-color
+									data-[state=checked]:bg-medinfo-light-1 h-[48px] font-medium focus:text-base
 									md:h-[64px] md:text-base md:focus:text-[18px]"
 							>
 								list
@@ -63,17 +63,17 @@ function LibraryFilter({ diseases }: { diseases: DiseasesResponse["data"]["disea
 				</DropdownMenu.Root>
 
 				<form
-					className="flex h-full
-						items-center gap-[18px] rounded-lg border-[1.4px] border-medinfo-primary-main bg-white
-						px-4 focus-within:ring-2 focus-within:ring-medinfo-primary-lighter focus-visible:outline-hidden lg:w-[500px]"
+					className="border-medinfo-primary-main focus-within:ring-medinfo-primary-lighter
+						focus-visible:outline-hidden flex h-full items-center gap-[18px] rounded-lg
+						border-[1.4px] bg-white px-4 focus-within:ring-2 lg:w-[500px]"
 				>
 					<SearchIcon type="green" className="size-5 shrink-0 lg:size-6" />
 
 					<input
 						type="search"
 						placeholder="search..."
-						className="w-full font-roboto text-sm font-medium outline-hidden
-							placeholder:font-medium placeholder:text-medinfo-dark-4 md:text-base"
+						className="font-roboto outline-hidden placeholder:text-medinfo-dark-4 w-full text-sm
+							font-medium placeholder:font-medium md:text-base"
 					/>
 				</form>
 			</section>

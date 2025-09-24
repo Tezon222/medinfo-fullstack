@@ -31,7 +31,7 @@ async function TipDetailsPage(props: { params: Promise<{ name: string }> }) {
 		<Main className="flex w-full flex-col">
 			<section className="lg:flex lg:gap-16">
 				<Image
-					className="size-[272px] rounded-tl-[16px] rounded-br-[16px] lg:size-[460px]"
+					className="size-[272px] rounded-br-[16px] rounded-tl-[16px] lg:size-[460px]"
 					src={singleDisease.data.data.Image}
 					alt=""
 					priority={true}
@@ -51,7 +51,7 @@ async function TipDetailsPage(props: { params: Promise<{ name: string }> }) {
 
 			<section className="mt-5 flex flex-col gap-5 lg:mt-10">
 				<h1
-					className="text-[32px] font-semibold text-medinfo-primary-darker lg:text-[52px]
+					className="text-medinfo-primary-darker text-[32px] font-semibold lg:text-[52px]
 						lg:font-bold"
 				>
 					{singleDisease.data.data.Disease}
@@ -93,7 +93,7 @@ async function TipDetailsPage(props: { params: Promise<{ name: string }> }) {
 			</section>
 
 			<section id="Related Posts" className="mt-14 w-full lg:mt-[92px]">
-				<h2 className="text-[48px] font-bold text-medinfo-primary-darker max-lg:hidden">
+				<h2 className="text-medinfo-primary-darker text-[48px] font-bold max-lg:hidden">
 					Related Posts
 				</h2>
 

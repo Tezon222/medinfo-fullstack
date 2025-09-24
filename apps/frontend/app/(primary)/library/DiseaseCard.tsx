@@ -52,7 +52,7 @@ export function DiseaseCard({ disease, type }: DiseaseCardProps) {
 				<div>
 					<h4
 						className={cnJoin(
-							"text-[18px] text-medinfo-primary-main",
+							"text-medinfo-primary-main text-[18px]",
 							type === "grid" && "font-medium lg:text-[22px]",
 							type === "list" && "lg:text-[32px] lg:font-bold"
 						)}
@@ -61,21 +61,21 @@ export function DiseaseCard({ disease, type }: DiseaseCardProps) {
 					</h4>
 
 					{type === "list" && (
-						<p className="mt-[16px] hidden text-sm text-medinfo-dark-1 lg:block">
+						<p className="text-medinfo-dark-1 mt-[16px] hidden text-sm lg:block">
 							{disease.Description}
 						</p>
 					)}
 				</div>
 
 				{type === "grid" && (
-					<p className="hidden text-sm text-medinfo-dark-1 lg:block">
+					<p className="text-medinfo-dark-1 hidden text-sm lg:block">
 						{disease.Description.slice(0, 40)}...
 					</p>
 				)}
 
 				<NavLink
 					href={`/library/disease/${disease.Disease}`}
-					className="inline-flex w-fit items-center gap-[14px] text-medinfo-primary-main lg:gap-4
+					className="text-medinfo-primary-main inline-flex w-fit items-center gap-[14px] lg:gap-4
 						lg:text-[20px] lg:font-medium"
 				>
 					See more
@@ -175,7 +175,7 @@ export function AlternateDiseaseCard(props: AlternateDiseaseCardProps) {
 				{type === "grid" && (
 					<NavLink
 						href={`/library/disease/${disease.Disease}`}
-						className="inline-flex w-fit items-center gap-[14px] text-medinfo-primary-main lg:gap-4
+						className="text-medinfo-primary-main inline-flex w-fit items-center gap-[14px] lg:gap-4
 							lg:text-[20px]"
 					>
 						Read post

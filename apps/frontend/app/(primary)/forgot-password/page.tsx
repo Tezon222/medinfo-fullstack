@@ -12,11 +12,11 @@ function ForgotPasswordPage() {
 	return (
 		<Main className="flex justify-center md:w-full">
 			<section
-				className="flex max-w-[524px] flex-col gap-5 rounded-[16px] border-[1.4px]
-					border-medinfo-light-2 p-6 shadow-[0_0_0_2px_hsl(0,0%,0%,0.25)] md:p-9"
+				className="border-medinfo-light-2 flex max-w-[524px] flex-col gap-5 rounded-[16px]
+					border-[1.4px] p-6 shadow-[0_0_0_2px_hsl(0,0%,0%,0.25)] md:p-9"
 			>
 				<div className="flex flex-col gap-3 text-center">
-					<h1 className="text-[22px] font-medium text-medinfo-primary-darker">Forgot Password</h1>
+					<h1 className="text-medinfo-primary-darker text-[22px] font-medium">Forgot Password</h1>
 					<p className="text-medinfo-dark-4">Select an option to send a link reset password</p>
 				</div>
 
@@ -32,8 +32,8 @@ function ForgotPasswordPage() {
 				>
 					<Form.Field name="resetMode" className="gap-4">
 						<Form.InputGroup
-							className="relative justify-normal gap-6 rounded-[12px] border-2
-								border-medinfo-primary-main p-3 md:p-6"
+							className="border-medinfo-primary-main relative justify-normal gap-6 rounded-[12px]
+								border-2 p-3 md:p-6"
 						>
 							<Form.InputLeftItem
 								className={cnJoin(
@@ -51,18 +51,18 @@ function ForgotPasswordPage() {
 							/>
 
 							<div className="max-w-[185px]">
-								<h3 className="text-[18px] font-medium text-medinfo-primary-darker">
+								<h3 className="text-medinfo-primary-darker text-[18px] font-medium">
 									Reset via Email
 								</h3>
 
-								<p className="text-sm text-medinfo-dark-4">
+								<p className="text-medinfo-dark-4 text-sm">
 									Link will be sent to your registered email
 								</p>
 							</div>
 
 							{resetMode === "email" && (
 								<Form.InputRightItem
-									className="ml-auto size-6 rounded-full bg-medinfo-primary-main"
+									className="bg-medinfo-primary-main ml-auto size-6 rounded-full"
 								>
 									<IconBox icon="mdi:check-bold" className="size-3 text-white" />
 								</Form.InputRightItem>
@@ -70,8 +70,8 @@ function ForgotPasswordPage() {
 						</Form.InputGroup>
 
 						<Form.InputGroup
-							className="relative justify-normal gap-6 rounded-[12px] border-2
-								border-medinfo-primary-main p-3 md:p-6"
+							className="border-medinfo-primary-main relative justify-normal gap-6 rounded-[12px]
+								border-2 p-3 md:p-6"
 						>
 							<Form.InputLeftItem
 								className={cnJoin(
@@ -89,18 +89,18 @@ function ForgotPasswordPage() {
 							/>
 
 							<div className="max-w-[185px]">
-								<h3 className="text-[18px] font-medium text-medinfo-primary-darker">
+								<h3 className="text-medinfo-primary-darker text-[18px] font-medium">
 									Reset via SMS
 								</h3>
 
-								<p className="text-sm text-medinfo-dark-4">
+								<p className="text-medinfo-dark-4 text-sm">
 									Link will be sent to your registered phone number
 								</p>
 							</div>
 
 							{resetMode === "sms" && (
 								<Form.InputRightItem
-									className="ml-auto size-6 rounded-full bg-medinfo-primary-main"
+									className="bg-medinfo-primary-main ml-auto size-6 rounded-full"
 								>
 									<IconBox icon="mdi:check-bold" className="size-3 text-white" />
 								</Form.InputRightItem>
@@ -113,7 +113,7 @@ function ForgotPasswordPage() {
 						<NavLink
 							href="#"
 							transitionType="regular"
-							className="text-[20px] font-medium text-medinfo-primary-main"
+							className="text-medinfo-primary-main text-[20px] font-medium"
 						>
 							Resend link
 						</NavLink>
