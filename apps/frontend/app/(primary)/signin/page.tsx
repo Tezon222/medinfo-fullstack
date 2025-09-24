@@ -46,7 +46,7 @@ function SignInPage(props: { searchParams: Promise<Record<string, string | strin
 	return (
 		<Main className="w-full px-0 max-md:max-w-[400px] md:flex md:flex-col md:items-center">
 			<div
-				className="border-medinfo-light-2 rounded-[16px] border-[1.4px]
+				className="rounded-[16px] border-[1.4px] border-medinfo-light-2
 					shadow-[0_0_0_2px_hsl(0,0%,0%,0.25)] md:flex md:max-w-fit"
 			>
 				<section
@@ -57,9 +57,9 @@ function SignInPage(props: { searchParams: Promise<Record<string, string | strin
 
 					<div className="mt-3 flex flex-col items-center gap-8 md:w-max">
 						<h1
-							className="text-medinfo-primary-darker max-w-[186px] text-center text-[24px]
-								font-semibold leading-[32px] md:mx-[42px] md:max-w-[375px] md:text-[48px]
-								md:font-bold md:leading-[56px]"
+							className="max-w-[186px] text-center text-[24px] leading-[32px] font-semibold
+								text-medinfo-primary-darker md:mx-[42px] md:max-w-[375px] md:text-[48px]
+								md:leading-[56px] md:font-bold"
 						>
 							Sign in to MedInfo Nigeria
 						</h1>
@@ -69,12 +69,12 @@ function SignInPage(props: { searchParams: Promise<Record<string, string | strin
 							className="w-full gap-[14px]"
 							onSubmit={(event) => void methods.handleSubmit(onSubmit)(event)}
 						>
-							<Form.Field control={control} name="email" className="font-roboto gap-1 font-medium">
+							<Form.Field control={control} name="email" className="gap-1 font-roboto font-medium">
 								<Form.Label className="md:text-[20px]">Email</Form.Label>
 
 								<Form.InputGroup
-									className="border-medinfo-primary-main h-[48px] gap-4 rounded-[8px]
-										border-[1.4px] px-4 py-3 md:h-[64px] md:py-5"
+									className="h-[48px] gap-4 rounded-[8px] border-[1.4px]
+										border-medinfo-primary-main px-4 py-3 md:h-[64px] md:py-5"
 								>
 									<Form.InputLeftItem className="size-5 md:size-6">
 										<IconBox icon="mynaui:envelope" className="size-full" />
@@ -91,13 +91,13 @@ function SignInPage(props: { searchParams: Promise<Record<string, string | strin
 							<Form.Field
 								control={control}
 								name="password"
-								className="font-roboto gap-1 font-medium"
+								className="gap-1 font-roboto font-medium"
 							>
 								<Form.Label className="md:text-[20px]">Password</Form.Label>
 
 								<Form.InputGroup
-									className="border-medinfo-primary-main h-[48px] gap-4 rounded-[8px]
-										border-[1.4px] px-4 py-3 md:h-[64px] md:py-5"
+									className="h-[48px] gap-4 rounded-[8px] border-[1.4px]
+										border-medinfo-primary-main px-4 py-3 md:h-[64px] md:py-5"
 								>
 									<Form.InputLeftItem className="size-5 md:size-6">
 										<IconBox icon="mynaui:lock-password" className="size-full" />
@@ -112,7 +112,7 @@ function SignInPage(props: { searchParams: Promise<Record<string, string | strin
 
 								<NavLink
 									href="/forgot-password"
-									className="font-work-sans text-medinfo-primary-main mt-1 self-end"
+									className="mt-1 self-end font-work-sans text-medinfo-primary-main"
 								>
 									Forgot password?
 								</NavLink>
@@ -190,8 +190,8 @@ function SignInPage(props: { searchParams: Promise<Record<string, string | strin
 				</section>
 
 				<section
-					className="bg-medinfo-primary-main flex max-w-[432px] flex-col items-center justify-center
-						rounded-r-[16px] px-[35px] text-center text-white max-md:hidden xl:shrink-0"
+					className="flex max-w-[432px] flex-col items-center justify-center rounded-r-[16px]
+						bg-medinfo-primary-main px-[35px] text-center text-white max-md:hidden xl:shrink-0"
 				>
 					<h2 className="text-[32px] font-semibold">Welcome friend!</h2>
 

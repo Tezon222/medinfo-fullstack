@@ -43,7 +43,7 @@ const buttonVariants = tv({
 			withInteractions: true,
 		},
 		{
-			className: "border-medinfo-dark-4 bg-medinfo-disabled-fill text-medinfo-dark-4 border-2",
+			className: "border-2 border-medinfo-dark-4 bg-medinfo-disabled-fill text-medinfo-dark-4",
 			isDisabled: true,
 			isLoading: false,
 		},
@@ -60,8 +60,8 @@ const buttonVariants = tv({
 		},
 
 		isDisabled: {
-			true: `border-medinfo-dark-4 bg-medinfo-disabled-fill text-medinfo-dark-4 cursor-not-allowed
-			border-2`,
+			true: `cursor-not-allowed border-2 border-medinfo-dark-4 bg-medinfo-disabled-fill
+			text-medinfo-dark-4`,
 		},
 
 		isLoading: {
@@ -82,9 +82,9 @@ const buttonVariants = tv({
 		theme: {
 			primary: "bg-medinfo-primary-main text-white",
 
-			"primary-inverted": "text-medinfo-primary-main bg-white",
+			"primary-inverted": "bg-white text-medinfo-primary-main",
 
-			secondary: "border-medinfo-primary-main text-medinfo-primary-main border-2 bg-transparent",
+			secondary: "border-2 border-medinfo-primary-main bg-transparent text-medinfo-primary-main",
 
 			"secondary-inverted": "border-2 border-white bg-transparent text-white",
 		},
