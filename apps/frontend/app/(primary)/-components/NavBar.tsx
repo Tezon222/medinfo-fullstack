@@ -12,7 +12,7 @@ function NavBar() {
 
 	return (
 		<header
-			className="sticky inset-[0_0_auto_0] z-500 flex w-full items-center justify-between bg-white px-6
+			className="z-500 sticky inset-[0_0_auto_0] flex w-full items-center justify-between bg-white px-6
 				py-[17px] shadow-[0_4px_8px_hsl(150,20%,25%,0.25)] [transition:box-shadow_0.3s_ease] md:px-10
 				md:py-5 lg:px-[100px]"
 		>
@@ -81,8 +81,8 @@ function MobileNavigation(props: MobileNavProps) {
 	return (
 		<section
 			className={cnMerge(
-				`fixed inset-[0_0_0_auto] flex flex-col items-center gap-7 overflow-x-hidden
-				bg-medinfo-primary-main pt-10 text-white`,
+				`bg-medinfo-primary-main fixed inset-[0_0_0_auto] flex flex-col items-center gap-7
+				overflow-x-hidden pt-10 text-white`,
 				isNavShow ? "w-full [transition:width_350ms_ease]" : "w-0 [transition:width_500ms_ease]",
 				className
 			)}
@@ -96,7 +96,7 @@ function MobileNavigation(props: MobileNavProps) {
 
 			<NavList
 				as="nav"
-				className="flex flex-col items-center gap-5 font-medium text-nowrap"
+				className="flex flex-col items-center gap-5 text-nowrap font-medium"
 				each={linkItems}
 				renderItem={(linkItem) => (
 					<NavLink key={linkItem.title} transitionType="navbar" href={linkItem.href}>

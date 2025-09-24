@@ -27,7 +27,7 @@ async function TipExpandedPage(props: { params: Promise<{ id: string }> }) {
 			<section className="h-[190px] w-[297px] lg:h-[410px] lg:w-[644px]">
 				<Image
 					src={singleTip.data.imageUrl}
-					className="size-full rounded-tl-[16px] rounded-br-[16px]"
+					className="size-full rounded-br-[16px] rounded-tl-[16px]"
 					priority={true}
 					width={297}
 					height={190}
@@ -36,7 +36,7 @@ async function TipExpandedPage(props: { params: Promise<{ id: string }> }) {
 			</section>
 
 			<section className="mt-8 flex flex-col gap-6 lg:mt-10 lg:gap-8">
-				<h1 className="text-[32px] font-bold text-medinfo-primary-main lg:text-[60px]">
+				<h1 className="text-medinfo-primary-main text-[32px] font-bold lg:text-[60px]">
 					{singleTip.data.mainTitle}
 				</h1>
 
@@ -46,13 +46,13 @@ async function TipExpandedPage(props: { params: Promise<{ id: string }> }) {
 					each={singleTip.data.mainBody}
 					renderItem={(item) => (
 						<div className="flex flex-col gap-4 lg:min-w-[616px] lg:gap-7">
-							<h4 className="text-[20px] font-semibold text-medinfo-primary-main lg:text-[24px]">
+							<h4 className="text-medinfo-primary-main text-[20px] font-semibold lg:text-[24px]">
 								{item.Title}
 							</h4>
 
 							<div
-								className="prose max-w-[80ch] [&>h4]:text-[18px] [&>h4]:font-medium
-									[&>h4]:text-medinfo-primary-main [&>p]:text-pretty"
+								className="prose [&>h4]:text-medinfo-primary-main max-w-[80ch] [&>h4]:text-[18px]
+									[&>h4]:font-medium [&>p]:text-pretty"
 								// eslint-disable-next-line react-dom/no-dangerously-set-innerhtml
 								dangerouslySetInnerHTML={{ __html: item.Content }}
 							/>
@@ -64,7 +64,7 @@ async function TipExpandedPage(props: { params: Promise<{ id: string }> }) {
 			</section>
 
 			<section className="mt-14 flex flex-col items-center lg:mt-[92px]">
-				<h2 className="text-center text-[28px] font-bold text-medinfo-primary-main lg:text-[52px]">
+				<h2 className="text-medinfo-primary-main text-center text-[28px] font-bold lg:text-[52px]">
 					Checkout Other Tips
 				</h2>
 

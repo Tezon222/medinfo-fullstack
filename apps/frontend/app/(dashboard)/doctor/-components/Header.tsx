@@ -22,12 +22,12 @@ const Header = () => {
 					shadow-md lg:flex"
 			>
 				<div className="relative items-center space-x-4">
-					<SearchIcon type="green" className="absolute top-2 left-8" />
+					<SearchIcon type="green" className="absolute left-8 top-2" />
 					<input
 						type="text"
 						placeholder="search"
-						className="w-[400px] rounded-[8px] border border-medinfo-primary-main px-12 py-2
-							text-medinfo-body-color"
+						className="border-medinfo-primary-main text-medinfo-body-color w-[400px] rounded-[8px]
+							border px-12 py-2"
 					/>
 				</div>
 				<div className="flex items-center space-x-[40px]">
