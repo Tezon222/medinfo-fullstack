@@ -21,8 +21,8 @@ export function DailyTipCard({ className, id, imageUrl, title }: DailyTipCardPro
 		<Card.Root
 			as="li"
 			className={cnMerge(
-				`flex w-[161px] shrink-0 flex-col gap-3 rounded-[16px] border-[1.4px] border-medinfo-light-1
-				pb-3 md:w-[276px]`,
+				`flex w-[161px] shrink-0 flex-col rounded-[16px] border-[1.4px] border-medinfo-light-1 pb-3
+				max-md:gap-3 md:w-[276px] md:pb-7`,
 				className
 			)}
 		>
@@ -37,12 +37,12 @@ export function DailyTipCard({ className, id, imageUrl, title }: DailyTipCardPro
 				/>
 			</Card.Header>
 
-			<Card.Content className="grow px-3">{title}</Card.Content>
+			<Card.Content className="grow px-3 md:p-7">{title}</Card.Content>
 
-			<Card.Footer className="px-3" asChild={true}>
+			<Card.Footer className="px-3 md:px-7" asChild={true}>
 				<NavLink href={`/daily-tips/${id}`} className="flex items-center gap-4">
 					Learn More
-					<IconBox icon="material-symbols:play-arrow" className="text-[20px]" />
+					<IconBox icon="lucide:chevron-right" className="text-[20px]" />
 				</NavLink>
 			</Card.Footer>
 		</Card.Root>
