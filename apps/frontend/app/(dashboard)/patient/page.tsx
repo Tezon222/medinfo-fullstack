@@ -41,8 +41,8 @@ function Page() {
 		cardData.map((card) => (
 			<div
 				key={card.id}
-				className="flex items-start gap-[12px] rounded-[8px] border border-solid
-					border-medinfo-secondary-main p-[16px] lg:px-[27px] lg:py-[28px]"
+				className="border-medinfo-secondary-main flex items-start gap-[12px] rounded-[8px] border
+					border-solid p-[16px] lg:px-[27px] lg:py-[28px]"
 				onClick={() => handleNavigation(card.slug)}
 			>
 				<div className="size-[64px]">
@@ -55,10 +55,10 @@ function Page() {
 				</div>
 				<div className="flex-1 space-y-[8px]">
 					<h2 className="text-[18px] font-medium lg:text-[20px]">{card.slug}</h2>
-					<p className="text-[14px] text-medinfo-dark-2 lg:text-[16px]">
+					<p className="text-medinfo-dark-2 text-[14px] lg:text-[16px]">
 						Lorem ipsum dolor sit amet consectetur. Massa nec imperdiet neque ut.
 					</p>
-					<p className="text-[14px] font-semibold text-medinfo-dark-1">{card.price}</p>
+					<p className="text-medinfo-dark-1 text-[14px] font-semibold">{card.price}</p>
 				</div>
 			</div>
 		));
@@ -76,11 +76,11 @@ function Page() {
 					<div>{/* <Image src={ChartImage} height={} alt="chart"/> */}</div>
 				</div>
 				<div className="w-full rounded-[16px] bg-white p-[16px] shadow-md lg:max-w-[338px] lg:p-[28px]">
-					<h2 className="text-[22px] font-medium text-medinfo-dark-1">Activities</h2>
-					<div className="mt-[12px] rounded-[8px] border border-solid border-medinfo-secondary-main">
+					<h2 className="text-medinfo-dark-1 text-[22px] font-medium">Activities</h2>
+					<div className="border-medinfo-secondary-main mt-[12px] rounded-[8px] border border-solid">
 						<div
-							className="flex gap-[34px] rounded-t-[8px] bg-medinfo-secondary-main py-[8px] pl-[8px]
-								font-semibold text-medinfo-dark-1"
+							className="bg-medinfo-secondary-main text-medinfo-dark-1 flex gap-[34px]
+								rounded-t-[8px] py-[8px] pl-[8px] font-semibold"
 						>
 							<h2>S/N</h2>
 							<h2>Log</h2>

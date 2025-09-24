@@ -3,7 +3,7 @@ import Image from "next/image";
 const HealthFinderLogo = ({ lastUpdated }: { lastUpdated: string }) => (
 	<>
 		<div className="mt-7 flex items-center gap-2">
-			<p className="font-roboto text-[18px] font-medium text-medinfo-dark-2 italic">Source: </p>
+			<p className="font-roboto text-medinfo-dark-2 text-[18px] font-medium italic">Source: </p>
 
 			<a
 				className="inline-block h-auto w-[200px]"
@@ -20,7 +20,7 @@ const HealthFinderLogo = ({ lastUpdated }: { lastUpdated: string }) => (
 			</a>
 		</div>
 
-		<p className="font-roboto text-[18px] font-medium text-medinfo-dark-2 italic">
+		<p className="font-roboto text-medinfo-dark-2 text-[18px] font-medium italic">
 			Last Updated: {lastUpdated}
 		</p>
 	</>
