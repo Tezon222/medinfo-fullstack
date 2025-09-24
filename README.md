@@ -1,1 +1,1 @@
-# medinfo-fullstack
+# MedInfo-Fullstack
