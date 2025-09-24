@@ -28,16 +28,16 @@ function SelectTrigger(
 		<SelectPrimitive.Trigger
 			data-slot="select-trigger"
 			className={cnMerge(
-				`border-shadcn-input shadow-xs focus-visible:border-shadcn-ring
-				focus-visible:ring-shadcn-ring/50 aria-invalid:border-shadcn-destructive
-				aria-invalid:ring-shadcn-destructive/20 data-[placeholder]:text-shadcn-muted-foreground
-				dark:aria-invalid:ring-shadcn-destructive/40
-				[&_svg:not([class*='text-'])]:text-shadcn-muted-foreground flex w-full items-center
-				justify-between gap-2 whitespace-nowrap rounded-md border bg-transparent px-3 py-2 text-sm
-				outline-none transition-[color,box-shadow] focus-visible:ring-[3px] disabled:cursor-not-allowed
-				disabled:opacity-50 *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex
-				*:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2
-				[&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0`,
+				`flex w-full items-center justify-between gap-2 rounded-md border border-shadcn-input
+				bg-transparent px-3 py-2 text-sm whitespace-nowrap shadow-xs transition-[color,box-shadow]
+				outline-none focus-visible:border-shadcn-ring focus-visible:ring-[3px]
+				focus-visible:ring-shadcn-ring/50 disabled:cursor-not-allowed disabled:opacity-50
+				aria-invalid:border-shadcn-destructive aria-invalid:ring-shadcn-destructive/20
+				data-[placeholder]:text-shadcn-muted-foreground *:data-[slot=select-value]:line-clamp-1
+				*:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center
+				*:data-[slot=select-value]:gap-2 dark:aria-invalid:ring-shadcn-destructive/40
+				[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4
+				[&_svg:not([class*='text-'])]:text-shadcn-muted-foreground`,
 				size === "sm" && "h-8",
 				size === "default" && "h-9",
 				className,
@@ -97,14 +97,14 @@ function SelectContent(
 			<SelectPrimitive.Content
 				data-slot="select-content"
 				className={cnMerge(
-					`max-h-(--radix-select-content-available-height)
-					origin-(--radix-select-content-transform-origin) bg-shadcn-popover
-					text-shadcn-popover-foreground data-[side=bottom]:slide-in-from-top-2
-					data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2
-					data-[side=top]:slide-in-from-bottom-2 data-[state=closed]:animate-out
-					data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in
-					data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 relative z-50 min-w-[8rem]
-					overflow-y-auto overflow-x-hidden rounded-md border shadow-md`,
+					`relative z-50 max-h-(--radix-select-content-available-height) min-w-[8rem]
+					origin-(--radix-select-content-transform-origin) overflow-x-hidden overflow-y-auto
+					rounded-md border bg-shadcn-popover text-shadcn-popover-foreground shadow-md
+					data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2
+					data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2
+					data-[state=closed]:animate-out data-[state=closed]:fade-out-0
+					data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0
+					data-[state=open]:zoom-in-95`,
 					position === "popper"
 						&& `data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1
 						data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1`,
@@ -119,7 +119,7 @@ function SelectContent(
 					className={cnMerge(
 						"flex flex-col p-1",
 						position === "popper"
-							&& `h-(--radix-select-trigger-height) min-w-(--radix-select-trigger-width) w-full
+							&& `h-(--radix-select-trigger-height) w-full min-w-(--radix-select-trigger-width)
 							scroll-my-1`,
 						classNames?.viewport
 					)}
@@ -139,7 +139,7 @@ function SelectLabel(props: InferProps<typeof SelectPrimitive.Label>) {
 	return (
 		<SelectPrimitive.Label
 			data-slot="select-label"
-			className={cnMerge("text-shadcn-muted-foreground px-2 py-1.5 text-xs", className)}
+			className={cnMerge("px-2 py-1.5 text-xs text-shadcn-muted-foreground", className)}
 			{...restOfProps}
 		/>
 	);
@@ -152,12 +152,12 @@ function SelectItem(props: InferProps<typeof SelectPrimitive.Item> & { withIndic
 		<SelectPrimitive.Item
 			data-slot="select-item"
 			className={cnMerge(
-				`outline-hidden focus:bg-shadcn-accent focus:text-shadcn-accent-foreground
+				`relative flex w-full cursor-default items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm
+				outline-hidden select-none focus:bg-shadcn-accent focus:text-shadcn-accent-foreground
+				data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none
+				[&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4
 				[&_svg:not([class*='text-'])]:text-shadcn-muted-foreground *:[span]:last:flex
-				*:[span]:last:items-center *:[span]:last:gap-2 relative flex w-full cursor-default select-none
-				items-center gap-2 rounded-sm py-1.5 pl-2 pr-8 text-sm data-[disabled]:pointer-events-none
-				data-[disabled]:opacity-50 [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none
-				[&_svg]:shrink-0`,
+				*:[span]:last:items-center *:[span]:last:gap-2`,
 				className
 			)}
 			{...restOfProps}
@@ -180,7 +180,7 @@ function SelectSeparator(props: InferProps<typeof SelectPrimitive.Separator>) {
 
 	return (
 		<SelectPrimitive.Separator
-			className={cnMerge("bg-shadcn-border pointer-events-none -mx-1 my-1 h-px", className)}
+			className={cnMerge("pointer-events-none -mx-1 my-1 h-px bg-shadcn-border", className)}
 			{...restOfProps}
 		/>
 	);
