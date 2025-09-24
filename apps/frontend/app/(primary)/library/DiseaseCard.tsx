@@ -19,6 +19,7 @@ export function DiseaseCard({ disease, type }: DiseaseCardProps) {
 		<Card.Root
 			as="li"
 			className={cnJoin(
+				"border-none shadow-none",
 				type === "grid" && "relative h-full max-lg:max-h-[176px]",
 				type === "list"
 					&& "flex w-full gap-[44px] rounded-[16px] border-2 border-medinfo-primary-main p-6"
