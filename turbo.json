@@ -11,7 +11,7 @@
 		},
 		"lint:format": {},
 		"lint:eslint": {},
-		"knip": {},
-		"lint:type-check": {}
+		"lint:type-check": {},
+		"knip": {}
 	}
 }
