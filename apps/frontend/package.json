@@ -8,7 +8,7 @@
 		"build": "next build",
 		"dev": "next dev -p 8000 --turbo",
 		"lint:eslint": "eslint . --max-warnings 0",
-		"lint:format": "prettier --cache --write .",
+		"lint:format": "prettier --write .",
 		"lint:type-check": "tsc --pretty --incremental -p tsconfig.json",
 		"prepare": "husky",
 		"start": "next start"

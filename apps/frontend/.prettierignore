@@ -3,4 +3,3 @@ pnpm-lock.yaml
 package.json
 *.md
 *.tsbuildinfo
-eslint-typegen.d.ts

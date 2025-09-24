@@ -21,7 +21,7 @@ const Sidebar = () => {
 								href={href}
 								className={cnJoin("flex h-[58px] items-center px-6", {
 									"bg-medinfo-primary-main text-white": isActive,
-									"hover:border-medinfo-dark-3 text-black hover:border-b-2 hover:bg-[#F0FDF6]/80":
+									"text-black hover:border-b-2 hover:border-medinfo-dark-3 hover:bg-[#F0FDF6]/80":
 										!isActive,
 								})}
 							>

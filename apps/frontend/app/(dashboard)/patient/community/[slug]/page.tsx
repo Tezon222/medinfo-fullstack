@@ -25,8 +25,8 @@ export default function Page({ params }: { params: { slug: string } }) {
 	return (
 		<div className="p-[24px] lg:p-[40px]">
 			<div
-				className="border-medinfo-light-1 flex max-w-[48px] items-center rounded-[8px] border
-					border-solid bg-white p-[14px] lg:max-w-[64px] lg:p-[20px]"
+				className="flex max-w-[48px] items-center rounded-[8px] border border-solid
+					border-medinfo-light-1 bg-white p-[14px] lg:max-w-[64px] lg:p-[20px]"
 				onClick={handleBackClick}
 			>
 				<ArrowBackIcon />
@@ -37,7 +37,7 @@ export default function Page({ params }: { params: { slug: string } }) {
 					<div>
 						<h2 className="text-[20px]">{params.slug}</h2>
 						<div className="flex">
-							<p className="text-medinfo-dark-3 font-normal">by Ezra </p>
+							<p className="font-normal text-medinfo-dark-3">by Ezra </p>
 							<p> - Feb 11</p>
 						</div>
 					</div>
@@ -49,7 +49,7 @@ export default function Page({ params }: { params: { slug: string } }) {
 						scelerisque ut nam consectetur faucibus est. Tortor amet sagittis sed tortor sed et
 						tellus. Eu lobortis aliquet dis vitae sed amet.
 					</p>
-					<p className="text-medinfo-dark-3 mt-[16px] text-[14px] font-normal">
+					<p className="mt-[16px] text-[14px] font-normal text-medinfo-dark-3">
 						Three specialized doctors have interacted with this post
 					</p>
 				</div>
@@ -67,7 +67,7 @@ export default function Page({ params }: { params: { slug: string } }) {
 					</div>
 					{showComments && (
 						<div className="w-full">
-							<div className="border-medinfo-light-1 mt-[20px] border-t">
+							<div className="mt-[20px] border-t border-medinfo-light-1">
 								<div
 									className="mt-[20px] flex w-full flex-col space-y-[20px] lg:flex-row
 										lg:items-center lg:gap-[40px] lg:space-y-0"
@@ -79,8 +79,8 @@ export default function Page({ params }: { params: { slug: string } }) {
 										<input
 											type="text"
 											placeholder="add a comment"
-											className="border-medinfo-primary-main focus:outline-hidden h-[48px]
-												w-full rounded-[8px] border-2 border-solid px-4 lg:h-[64px]"
+											className="h-[48px] w-full rounded-[8px] border-2 border-solid
+												border-medinfo-primary-main px-4 focus:outline-hidden lg:h-[64px]"
 										/>
 									</div>
 									<Button

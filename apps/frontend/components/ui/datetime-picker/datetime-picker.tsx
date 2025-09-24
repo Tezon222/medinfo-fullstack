@@ -38,7 +38,7 @@ export function DateTimePicker(props: DatePickerProps) {
 					theme="secondary"
 					withInteractions={false}
 					className={cnMerge(
-						"text-medinfo-body-color w-full justify-between text-[14px] md:w-full",
+						"w-full justify-between text-[14px] text-medinfo-body-color md:w-full",
 						className
 					)}
 				>
@@ -51,7 +51,7 @@ export function DateTimePicker(props: DatePickerProps) {
 			</Popover.Trigger>
 
 			<Popover.Content className="w-auto border-none p-0">
-				<div className="border-medinfo-primary-main flex rounded-[10px] border-[1.4px]">
+				<div className="flex rounded-[10px] border-[1.4px] border-medinfo-primary-main">
 					{showDatePicker && (
 						<Calendar
 							mode="single"
@@ -145,7 +145,7 @@ function TimeScrollArea(props: TimeScrollAreaProps) {
 		onChange(format(newDate, formats?.onChangeDate ?? "MM-dd-yyyy HH:mm:ss"));
 	}
 	return (
-		<div className="divide-medinfo-primary-main flex h-[332px] divide-x divide-y-0">
+		<div className="flex h-[332px] divide-x divide-y-0 divide-medinfo-primary-main">
 			<ScrollArea className="w-auto">
 				<ForWithWrapper
 					className="flex flex-col p-2"
