@@ -32,8 +32,8 @@ export function Calendar(
 		<DayPicker
 			showOutsideDays={showOutsideDays}
 			className={cnMerge(
-				`group/calendar bg-shadcn-background p-3 [--cell-size:--spacing(8)]
-				in-data-[slot=card-content]:bg-transparent in-data-[slot=popover-content]:bg-transparent`,
+				`group/calendar bg-shadcn-background in-data-[slot=card-content]:bg-transparent
+				in-data-[slot=popover-content]:bg-transparent p-3 [--cell-size:--spacing(8)]`,
 				// prettier-ignore
 				String.raw`rtl:**:[.rdp-button\_next>svg]:rotate-180`,
 				// prettier-ignore
@@ -52,27 +52,27 @@ export function Calendar(
 				root: cnMerge("w-fit", defaultClassNames.root, classNames?.root),
 				button_next: cnMerge(
 					shadcnButtonVariants({ variant: buttonVariant }),
-					"size-(--cell-size) p-0 select-none aria-disabled:opacity-50",
+					"size-(--cell-size) select-none p-0 aria-disabled:opacity-50",
 					defaultClassNames.button_next,
 					classNames?.button_next
 				),
 				button_previous: cnMerge(
 					shadcnButtonVariants({ variant: buttonVariant }),
-					"size-(--cell-size) p-0 select-none aria-disabled:opacity-50",
+					"size-(--cell-size) select-none p-0 aria-disabled:opacity-50",
 					defaultClassNames.button_previous,
 					classNames?.button_previous
 				),
 				caption_label: cnMerge(
-					"font-medium select-none",
-					captionLayout === "label"
-						? "text-sm"
-						: `flex h-8 items-center gap-1 rounded-md pr-1 pl-2 text-sm [&>svg]:size-3.5
-							[&>svg]:text-shadcn-muted-foreground`,
+					"select-none font-medium",
+					captionLayout === "label" ? "text-sm" : (
+						`[&>svg]:text-shadcn-muted-foreground flex h-8 items-center gap-1 rounded-md pl-2 pr-1
+							text-sm [&>svg]:size-3.5`
+					),
 					defaultClassNames.caption_label,
 					classNames?.caption_label
 				),
 				day: cnMerge(
-					`group/day relative aspect-square h-full w-full p-0 text-center select-none
+					`group/day relative aspect-square h-full w-full select-none p-0 text-center
 					[&:first-child[data-selected=true]_button]:rounded-l-md
 					[&:last-child[data-selected=true]_button]:rounded-r-md`,
 					defaultClassNames.day,
@@ -89,20 +89,20 @@ export function Calendar(
 					classNames?.dropdown
 				),
 				dropdown_root: cnMerge(
-					`has-focus:border-ring relative rounded-md border border-shadcn-input shadow-xs
-					has-focus:ring-[3px] has-focus:ring-shadcn-ring/50`,
+					`has-focus:border-ring border-shadcn-input shadow-xs has-focus:ring-[3px]
+					has-focus:ring-shadcn-ring/50 relative rounded-md border`,
 					defaultClassNames.dropdown_root,
 					classNames?.dropdown_root
 				),
 				dropdowns: cnMerge(
-					"flex h-(--cell-size) w-full items-center justify-center gap-1.5 text-sm font-medium",
+					"h-(--cell-size) flex w-full items-center justify-center gap-1.5 text-sm font-medium",
 					defaultClassNames.dropdowns,
 					classNames?.dropdowns
 				),
 				hidden: cnMerge("invisible", defaultClassNames.hidden, classNames?.hidden),
 				month: cnMerge("flex w-full flex-col gap-4", defaultClassNames.month, classNames?.month),
 				month_caption: cnMerge(
-					"flex h-(--cell-size) w-full items-center justify-center px-(--cell-size)",
+					"h-(--cell-size) px-(--cell-size) flex w-full items-center justify-center",
 					defaultClassNames.month_caption,
 					classNames?.month_caption
 				),
@@ -122,7 +122,7 @@ export function Calendar(
 					classNames?.outside
 				),
 				range_end: cnMerge(
-					"rounded-r-md bg-shadcn-accent",
+					"bg-shadcn-accent rounded-r-md",
 					defaultClassNames.range_end,
 					classNames?.range_end
 				),
@@ -132,19 +132,19 @@ export function Calendar(
 					classNames?.range_middle
 				),
 				range_start: cnMerge(
-					"rounded-l-md bg-shadcn-accent",
+					"bg-shadcn-accent rounded-l-md",
 					defaultClassNames.range_start,
 					classNames?.range_start
 				),
 				today: cnMerge(
-					`rounded-md bg-shadcn-accent text-shadcn-primary-foreground
+					`bg-shadcn-accent text-shadcn-primary-foreground rounded-md
 					data-[selected=true]:rounded-none`,
 					defaultClassNames.today,
 					classNames?.today
 				),
 				week: cnMerge("mt-2 flex w-full", defaultClassNames.week, classNames?.week),
 				week_number: cnMerge(
-					"text-[12.8px] text-shadcn-muted-foreground select-none",
+					"text-shadcn-muted-foreground select-none text-[12.8px]",
 					defaultClassNames.week_number,
 					classNames?.week_number
 				),
@@ -154,7 +154,7 @@ export function Calendar(
 					classNames?.week_number_header
 				),
 				weekday: cnMerge(
-					"flex-1 rounded-md text-[12.8px] font-normal text-shadcn-muted-foreground select-none",
+					"text-shadcn-muted-foreground flex-1 select-none rounded-md text-[12.8px] font-normal",
 					defaultClassNames.weekday,
 					classNames?.weekday
 				),
@@ -207,7 +207,7 @@ export function Calendar(
 				WeekNumber: ({ children, ...innerRestOfProps }) => {
 					return (
 						<td {...innerRestOfProps}>
-							<div className="flex size-(--cell-size) items-center justify-center text-center">
+							<div className="size-(--cell-size) flex items-center justify-center text-center">
 								{children}
 							</div>
 						</td>
@@ -246,18 +246,20 @@ export function CalendarDayButton(props: InferProps<typeof DayButton> & ShadcnBu
 			data-range-end={modifiers.range_end}
 			data-range-middle={modifiers.range_middle}
 			className={cnMerge(
-				`flex aspect-square size-auto w-full min-w-(--cell-size) flex-col gap-1 leading-none
-				font-normal group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10
-				group-data-[focused=true]/day:ring-[3px] group-data-[focused=true]/day:ring-shadcn-ring/30
-				data-[range-end=true]:rounded-md data-[range-end=true]:rounded-r-md
+				`min-w-(--cell-size) group-data-[focused=true]/day:ring-shadcn-ring/30
 				data-[range-end=true]:bg-shadcn-primary data-[range-end=true]:text-shadcn-primary-foreground
-				data-[range-middle=true]:rounded-none data-[range-middle=true]:bg-shadcn-accent
-				data-[range-middle=true]:text-shadcn-primary-foreground data-[range-start=true]:rounded-md
-				data-[range-start=true]:rounded-l-md data-[range-start=true]:bg-shadcn-primary
+				data-[range-middle=true]:bg-shadcn-accent
+				data-[range-middle=true]:text-shadcn-primary-foreground
+				data-[range-start=true]:bg-shadcn-primary
 				data-[range-start=true]:text-shadcn-primary-foreground
 				data-[selected-single=true]:bg-shadcn-primary
 				data-[selected-single=true]:text-shadcn-primary-foreground
-				dark:hover:text-shadcn-primary-foreground [&>span]:text-xs [&>span]:opacity-70`,
+				dark:hover:text-shadcn-primary-foreground flex aspect-square size-auto w-full flex-col gap-1
+				font-normal leading-none data-[range-end=true]:rounded-md data-[range-middle=true]:rounded-none
+				data-[range-start=true]:rounded-md data-[range-end=true]:rounded-r-md
+				data-[range-start=true]:rounded-l-md group-data-[focused=true]/day:relative
+				group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:ring-[3px] [&>span]:text-xs
+				[&>span]:opacity-70`,
 				defaultClassNames.day,
 				shadcnButtonVariants({ size, variant }),
 				className

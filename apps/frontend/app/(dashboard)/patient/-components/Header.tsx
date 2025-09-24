@@ -50,7 +50,9 @@ const Header = () => {
 					<SearchIcon type="green" />
 					<NotificationIcon />
 					<Button unstyled={true} className="z-10" onClick={toggleNavShow}>
-						{isNavShow ? <XIcon /> : <HamburgerIcon />}
+						{isNavShow ?
+							<XIcon />
+						:	<HamburgerIcon />}
 					</Button>
 					<MobileNavigation isNavShow={isNavShow} toggleNavShow={toggleNavShow} />
 				</div>

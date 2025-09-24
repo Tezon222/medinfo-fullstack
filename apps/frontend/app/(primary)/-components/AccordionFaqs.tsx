@@ -46,20 +46,20 @@ function AccordionFaqs() {
 					<Accordion.Item
 						key={FAQ.question}
 						value={FAQ.answer}
-						className="w-full rounded-[16px] border border-medinfo-primary-darker"
+						className="border-medinfo-primary-darker w-full rounded-[16px] border"
 					>
 						<Accordion.Trigger
 							withIcon={false}
 							classNames={{
-								base: `px-6 py-[15px] text-[22px] text-medinfo-primary-main md:p-6 md:text-[32px]
+								base: `text-medinfo-primary-main px-6 py-[15px] text-[22px] md:p-6 md:text-[32px]
 								md:font-semibold`,
 							}}
 						>
-							<p className="text-left text-pretty">{FAQ.question}</p>
+							<p className="text-pretty text-left">{FAQ.question}</p>
 
 							<span
 								data-icon="true"
-								className="flex items-center justify-center rounded-full bg-medinfo-primary-main
+								className="bg-medinfo-primary-main flex items-center justify-center rounded-full
 									p-[10px] md:p-4"
 							>
 								<ChevronDownIcon className="size-4 md:size-6" />
@@ -67,9 +67,9 @@ function AccordionFaqs() {
 						</Accordion.Trigger>
 
 						<Accordion.Content
-							className="flex flex-col gap-4 border-medinfo-primary-darker px-6 pb-[15px] md:pb-6"
+							className="border-medinfo-primary-darker flex flex-col gap-4 px-6 pb-[15px] md:pb-6"
 						>
-							<hr className="h-[2px] border-none bg-medinfo-secondary-main" />
+							<hr className="bg-medinfo-secondary-main h-[2px] border-none" />
 
 							<p>{FAQ.answer}</p>
 						</Accordion.Content>
