@@ -17,8 +17,8 @@ export default function Page({ params }: { params: { slug: string } }) {
 	return (
 		<div className="p-[24px] lg:p-[40px]">
 			<div
-				className="flex max-w-[48px] items-center rounded-[8px] border border-solid
-					border-medinfo-light-1 bg-white p-[14px] lg:max-w-[64px] lg:p-[20px]"
+				className="border-medinfo-light-1 flex max-w-[48px] items-center rounded-[8px] border
+					border-solid bg-white p-[14px] lg:max-w-[64px] lg:p-[20px]"
 				onClick={handleBackClick}
 			>
 				<ArrowBackIcon />
@@ -35,10 +35,10 @@ export default function Page({ params }: { params: { slug: string } }) {
 					</div>
 					<div className="flex-1 space-y-[30px]">
 						<h2 className="text-[18px] font-medium lg:text-[20px]">{decodedSlug}</h2>
-						<p className="text-[14px] font-semibold text-medinfo-dark-1">$0 - $120</p>
+						<p className="text-medinfo-dark-1 text-[14px] font-semibold">$0 - $120</p>
 					</div>
 				</div>
-				<hr className="mt-[32px] w-full border-[0.6px] border-medinfo-light-1" />
+				<hr className="border-medinfo-light-1 mt-[32px] w-full border-[0.6px]" />
 				<div
 					className="mt-[32px] flex w-full max-w-[727px] flex-col items-center gap-[72px] lg:flex-row
 						lg:items-end"
@@ -56,13 +56,13 @@ export default function Page({ params }: { params: { slug: string } }) {
 								</div>
 								<div className="space-y-[30px]">
 									<h2 className="text-[18px] font-semibold lg:text-[24px]">John Doe</h2>
-									<p className="text-[14px] font-normal text-medinfo-dark-1 lg:text-[18px]">
+									<p className="text-medinfo-dark-1 text-[14px] font-normal lg:text-[18px]">
 										28 years old
 									</p>
 								</div>
 							</div>
 							<div>
-								<h2 className="text-[20px] font-medium text-medinfo-primary-main">Change</h2>
+								<h2 className="text-medinfo-primary-main text-[20px] font-medium">Change</h2>
 							</div>
 						</div>
 						<div className="flex justify-between lg:items-center">
@@ -71,10 +71,10 @@ export default function Page({ params }: { params: { slug: string } }) {
 								Awka, Anambra state, <br className="lg:hidden" />
 								Nigeria
 							</p>
-							<h2 className="text-[20px] font-medium text-medinfo-primary-main">Change</h2>
+							<h2 className="text-medinfo-primary-main text-[20px] font-medium">Change</h2>
 						</div>
 						<div className="flex justify-between">
-							<h2 className="text-left text-medinfo-dark-1 lg:w-auto lg:text-[18px]">
+							<h2 className="text-medinfo-dark-1 text-left lg:w-auto lg:text-[18px]">
 								Do you have health insurance?
 							</h2>
 							<div className="space-y-[8px]">
@@ -90,7 +90,7 @@ export default function Page({ params }: { params: { slug: string } }) {
 						</div>
 						<div className="flex lg:items-center">
 							<WarningIcon />
-							<p className="text-[14px] text-medinfo-dark-3">
+							<p className="text-medinfo-dark-3 text-[14px]">
 								You’ll be assigned a specialized doctor after payment
 							</p>
 						</div>

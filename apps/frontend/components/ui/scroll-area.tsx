@@ -15,8 +15,8 @@ export function ScrollArea(props: InferProps<typeof ScrollAreaPrimitive.Root>) {
 		>
 			<ScrollAreaPrimitive.Viewport
 				data-slot="scroll-area-viewport"
-				className="size-full rounded-[inherit] transition-[color,box-shadow] outline-none
-					focus-visible:ring-[3px] focus-visible:ring-shadcn-ring/50 focus-visible:outline-1"
+				className="focus-visible:ring-shadcn-ring/50 size-full rounded-[inherit] outline-none
+					transition-[color,box-shadow] focus-visible:outline-1 focus-visible:ring-[3px]"
 			>
 				{children}
 			</ScrollAreaPrimitive.Viewport>
@@ -43,7 +43,7 @@ export function ScrollBar(
 			data-slot="scroll-area-scrollbar"
 			orientation={orientation}
 			className={cnMerge(
-				"flex touch-none p-px transition-colors select-none",
+				"flex touch-none select-none p-px transition-colors",
 				orientation === "vertical" && "h-full w-2.5 border-l border-l-transparent",
 				orientation === "horizontal" && "h-2.5 flex-col border-t border-t-transparent",
 				className,
@@ -53,7 +53,7 @@ export function ScrollBar(
 		>
 			<ScrollAreaPrimitive.ScrollAreaThumb
 				data-slot="scroll-area-thumb"
-				className={cnMerge("relative flex-1 rounded-full bg-shadcn-border", classNames?.thumb)}
+				className={cnMerge("bg-shadcn-border relative flex-1 rounded-full", classNames?.thumb)}
 			/>
 		</ScrollAreaPrimitive.ScrollAreaScrollbar>
 	);
