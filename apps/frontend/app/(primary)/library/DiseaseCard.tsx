@@ -21,7 +21,7 @@ export function DiseaseCard({ disease, type }: DiseaseCardProps) {
 			className={cnJoin(
 				type === "grid" && "relative h-full max-lg:max-h-[176px]",
 				type === "list"
-					&& "border-medinfo-primary-main flex w-full gap-[44px] rounded-[16px] border-2 p-6"
+					&& "flex w-full gap-[44px] rounded-[16px] border-2 border-medinfo-primary-main p-6"
 			)}
 		>
 			<Card.Header>
@@ -44,15 +44,15 @@ export function DiseaseCard({ disease, type }: DiseaseCardProps) {
 				className={cnJoin(
 					"flex flex-col justify-between",
 					type === "grid"
-						&& `border-medinfo-primary-main absolute bottom-[calc(-95px/2)] right-0 h-[95px] w-fit
-						rounded-[16px] border-2 bg-white p-2 lg:bottom-[calc((400px-182px)/2)] lg:h-[182px]
+						&& `absolute right-0 bottom-[calc(-95px/2)] h-[95px] w-fit rounded-[16px] border-2
+						border-medinfo-primary-main bg-white p-2 lg:bottom-[calc((400px-182px)/2)] lg:h-[182px]
 						lg:max-w-[229px] lg:p-6`
 				)}
 			>
 				<div>
 					<h4
 						className={cnJoin(
-							"text-medinfo-primary-main text-[18px]",
+							"text-[18px] text-medinfo-primary-main",
 							type === "grid" && "font-medium lg:text-[22px]",
 							type === "list" && "lg:text-[32px] lg:font-bold"
 						)}
@@ -61,21 +61,21 @@ export function DiseaseCard({ disease, type }: DiseaseCardProps) {
 					</h4>
 
 					{type === "list" && (
-						<p className="text-medinfo-dark-1 mt-[16px] hidden text-sm lg:block">
+						<p className="mt-[16px] hidden text-sm text-medinfo-dark-1 lg:block">
 							{disease.Description}
 						</p>
 					)}
 				</div>
 
 				{type === "grid" && (
-					<p className="text-medinfo-dark-1 hidden text-sm lg:block">
+					<p className="hidden text-sm text-medinfo-dark-1 lg:block">
 						{disease.Description.slice(0, 40)}...
 					</p>
 				)}
 
 				<NavLink
 					href={`/library/disease/${disease.Disease}`}
-					className="text-medinfo-primary-main inline-flex w-fit items-center gap-[14px] lg:gap-4
+					className="inline-flex w-fit items-center gap-[14px] text-medinfo-primary-main lg:gap-4
 						lg:text-[20px] lg:font-medium"
 				>
 					See more
@@ -109,7 +109,7 @@ export function AlternateDiseaseCard(props: AlternateDiseaseCardProps) {
 			className={cnJoin(
 				type === "grid" && "flex max-w-[161px] shrink-0 flex-col lg:max-w-[340px]",
 				type === "list"
-					&& `bg-medinfo-secondary-subtle flex w-fit gap-4 rounded-[16px] p-3
+					&& `flex w-fit gap-4 rounded-[16px] bg-medinfo-secondary-subtle p-3
 					shadow-[0_4px_4px_hsl(0,0%,0%,0.12)] lg:p-6`,
 				className
 			)}
@@ -175,7 +175,7 @@ export function AlternateDiseaseCard(props: AlternateDiseaseCardProps) {
 				{type === "grid" && (
 					<NavLink
 						href={`/library/disease/${disease.Disease}`}
-						className="text-medinfo-primary-main inline-flex w-fit items-center gap-[14px] lg:gap-4
+						className="inline-flex w-fit items-center gap-[14px] text-medinfo-primary-main lg:gap-4
 							lg:text-[20px]"
 					>
 						Read post

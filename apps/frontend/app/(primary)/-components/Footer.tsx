@@ -4,7 +4,7 @@ import { CopyrightIcon } from "@/components/icons";
 function Footer() {
 	return (
 		<footer
-			className="bg-medinfo-primary-main flex w-full flex-col gap-[44px] px-6 py-10 text-white
+			className="flex w-full flex-col gap-[44px] bg-medinfo-primary-main px-6 py-10 text-white
 				lg:flex-row lg:items-start lg:justify-between lg:px-[100px] lg:py-14"
 		>
 			<div className="mt-5 flex flex-col">
@@ -17,7 +17,7 @@ function Footer() {
 			</div>
 
 			<div className="text-[18px]">
-				<h3 className="text-medinfo-secondary-darker text-[20px]">Quick links</h3>
+				<h3 className="text-[20px] text-medinfo-secondary-darker">Quick links</h3>
 
 				<ul className="mt-6 grid gap-4">
 					<li>About us</li>
@@ -27,7 +27,7 @@ function Footer() {
 			</div>
 
 			<div className="text-[18px]">
-				<h3 className="text-medinfo-secondary-darker text-[20px]">Contact us</h3>
+				<h3 className="text-[20px] text-medinfo-secondary-darker">Contact us</h3>
 
 				<ul className="mt-6 grid gap-4">
 					<li className="flex items-center gap-3">
