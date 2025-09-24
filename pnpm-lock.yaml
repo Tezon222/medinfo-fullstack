@@ -41,9 +41,6 @@ importers:
       lint-staged:
         specifier: 16.2.0
         version: 16.2.0
-      prettier:
-        specifier: 3.6.2
-        version: 3.6.2
       tailwindcss:
         specifier: ^4.1.13
         version: 4.1.13

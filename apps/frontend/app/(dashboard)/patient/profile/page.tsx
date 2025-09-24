@@ -28,12 +28,12 @@ function ProfilePage() {
 					lg:bg-white lg:p-8"
 			>
 				<div
-					className="border-medinfo-primary-main relative -z-10 size-[108px] rounded-full
-						border-[1.4px] bg-gray-300 lg:size-[140px]"
+					className="relative -z-10 size-[108px] rounded-full border-[1.4px]
+						border-medinfo-primary-main bg-gray-300 lg:size-[140px]"
 				>
 					<div
-						className="border-medinfo-primary-main absolute right-0 top-[2px] flex size-[24px]
-							items-center justify-center rounded-full border-[1.4px] bg-white lg:size-[40px]"
+						className="absolute top-[2px] right-0 flex size-[24px] items-center justify-center
+							rounded-full border-[1.4px] border-medinfo-primary-main bg-white lg:size-[40px]"
 					>
 						<CameraIcon className="size-[16px] lg:size-[26px]" />
 					</div>
@@ -54,30 +54,30 @@ function ProfilePage() {
 				<Form.Root className="w-full max-w-[372px] gap-3 self-center" methods={userIdentityMethods}>
 					<Form.Field<typeof userIdentityMethods.control>
 						name="firstName"
-						className="font-roboto gap-1 font-medium"
+						className="gap-1 font-roboto font-medium"
 					>
 						<Form.Label className="md:text-[20px]">First Name</Form.Label>
 						<Form.Input
 							type="text"
-							className="border-medinfo-primary-main placeholder:text-medinfo-dark-4 h-[48px]
-								rounded-[8px] border-[1.4px] px-4 py-3 focus-visible:ring-transparent md:h-[64px]
-								md:py-5 md:text-base"
+							className="h-[48px] rounded-[8px] border-[1.4px] border-medinfo-primary-main px-4 py-3
+								placeholder:text-medinfo-dark-4 focus-visible:ring-transparent md:h-[64px] md:py-5
+								md:text-base"
 						/>
 					</Form.Field>
 					<Form.Field<typeof userIdentityMethods.control>
 						name="lastName"
-						className="font-roboto gap-1 font-medium"
+						className="gap-1 font-roboto font-medium"
 					>
 						<Form.Label className="md:text-[20px]">Last Name</Form.Label>
 						<Form.Input
 							type="text"
-							className="border-medinfo-primary-main placeholder:text-medinfo-dark-4 h-[48px]
-								rounded-[8px] border-[1.4px] px-4 py-3 focus-visible:ring-transparent md:h-[64px]
-								md:py-5 md:text-base"
+							className="h-[48px] rounded-[8px] border-[1.4px] border-medinfo-primary-main px-4 py-3
+								placeholder:text-medinfo-dark-4 focus-visible:ring-transparent md:h-[64px] md:py-5
+								md:text-base"
 						/>
 					</Form.Field>
 
-					<Form.Field name="gender" className="font-roboto gap-1 font-medium">
+					<Form.Field name="gender" className="gap-1 font-roboto font-medium">
 						<Form.Label className="md:text-[20px]">Gender</Form.Label>
 
 						<Form.FieldController
@@ -85,9 +85,9 @@ function ProfilePage() {
 								<Select.Root name={field.name} value={field.value} onValueChange={field.onChange}>
 									<Select.Trigger
 										classNames={{
-											base: `border-medinfo-primary-main data-placeholder:text-medinfo-dark-4
-											group h-[48px] gap-2 rounded-[8px] border-[1.4px] px-4 font-medium
-											md:h-[64px] md:text-base`,
+											base: `group h-[48px] gap-2 rounded-[8px] border-[1.4px]
+											border-medinfo-primary-main px-4 font-medium
+											data-placeholder:text-medinfo-dark-4 md:h-[64px] md:text-base`,
 											icon: `text-medinfo-body-color group-data-[state=open]:rotate-180
 											md:size-6`,
 										}}
@@ -97,24 +97,24 @@ function ProfilePage() {
 
 									<Select.Content
 										classNames={{
-											base: `border-medinfo-primary-main border-[1.4px] bg-white/90 p-0
+											base: `border-[1.4px] border-medinfo-primary-main bg-white/90 p-0
 											backdrop-blur-lg`,
 											viewport: "gap-1",
 										}}
 									>
 										<Select.Item
 											value="male"
-											className="bg-medinfo-light-3 text-medinfo-dark-4 focus:bg-medinfo-light-1
-												focus:text-medinfo-body-color data-[state=checked]:bg-medinfo-light-1
-												h-[48px] font-medium md:h-[64px] md:text-base"
+											className="h-[48px] bg-medinfo-light-3 font-medium text-medinfo-dark-4
+												focus:bg-medinfo-light-1 focus:text-medinfo-body-color
+												data-[state=checked]:bg-medinfo-light-1 md:h-[64px] md:text-base"
 										>
 											Male
 										</Select.Item>
 										<Select.Item
 											value="female"
-											className="bg-medinfo-light-3 text-medinfo-dark-4 focus:bg-medinfo-light-1
-												focus:text-medinfo-body-color data-[state=checked]:bg-medinfo-light-1
-												h-[48px] font-medium md:h-[64px] md:text-base"
+											className="h-[48px] bg-medinfo-light-3 font-medium text-medinfo-dark-4
+												focus:bg-medinfo-light-1 focus:text-medinfo-body-color
+												data-[state=checked]:bg-medinfo-light-1 md:h-[64px] md:text-base"
 										>
 											Female
 										</Select.Item>
@@ -126,13 +126,13 @@ function ProfilePage() {
 
 					<Form.Field<typeof userIdentityMethods.control>
 						name="bio"
-						className="font-roboto gap-1 font-medium"
+						className="gap-1 font-roboto font-medium"
 					>
 						<Form.Label className="md:text-[20px]">Bio</Form.Label>
 						<Form.Input
 							type="textarea"
-							className="border-medinfo-primary-main placeholder:text-medinfo-dark-4 h-[163px]
-								rounded-[8px] border-[1.4px] px-4 py-5 focus-visible:ring-transparent md:h-[159px]
+							className="h-[163px] rounded-[8px] border-[1.4px] border-medinfo-primary-main px-4
+								py-5 placeholder:text-medinfo-dark-4 focus-visible:ring-transparent md:h-[159px]
 								md:text-base"
 						/>
 					</Form.Field>
@@ -153,26 +153,26 @@ function ProfilePage() {
 				<Form.Root className="w-full max-w-[372px] gap-3 self-center" methods={contactInfoMethods}>
 					<Form.Field<typeof contactInfoMethods.control>
 						name="email"
-						className="font-roboto gap-1 font-medium"
+						className="gap-1 font-roboto font-medium"
 					>
 						<Form.Label className="md:text-[20px]">Email</Form.Label>
 						<Form.Input
 							type="text"
-							className="border-medinfo-primary-main placeholder:text-medinfo-dark-4 h-[48px]
-								rounded-[8px] border-[1.4px] px-4 py-3 focus-visible:ring-transparent md:h-[64px]
-								md:py-5 md:text-base"
+							className="h-[48px] rounded-[8px] border-[1.4px] border-medinfo-primary-main px-4 py-3
+								placeholder:text-medinfo-dark-4 focus-visible:ring-transparent md:h-[64px] md:py-5
+								md:text-base"
 						/>
 					</Form.Field>
 					<Form.Field<typeof contactInfoMethods.control>
 						name="phoneNumber"
-						className="font-roboto gap-1 font-medium"
+						className="gap-1 font-roboto font-medium"
 					>
 						<Form.Label className="md:text-[20px]">Phone number</Form.Label>
 						<Form.Input
 							type="number"
-							className="border-medinfo-primary-main placeholder:text-medinfo-dark-4 h-[48px]
-								rounded-[8px] border-[1.4px] px-4 py-3 focus-visible:ring-transparent md:h-[64px]
-								md:py-5 md:text-base"
+							className="h-[48px] rounded-[8px] border-[1.4px] border-medinfo-primary-main px-4 py-3
+								placeholder:text-medinfo-dark-4 focus-visible:ring-transparent md:h-[64px] md:py-5
+								md:text-base"
 						/>
 					</Form.Field>
 				</Form.Root>
@@ -192,26 +192,26 @@ function ProfilePage() {
 				<Form.Root className="w-full max-w-[372px] gap-3 self-center" methods={locationMethods}>
 					<Form.Field<typeof locationMethods.control>
 						name="country"
-						className="font-roboto gap-1 font-medium"
+						className="gap-1 font-roboto font-medium"
 					>
 						<Form.Label className="md:text-[20px]">Country</Form.Label>
 						<Form.Input
 							type="text"
-							className="border-medinfo-primary-main placeholder:text-medinfo-dark-4 h-[48px]
-								rounded-[8px] border-[1.4px] px-4 py-3 focus-visible:ring-transparent md:h-[64px]
-								md:py-5 md:text-base"
+							className="h-[48px] rounded-[8px] border-[1.4px] border-medinfo-primary-main px-4 py-3
+								placeholder:text-medinfo-dark-4 focus-visible:ring-transparent md:h-[64px] md:py-5
+								md:text-base"
 						/>
 					</Form.Field>
 					<Form.Field<typeof locationMethods.control>
 						name="city"
-						className="font-roboto gap-1 font-medium"
+						className="gap-1 font-roboto font-medium"
 					>
 						<Form.Label className="md:text-[20px]">City</Form.Label>
 						<Form.Input
 							type="text"
-							className="border-medinfo-primary-main placeholder:text-medinfo-dark-4 h-[48px]
-								rounded-[8px] border-[1.4px] px-4 py-3 focus-visible:ring-transparent md:h-[64px]
-								md:py-5 md:text-base"
+							className="h-[48px] rounded-[8px] border-[1.4px] border-medinfo-primary-main px-4 py-3
+								placeholder:text-medinfo-dark-4 focus-visible:ring-transparent md:h-[64px] md:py-5
+								md:text-base"
 						/>
 					</Form.Field>
 				</Form.Root>
@@ -231,45 +231,45 @@ function ProfilePage() {
 				<Form.Root className="w-full max-w-[372px] gap-3 self-center" methods={changePasswordMethods}>
 					<Form.Field<typeof changePasswordMethods.control>
 						name="oldPassword"
-						className="font-roboto gap-1 font-medium"
+						className="gap-1 font-roboto font-medium"
 					>
 						<Form.Label className="md:text-[20px]">Old password</Form.Label>
 						<Form.Input
 							type="password"
 							classNames={{
-								input: `placeholder:text-medinfo-dark-4 border-none focus-visible:ring-transparent
+								input: `border-none placeholder:text-medinfo-dark-4 focus-visible:ring-transparent
 								md:text-base`,
-								inputGroup: `border-medinfo-primary-main h-[48px] rounded-[8px] border-[1.4px] px-4
+								inputGroup: `h-[48px] rounded-[8px] border-[1.4px] border-medinfo-primary-main px-4
 								py-3 md:h-[64px] md:py-5`,
 							}}
 						/>
 					</Form.Field>
 					<Form.Field<typeof changePasswordMethods.control>
 						name="newPassword"
-						className="font-roboto gap-1 font-medium"
+						className="gap-1 font-roboto font-medium"
 					>
 						<Form.Label className="md:text-[20px]">New password</Form.Label>
 						<Form.Input
 							type="password"
 							classNames={{
-								input: `placeholder:text-medinfo-dark-4 border-none focus-visible:ring-transparent
+								input: `border-none placeholder:text-medinfo-dark-4 focus-visible:ring-transparent
 								md:text-base`,
-								inputGroup: `border-medinfo-primary-main h-[48px] rounded-[8px] border-[1.4px] px-4
+								inputGroup: `h-[48px] rounded-[8px] border-[1.4px] border-medinfo-primary-main px-4
 								py-3 md:h-[64px] md:py-5`,
 							}}
 						/>
 					</Form.Field>
 					<Form.Field<typeof changePasswordMethods.control>
 						name="confirmPassword"
-						className="font-roboto gap-1 font-medium"
+						className="gap-1 font-roboto font-medium"
 					>
 						<Form.Label className="md:text-[20px]">Confirm password</Form.Label>
 						<Form.Input
 							type="password"
 							classNames={{
-								input: `placeholder:text-medinfo-dark-4 border-none focus-visible:ring-transparent
+								input: `border-none placeholder:text-medinfo-dark-4 focus-visible:ring-transparent
 								md:text-base`,
-								inputGroup: `border-medinfo-primary-main h-[48px] rounded-[8px] border-[1.4px] px-4
+								inputGroup: `h-[48px] rounded-[8px] border-[1.4px] border-medinfo-primary-main px-4
 								py-3 md:h-[64px] md:py-5`,
 							}}
 						/>

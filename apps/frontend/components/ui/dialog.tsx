@@ -78,8 +78,8 @@ function DialogOverlay(props: InferProps<typeof DialogPrimitive.Overlay>) {
 	return (
 		<DialogPrimitive.Overlay
 			className={cnMerge(
-				`data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in
-				data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/50`,
+				`fixed inset-0 z-50 bg-black/50 data-[state=closed]:animate-out data-[state=closed]:fade-out-0
+				data-[state=open]:animate-in data-[state=open]:fade-in-0`,
 				className
 			)}
 			{...restOfProps}
@@ -101,11 +101,11 @@ function DialogContent(props: InferProps<typeof DialogPrimitive.Content> & { wit
 			<DialogPrimitive.Content
 				data-slot="dialog-content"
 				className={cnMerge(
-					`translate-[-50%] bg-shadcn-background data-[state=closed]:animate-out
-					data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in
-					data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 fixed left-[50%] top-[50%] z-50
-					grid w-full max-w-[calc(100%-2rem)] gap-4 rounded-lg border p-6 shadow-lg duration-200
-					sm:max-w-lg`,
+					`fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-[-50%] gap-4
+					rounded-lg border bg-shadcn-background p-6 shadow-lg duration-200
+					data-[state=closed]:animate-out data-[state=closed]:fade-out-0
+					data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0
+					data-[state=open]:zoom-in-95 sm:max-w-lg`,
 					className
 				)}
 				{...restOfProps}
@@ -114,12 +114,11 @@ function DialogContent(props: InferProps<typeof DialogPrimitive.Content> & { wit
 
 				{withCloseBtn && (
 					<DialogClose
-						className="rounded-xs ring-offset-shadcn-background focus:ring-shadcn-ring
-							focus:outline-hidden data-[state=open]:bg-shadcn-accent
-							data-[state=open]:text-shadcn-muted-foreground absolute right-4 top-4 opacity-70
-							transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2
-							disabled:pointer-events-none [&_svg:not([class*='size-'])]:size-4
-							[&_svg]:pointer-events-none [&_svg]:shrink-0"
+						className="absolute top-4 right-4 rounded-xs opacity-70 ring-offset-shadcn-background
+							transition-opacity hover:opacity-100 focus:ring-2 focus:ring-shadcn-ring
+							focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none
+							data-[state=open]:bg-shadcn-accent data-[state=open]:text-shadcn-muted-foreground
+							[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
 					>
 						<IconBox icon="lucide:x" className="size-4" />
 						<span className="sr-only">Close</span>
@@ -164,7 +163,7 @@ function DialogTitle(props: InferProps<typeof DialogPrimitive.Title>) {
 	return (
 		<DialogPrimitive.Title
 			data-slot="dialog-title"
-			className={cnMerge("text-lg font-semibold leading-none", className)}
+			className={cnMerge("text-lg leading-none font-semibold", className)}
 			{...restOfProps}
 		/>
 	);
@@ -189,7 +188,7 @@ function DialogDescription(props: InferProps<typeof DialogPrimitive.Description>
 	return (
 		<DialogPrimitive.Description
 			data-slot="dialog-description"
-			className={cnMerge("text-shadcn-muted-foreground text-sm", className)}
+			className={cnMerge("text-sm text-shadcn-muted-foreground", className)}
 			{...restOfProps}
 		/>
 	);

@@ -77,8 +77,8 @@ function AppointmentPage() {
 	return (
 		<Main className="w-full gap-8 max-md:mx-auto max-md:max-w-[400px]">
 			<header>
-				<Button size="icon" theme="primary-inverted" className="border-medinfo-light-1 border-[0.6px]">
-					<IconBox icon="lucide:chevron-left" className="text-medinfo-primary-darker size-5" />
+				<Button size="icon" theme="primary-inverted" className="border-[0.6px] border-medinfo-light-1">
+					<IconBox icon="lucide:chevron-left" className="size-5 text-medinfo-primary-darker" />
 				</Button>
 			</header>
 
@@ -105,10 +105,10 @@ function AppointmentPage() {
 						</div>
 					</section>
 
-					<hr className="bg-medinfo-light-1 h-[0.6px]" />
+					<hr className="h-[0.6px] bg-medinfo-light-1" />
 
 					<section className="flex flex-col gap-4">
-						<h2 className="text-medinfo-dark-1 text-[18px] font-medium md:text-[22px]">
+						<h2 className="text-[18px] font-medium text-medinfo-dark-1 md:text-[22px]">
 							Patient Information
 						</h2>
 
@@ -119,7 +119,7 @@ function AppointmentPage() {
 								<Form.InputPrimitive
 									type="radio"
 									value="manual"
-									className="accent-medinfo-primary-main size-5"
+									className="size-5 accent-medinfo-primary-main"
 								/>
 							</Form.Field>
 
@@ -130,7 +130,7 @@ function AppointmentPage() {
 									defaultChecked={true}
 									type="radio"
 									value="manual"
-									className="accent-medinfo-primary-main size-5"
+									className="size-5 accent-medinfo-primary-main"
 								/>
 							</Form.Field>
 						</div>
@@ -140,48 +140,48 @@ function AppointmentPage() {
 								<Form.Field
 									control={methods.control}
 									name="name"
-									className="font-roboto gap-1 font-medium"
+									className="gap-1 font-roboto font-medium"
 								>
 									<Form.Label className="md:text-[20px]">Name</Form.Label>
 
 									<Form.Input
 										type="text"
 										placeholder="enter full name"
-										className="border-medinfo-primary-main placeholder:text-medinfo-dark-4
-											h-[48px] gap-4 rounded-[8px] border-[1.4px] px-4 py-3 md:h-[64px] md:py-5
-											md:text-base"
+										className="h-[48px] gap-4 rounded-[8px] border-[1.4px]
+											border-medinfo-primary-main px-4 py-3 placeholder:text-medinfo-dark-4
+											md:h-[64px] md:py-5 md:text-base"
 									/>
 								</Form.Field>
 
 								<Form.Field
 									control={methods.control}
 									name="email"
-									className="font-roboto gap-1 font-medium"
+									className="gap-1 font-roboto font-medium"
 								>
 									<Form.Label className="md:text-[20px]">Email</Form.Label>
 
 									<Form.Input
 										type="email"
 										placeholder="enter email"
-										className="border-medinfo-primary-main placeholder:text-medinfo-dark-4
-											h-[48px] gap-4 rounded-[8px] border-[1.4px] px-4 py-3 md:h-[64px] md:py-5
-											md:text-base"
+										className="h-[48px] gap-4 rounded-[8px] border-[1.4px]
+											border-medinfo-primary-main px-4 py-3 placeholder:text-medinfo-dark-4
+											md:h-[64px] md:py-5 md:text-base"
 									/>
 								</Form.Field>
 
 								<Form.Field
 									control={methods.control}
 									name="phoneNumber"
-									className="font-roboto gap-1 font-medium"
+									className="gap-1 font-roboto font-medium"
 								>
 									<Form.Label className="md:text-[20px]">Phone Number</Form.Label>
 
 									<Form.Input
 										type="text"
 										placeholder="enter phone number"
-										className="border-medinfo-primary-main placeholder:text-medinfo-dark-4
-											h-[48px] gap-4 rounded-[8px] border-[1.4px] px-4 py-3 md:h-[64px] md:py-5
-											md:text-base"
+										className="h-[48px] gap-4 rounded-[8px] border-[1.4px]
+											border-medinfo-primary-main px-4 py-3 placeholder:text-medinfo-dark-4
+											md:h-[64px] md:py-5 md:text-base"
 									/>
 								</Form.Field>
 							</div>
@@ -190,7 +190,7 @@ function AppointmentPage() {
 								<Form.Field
 									control={methods.control}
 									name="gender"
-									className="font-roboto gap-1 font-medium"
+									className="gap-1 font-roboto font-medium"
 								>
 									<Form.Label className="md:text-[20px]">Gender</Form.Label>
 
@@ -203,10 +203,9 @@ function AppointmentPage() {
 											>
 												<Select.Trigger
 													classNames={{
-														base: `border-medinfo-primary-main
-														data-placeholder:text-medinfo-dark-4 group h-[48px] gap-2
-														rounded-[8px] border-[1.4px] px-4 font-medium md:h-[64px]
-														md:text-base`,
+														base: `group h-[48px] gap-2 rounded-[8px] border-[1.4px]
+														border-medinfo-primary-main px-4 font-medium
+														data-placeholder:text-medinfo-dark-4 md:h-[64px] md:text-base`,
 														icon: `text-medinfo-body-color group-data-[state=open]:rotate-180
 														md:size-6`,
 													}}
@@ -216,26 +215,28 @@ function AppointmentPage() {
 
 												<Select.Content
 													classNames={{
-														base: `border-medinfo-primary-main border-[1.4px] bg-white/90 p-0
+														base: `border-[1.4px] border-medinfo-primary-main bg-white/90 p-0
 														backdrop-blur-lg`,
 														viewport: "gap-1",
 													}}
 												>
 													<Select.Item
 														value="Male"
-														className="bg-medinfo-light-3 text-medinfo-dark-4
-															focus:bg-medinfo-light-1 focus:text-medinfo-body-color
-															data-[state=checked]:bg-medinfo-light-1 h-[48px] font-medium
-															md:h-[64px] md:text-base"
+														className="h-[48px] bg-medinfo-light-3 font-medium
+															text-medinfo-dark-4 focus:bg-medinfo-light-1
+															focus:text-medinfo-body-color
+															data-[state=checked]:bg-medinfo-light-1 md:h-[64px]
+															md:text-base"
 													>
 														Male
 													</Select.Item>
 													<Select.Item
 														value="Female"
-														className="bg-medinfo-light-3 text-medinfo-dark-4
-															focus:bg-medinfo-light-1 focus:text-medinfo-body-color
-															data-[state=checked]:bg-medinfo-light-1 h-[48px] font-medium
-															md:h-[64px] md:text-base"
+														className="h-[48px] bg-medinfo-light-3 font-medium
+															text-medinfo-dark-4 focus:bg-medinfo-light-1
+															focus:text-medinfo-body-color
+															data-[state=checked]:bg-medinfo-light-1 md:h-[64px]
+															md:text-base"
 													>
 														Female
 													</Select.Item>
@@ -248,16 +249,16 @@ function AppointmentPage() {
 								<Form.Field
 									control={methods.control}
 									name="dob"
-									className="font-roboto gap-1 font-medium"
+									className="gap-1 font-roboto font-medium"
 								>
 									<Form.Label className="md:text-[20px]">Date of Birth</Form.Label>
 
 									<Form.FieldController
 										render={({ field }) => (
 											<DateTimePicker
-												className="border-medinfo-primary-main h-[48px] gap-4 rounded-[8px]
-													border-[1.4px] px-4 py-3 text-[14px] md:h-[64px] md:py-5
-													md:text-base"
+												className="h-[48px] gap-4 rounded-[8px] border-[1.4px]
+													border-medinfo-primary-main px-4 py-3 text-[14px] md:h-[64px]
+													md:py-5 md:text-base"
 												dateValueString={field.value}
 												placeholder="DD/MM/YYYY"
 												onChange={field.onChange}
@@ -269,10 +270,10 @@ function AppointmentPage() {
 						</article>
 					</section>
 
-					<hr className="bg-medinfo-light-1 h-[0.6px]" />
+					<hr className="h-[0.6px] bg-medinfo-light-1" />
 
 					<section className="flex flex-col gap-4">
-						<h2 className="text-medinfo-dark-1 text-[18px] font-medium md:text-[22px]">
+						<h2 className="text-[18px] font-medium text-medinfo-dark-1 md:text-[22px]">
 							Appointment details
 						</h2>
 
@@ -280,16 +281,16 @@ function AppointmentPage() {
 							<Form.Field
 								control={methods.control}
 								name="reason"
-								className="font-roboto w-full gap-1 font-medium"
+								className="w-full gap-1 font-roboto font-medium"
 							>
 								<Form.Label className="md:text-[20px]">Reason</Form.Label>
 
 								<Form.Input
 									type="textarea"
 									placeholder="tell us your symptoms"
-									className="border-medinfo-primary-main placeholder:text-medinfo-dark-4
-										min-h-[180px] gap-4 rounded-[8px] border-[1.4px] px-4 py-3
-										[field-sizing:content] md:py-5 md:text-base"
+									className="[field-sizing:content] min-h-[180px] gap-4 rounded-[8px]
+										border-[1.4px] border-medinfo-primary-main px-4 py-3
+										placeholder:text-medinfo-dark-4 md:py-5 md:text-base"
 								/>
 							</Form.Field>
 
@@ -307,9 +308,9 @@ function AppointmentPage() {
 													onChangeDate: "yyyy-MM-dd'T'HH:mm:ss",
 													visibleDate: "PPP - HH:mm:ss",
 												}}
-												className="border-medinfo-primary-main h-[48px] gap-4 rounded-[8px]
-													border-[1.4px] px-4 py-3 text-[14px] md:h-[64px] md:py-5
-													md:text-base"
+												className="h-[48px] gap-4 rounded-[8px] border-[1.4px]
+													border-medinfo-primary-main px-4 py-3 text-[14px] md:h-[64px]
+													md:py-5 md:text-base"
 												dateValueString={field.value}
 												placeholder="YYYY-MM-DD - 00:00:00"
 												onChange={field.onChange}
@@ -321,7 +322,7 @@ function AppointmentPage() {
 								<Form.Field
 									control={methods.control}
 									name="language"
-									className="font-roboto gap-1 font-medium"
+									className="gap-1 font-roboto font-medium"
 								>
 									<Form.Label className="text-medinfo-dark-4 md:text-[20px]">Language</Form.Label>
 
@@ -336,11 +337,11 @@ function AppointmentPage() {
 											>
 												<Select.Trigger
 													classNames={{
-														base: `border-medinfo-primary-main disabled:border-medinfo-dark-4
-														disabled:bg-medinfo-disabled-fill disabled:text-medinfo-dark-4
-														data-placeholder:text-medinfo-dark-4 group h-[48px] gap-2
-														rounded-[8px] border-[1.4px] px-4 font-medium
-														disabled:opacity-[initial] md:h-[64px] md:text-base`,
+														base: `group h-[48px] gap-2 rounded-[8px] border-[1.4px]
+														border-medinfo-primary-main px-4 font-medium
+														disabled:border-medinfo-dark-4 disabled:bg-medinfo-disabled-fill
+														disabled:text-medinfo-dark-4 disabled:opacity-[initial]
+														data-placeholder:text-medinfo-dark-4 md:h-[64px] md:text-base`,
 														icon: `text-medinfo-body-color group-data-[state=open]:rotate-180
 														md:size-6`,
 													}}
@@ -350,17 +351,18 @@ function AppointmentPage() {
 
 												<Select.Content
 													classNames={{
-														base: `border-medinfo-primary-main border-[1.4px] bg-white/90 p-0
+														base: `border-[1.4px] border-medinfo-primary-main bg-white/90 p-0
 														backdrop-blur-lg`,
 														viewport: "gap-1",
 													}}
 												>
 													<Select.Item
 														value="English"
-														className="bg-medinfo-light-3 text-medinfo-dark-4
-															focus:bg-medinfo-light-1 focus:text-medinfo-body-color
-															data-[state=checked]:bg-medinfo-light-1 h-[48px] font-medium
-															md:h-[64px] md:text-base"
+														className="h-[48px] bg-medinfo-light-3 font-medium
+															text-medinfo-dark-4 focus:bg-medinfo-light-1
+															focus:text-medinfo-body-color
+															data-[state=checked]:bg-medinfo-light-1 md:h-[64px]
+															md:text-base"
 													>
 														English
 													</Select.Item>
@@ -373,7 +375,7 @@ function AppointmentPage() {
 						</article>
 
 						<div className="flex flex-col gap-2">
-							<p className="text-medinfo-dark-4 flex items-center gap-2 text-[14px]">
+							<p className="flex items-center gap-2 text-[14px] text-medinfo-dark-4">
 								Appointment will be held via
 								<a href="https://zoom.us" target="_blank" rel="noreferrer noopener">
 									<IconBox icon="logos:zoom" className="w-14" />
@@ -382,15 +384,15 @@ function AppointmentPage() {
 						</div>
 					</section>
 
-					<hr className="bg-medinfo-light-1 h-[0.6px]" />
+					<hr className="h-[0.6px] bg-medinfo-light-1" />
 
 					<section className="flex flex-col gap-4">
 						<div className="flex flex-col gap-2">
-							<h2 className="text-medinfo-dark-1 text-[18px] font-medium md:text-[22px]">
+							<h2 className="text-[18px] font-medium text-medinfo-dark-1 md:text-[22px]">
 								Health Information
 							</h2>
 
-							<p className="text-medinfo-dark-4 text-[14px] font-normal">
+							<p className="text-[14px] font-normal text-medinfo-dark-4">
 								This section will help the doctor prepare better for your consultation
 							</p>
 						</div>
@@ -400,32 +402,32 @@ function AppointmentPage() {
 								<Form.Field
 									control={methods.control}
 									name="medicalConditions"
-									className="font-roboto w-full gap-1 font-medium"
+									className="w-full gap-1 font-roboto font-medium"
 								>
 									<Form.Label className="md:text-[20px]">Existing medical conditions</Form.Label>
 
 									<Form.Input
 										type="textarea"
 										placeholder={`write "none" if there is none`}
-										className="border-medinfo-primary-main placeholder:text-medinfo-dark-4
-											min-h-[180px] rounded-[8px] border-[1.4px] px-4 py-3
-											[field-sizing:content] md:py-5 md:text-base"
+										className="[field-sizing:content] min-h-[180px] rounded-[8px] border-[1.4px]
+											border-medinfo-primary-main px-4 py-3 placeholder:text-medinfo-dark-4
+											md:py-5 md:text-base"
 									/>
 								</Form.Field>
 
 								<Form.Field
 									control={methods.control}
 									name="allergies"
-									className="font-roboto w-full gap-1 font-medium"
+									className="w-full gap-1 font-roboto font-medium"
 								>
 									<Form.Label className="md:text-[20px]">Allergies</Form.Label>
 
 									<Form.Input
 										type="textarea"
 										placeholder={`write "none" if there is none`}
-										className="border-medinfo-primary-main placeholder:text-medinfo-dark-4
-											min-h-[180px] rounded-[8px] border-[1.4px] px-4 py-3
-											[field-sizing:content] md:py-5 md:text-base"
+										className="[field-sizing:content] min-h-[180px] rounded-[8px] border-[1.4px]
+											border-medinfo-primary-main px-4 py-3 placeholder:text-medinfo-dark-4
+											md:py-5 md:text-base"
 									/>
 								</Form.Field>
 							</div>
@@ -441,7 +443,7 @@ function AppointmentPage() {
 									<Form.Input
 										type="radio"
 										value="true"
-										className="accent-medinfo-primary-main size-5"
+										className="size-5 accent-medinfo-primary-main"
 									/>
 								</Form.Field>
 
@@ -458,17 +460,17 @@ function AppointmentPage() {
 										defaultChecked={true}
 										type="radio"
 										value="false"
-										className="accent-medinfo-primary-main size-5"
+										className="size-5 accent-medinfo-primary-main"
 									/>
 								</Form.Field>
 							</div>
 						</article>
 					</section>
 
-					<hr className="bg-medinfo-light-1 h-[0.6px]" />
+					<hr className="h-[0.6px] bg-medinfo-light-1" />
 
 					<section className="flex flex-col gap-4">
-						<h2 className="text-medinfo-dark-1 text-[18px] font-medium md:text-[22px]">
+						<h2 className="text-[18px] font-medium text-medinfo-dark-1 md:text-[22px]">
 							Consent & policies
 						</h2>
 
@@ -483,8 +485,8 @@ function AppointmentPage() {
 								<Form.Input
 									type="checkbox"
 									value="true"
-									className="border-medinfo-primary-main accent-medinfo-primary-main size-5
-										shrink-0 rounded-[4px] border"
+									className="size-5 shrink-0 rounded-[4px] border border-medinfo-primary-main
+										accent-medinfo-primary-main"
 								/>
 							</Form.Field>
 
@@ -498,8 +500,8 @@ function AppointmentPage() {
 								<Form.Input
 									type="checkbox"
 									value="false"
-									className="border-medinfo-primary-main accent-medinfo-primary-main size-5
-										shrink-0 rounded-[4px] border"
+									className="size-5 shrink-0 rounded-[4px] border border-medinfo-primary-main
+										accent-medinfo-primary-main"
 								/>
 							</Form.Field>
 
@@ -516,8 +518,8 @@ function AppointmentPage() {
 								<Form.Input
 									type="checkbox"
 									value="false"
-									className="border-medinfo-primary-main accent-medinfo-primary-main size-5
-										shrink-0 rounded-[4px] border"
+									className="size-5 shrink-0 rounded-[4px] border border-medinfo-primary-main
+										accent-medinfo-primary-main"
 								/>
 							</Form.Field>
 
@@ -531,8 +533,8 @@ function AppointmentPage() {
 								<Form.Input
 									type="checkbox"
 									value="false"
-									className="border-medinfo-primary-main accent-medinfo-primary-main size-5
-										shrink-0 rounded-[4px] border"
+									className="size-5 shrink-0 rounded-[4px] border border-medinfo-primary-main
+										accent-medinfo-primary-main"
 								/>
 							</Form.Field>
 						</article>
@@ -626,7 +628,7 @@ function AppointmentDialog(props: DialogMainContentProps) {
 					"flex flex-col rounded-[16px]",
 					matchDoctorsQueryResult.data ?
 						"max-w-[341px] gap-8 px-6 py-8 md:max-w-[650px] md:gap-9 md:px-10"
-					:	"w-[292px] gap-2 pb-[56px] pt-6 md:max-w-[372px]"
+					:	"w-[292px] gap-2 pt-6 pb-[56px] md:max-w-[372px]"
 				)}
 				withCloseBtn={false}
 			>
@@ -651,13 +653,13 @@ function AppointmentDialog(props: DialogMainContentProps) {
 									<span className="size-4">
 										<IconBox
 											icon="solar:verified-check-linear"
-											className="text-medinfo-state-success-main size-full"
+											className="size-full text-medinfo-state-success-main"
 										/>
 									</span>
 								</figcaption>
 							</figure>
 
-							<Dialog.Title className="text-medinfo-dark-3 text-[18px] font-bold">
+							<Dialog.Title className="text-[18px] font-bold text-medinfo-dark-3">
 								{capitalize(matchedDoctor?.specialty)}
 							</Dialog.Title>
 						</Dialog.Header>
@@ -693,7 +695,7 @@ function AppointmentDialog(props: DialogMainContentProps) {
 								</Button>
 							</div>
 
-							<p className="text-medinfo-dark-4 text-[14px]">
+							<p className="text-[14px] text-medinfo-dark-4">
 								You have only{" "}
 								<span className="text-medinfo-dark-1">
 									{Number(matchDoctorsQueryResult.data?.selectedDoctors.length) - 1 - trialCount}
@@ -713,7 +715,7 @@ function AppointmentDialog(props: DialogMainContentProps) {
 						<Dialog.Header className="items-center gap-8">
 							<GreenSpinnerIcon className="animate-spin md:size-[100px]" />
 							<Dialog.Title
-								className="text-medinfo-dark-4 text-center text-base font-normal md:px-4"
+								className="text-center text-base font-normal text-medinfo-dark-4 md:px-4"
 							>
 								Matching you to a doctor, please hold on.
 							</Dialog.Title>
@@ -737,25 +739,25 @@ function StepperList(props: { className?: string }) {
 					<Steps.Item key={index} index={index} className="flex items-center">
 						{index !== 0 && (
 							<Steps.Separator
-								className="bg-medinfo-light-2 data-current:bg-medinfo-primary-main h-[2px] w-[82px]
+								className="h-[2px] w-[82px] bg-medinfo-light-2 data-current:bg-medinfo-primary-main
 									md:h-1 md:w-[200px]"
 							/>
 						)}
 
 						<Steps.Trigger className="relative flex flex-col items-center">
 							<Steps.Indicator
-								className="text-medinfo-secondary-darker data-complete:border-medinfo-primary-main
+								className="flex size-6 items-center justify-center rounded-full border-[1.4px]
+									border-[hsl(150,20%,95%)] bg-[hsl(150,20%,95%)] text-[10px]
+									text-medinfo-secondary-darker data-complete:border-medinfo-primary-main
 									data-complete:text-medinfo-primary-main data-current:border-medinfo-primary-main
-									data-current:text-medinfo-primary-main flex size-6 items-center justify-center
-									rounded-full border-[1.4px] border-[hsl(150,20%,95%)] bg-[hsl(150,20%,95%)]
-									text-[10px] md:size-12 md:text-[20px]"
+									data-current:text-medinfo-primary-main md:size-12 md:text-[20px]"
 							>
 								{index + 1}
 							</Steps.Indicator>
 
 							<span
-								className="text-medinfo-dark-3 absolute top-[calc(--spacing(6)+2px)] text-nowrap
-									text-[10px] italic md:top-[calc(--spacing(12)+2px)] md:text-[14px]"
+								className="absolute top-[calc(--spacing(6)+2px)] text-[10px] text-nowrap
+									text-medinfo-dark-3 italic md:top-[calc(--spacing(12)+2px)] md:text-[14px]"
 							>
 								{item.title}
 							</span>

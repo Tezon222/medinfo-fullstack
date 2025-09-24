@@ -26,11 +26,11 @@ const Header = () => {
 			>
 				<div className="text-[32px] font-semibold">{activeTitle}</div>
 				<div className="relative items-center space-x-4">
-					<SearchIcon type="green" className="absolute left-8 top-2" />
+					<SearchIcon type="green" className="absolute top-2 left-8" />
 					<input
 						type="text"
 						placeholder="search"
-						className="border-medinfo-primary-main w-[400px] rounded-[8px] border px-12 py-2
+						className="w-[400px] rounded-[8px] border border-medinfo-primary-main px-12 py-2
 							text-[#414141]"
 					/>
 				</div>

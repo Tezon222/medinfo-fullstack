@@ -13,7 +13,6 @@
 		"lint:eslint:root": "eslint . --max-warnings 0",
 		"lint:eslint:root:interactive": "pnpx eslint-interactive@latest . --max-warnings 0 --fix",
 		"lint:format": "turbo run --filter=./apps/* lint:format",
-		"lint:format:root": "prettier --write .",
 		"lint:type-check": "turbo run --filter=./apps/* lint:type-check",
 		"prepare": "husky"
 	},
@@ -29,7 +28,6 @@
 		"eslint-plugin-react-refresh": "^0.4.20",
 		"husky": "9.1.7",
 		"lint-staged": "16.2.0",
-		"prettier": "3.6.2",
 		"tailwindcss": "^4.1.13",
 		"turbo": "^2.5.6",
 		"typescript": "^5.9.2"
