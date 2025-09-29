@@ -1,5 +1,9 @@
 "use client";
 
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { use } from "react";
+import { useForm } from "react-hook-form";
 import { Main } from "@/app/(primary)/-components";
 import {
 	DropZoneInput,
@@ -12,10 +16,6 @@ import {
 import { Button, DateTimePicker, Form, Select } from "@/components/ui";
 import { DropZone } from "@/components/ui/drop-zone";
 import { callBackendApi } from "@/lib/api/callBackendApi";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { use } from "react";
-import { useForm } from "react-hook-form";
 
 function SignUpPage(props: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
 	const methods = useForm({
@@ -369,7 +369,9 @@ function SignUpPage(props: { searchParams: Promise<Record<string, string | strin
 
 													<p className="text-sm text-medinfo-dark-2">or</p>
 
-												<DropZone.Trigger asChild={true}>	<Button size="large">Choose File</Button></Drop Zone.Trigger>
+													<DropZone.Trigger asChild={true}>
+														<Button size="large">Choose File</Button>
+													</DropZone.Trigger>
 
 													<p className="text-sm text-medinfo-dark-2">Maximum size: 4mb</p>
 												</DropZone.Area>
