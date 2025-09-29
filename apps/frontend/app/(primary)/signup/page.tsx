@@ -369,7 +369,7 @@ function SignUpPage(props: { searchParams: Promise<Record<string, string | strin
 
 													<p className="text-sm text-medinfo-dark-2">or</p>
 
-													<Button size="large">Choose File</Button>
+												<DropZone.Trigger asChild={true}>	<Button size="large">Choose File</Button></Drop Zone.Trigger>
 
 													<p className="text-sm text-medinfo-dark-2">Maximum size: 4mb</p>
 												</DropZone.Area>
