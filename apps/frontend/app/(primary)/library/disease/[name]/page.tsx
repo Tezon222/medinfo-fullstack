@@ -5,13 +5,12 @@ import { callBackendApi } from "@/lib/api/callBackendApi";
 import type { DiseasesResponse, SingleDisease } from "@/lib/api/callBackendApi/types";
 import { AlternateDiseaseCard, ScrollableAlternateDiseaseCards } from "../../DiseaseCard";
 
-async function TipDetailsPage(props: { params: Promise<{ name: string }> }) {
-	// eslint-disable-next-line react/prefer-destructuring-assignment
-	const params = await props.params;
+async function DiseaseDetailsPage({ params }: PageProps<"/library/disease/[name]">) {
+	const { name: diseaseName } = await params;
 
 	const [singleDisease, allDiseases] = await Promise.all([
 		callBackendApi<SingleDisease>("/diseases/oneDisease", {
-			query: { name: decodeURIComponent(params.name) },
+			query: { name: decodeURIComponent(diseaseName) },
 		}),
 		callBackendApi<DiseasesResponse>("/diseases/allDiseases"),
 	]);
@@ -104,4 +103,4 @@ async function TipDetailsPage(props: { params: Promise<{ name: string }> }) {
 		</Main>
 	);
 }
-export default TipDetailsPage;
+export default DiseaseDetailsPage;

@@ -74,7 +74,7 @@ function PricingCard(props: PricingCardProps) {
 
 	const [For] = getElementList("base");
 
-	const hasGetStartedButton = !banner || banner.title !== "active";
+	const hasGetStartedButton = banner?.title !== "active";
 
 	return (
 		<Card.Root

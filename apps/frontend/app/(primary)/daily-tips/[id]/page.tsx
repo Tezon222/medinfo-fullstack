@@ -1,17 +1,16 @@
+import Image from "next/image";
 import { Main } from "@/app/(primary)/-components";
 import { AwaitRoot } from "@/components/common/await";
-import { getElementList } from "@/components/common/for";
-import { type SingleTip, callBackendApi } from "@/lib/api/callBackendApi";
+import { ForWithWrapper } from "@/components/common/for";
+import { callBackendApi, type SingleTip } from "@/lib/api/callBackendApi";
 import { getTipsResponse } from "@/lib/api/callBackendApi/utils";
-import Image from "next/image";
 import { ScrollableTipCards } from "../DailyTipCard";
 import HealthFinderLogo from "../HealthFinderLogo";
 
-async function TipExpandedPage(props: { params: Promise<{ id: string }> }) {
-	// eslint-disable-next-line react/prefer-destructuring-assignment
-	const params = await props.params;
+async function TipExpandedPage({ params }: PageProps<"/daily-tips/[id]">) {
+	const { id: tipID } = await params;
 
-	const singleTip = await callBackendApi<SingleTip>(`/dailyTips/tip/${params.id}`);
+	const singleTip = await callBackendApi<SingleTip>(`/dailyTips/tip/${tipID}`);
 
 	const tipsResponsePromise = getTipsResponse();
 
@@ -19,8 +18,6 @@ async function TipExpandedPage(props: { params: Promise<{ id: string }> }) {
 		console.error(singleTip.error.errorData);
 		return null;
 	}
-
-	const [ArticleList] = getElementList();
 
 	return (
 		<Main className="flex w-full flex-col max-md:max-w-[400px]">
@@ -40,12 +37,11 @@ async function TipExpandedPage(props: { params: Promise<{ id: string }> }) {
 					{singleTip.data.mainTitle}
 				</h1>
 
-				<ArticleList
-					as="article"
+				<ForWithWrapper
 					className="flex flex-col gap-8 lg:gap-[64px]"
 					each={singleTip.data.mainBody}
 					renderItem={(item) => (
-						<div className="flex flex-col gap-4 lg:min-w-[616px] lg:gap-7">
+						<li className="flex flex-col gap-4 lg:min-w-[616px] lg:gap-7">
 							<h4 className="text-[20px] font-semibold text-medinfo-primary-main lg:text-[24px]">
 								{item.Title}
 							</h4>
@@ -56,7 +52,7 @@ async function TipExpandedPage(props: { params: Promise<{ id: string }> }) {
 								// eslint-disable-next-line react-dom/no-dangerously-set-innerhtml
 								dangerouslySetInnerHTML={{ __html: item.Content }}
 							/>
-						</div>
+						</li>
 					)}
 				/>
 

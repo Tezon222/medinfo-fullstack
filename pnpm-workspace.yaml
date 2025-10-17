@@ -1,2 +1,10 @@
 packages:
-   - "apps/*"
+  - apps/*
+  - packages/*
+
+catalog:
+  '@dotenvx/dotenvx': 1.51.0
+  '@zayne-labs/tsconfig': 0.10.10
+  tsdown: 0.15.7
+  typescript: 5.9.3
+  zod: 4.1.12

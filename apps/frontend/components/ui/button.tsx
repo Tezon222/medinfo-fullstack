@@ -2,8 +2,8 @@
 
 import type { InferProps, PolymorphicProps } from "@zayne-labs/toolkit-react/utils";
 import type { Prettify } from "@zayne-labs/toolkit-type-helpers";
-import { Slot } from "@/components/common/slot";
 import { tv, type VariantProps } from "tailwind-variants";
+import { Slot } from "@/components/common/slot";
 import { WhiteSpinnerIcon } from "../icons";
 
 export type ButtonProps = InferProps<"button">
@@ -15,7 +15,8 @@ export type ButtonProps = InferProps<"button">
 		}
 	>;
 
-const buttonVariants = tv({
+// eslint-disable-next-line react-refresh/only-export-components
+export const buttonVariants = tv({
 	base: "flex items-center justify-center rounded-[8px]",
 
 	compoundVariants: [

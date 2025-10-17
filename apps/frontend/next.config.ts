@@ -1,9 +1,9 @@
-import type { NextConfig } from "next";
-
 import { fileURLToPath } from "node:url";
+import type { NextConfig } from "next";
 
 const getRoot = (rootPath = "/") => fileURLToPath(new URL(rootPath, import.meta.url));
 
+// eslint-disable-next-line node/no-process-env
 const isDev = process.env.NODE_ENV !== "production";
 
 const nextConfig = {
@@ -12,9 +12,7 @@ const nextConfig = {
 	},
 
 	...(isDev && {
-		turbopack: {
-			root: getRoot(),
-		},
+		outputFileTracingRoot: getRoot(),
 	}),
 
 	eslint: {

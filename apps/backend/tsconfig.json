@@ -1,0 +1,14 @@
+{
+	"extends": "@zayne-labs/tsconfig/bundler/no-dom/app",
+
+	"compilerOptions": {
+		"jsx": "react-jsx",
+		"jsxImportSource": "hono/jsx",
+		"baseUrl": ".",
+		"paths": {
+			"@/*": ["src/*"]
+		}
+	},
+
+	"include": ["src/**/*", "**/*"]
+}

@@ -1,13 +1,5 @@
 "use client";
 
-import { IconBox, Show } from "@/components/common";
-import { getElementList } from "@/components/common/for";
-import { CloseIcon, GreenSpinnerIcon } from "@/components/icons";
-import { Button, DateTimePicker, Dialog, Form, Select } from "@/components/ui";
-import { capitalize } from "@/lib/utils";
-import { cnJoin, cnMerge } from "@/lib/utils/cn";
-import { appointmentPlaceholder, doctorAvatar } from "@/public/assets/images/dashboard";
-import { bookAppointmentQuery, matchDoctorsQuery } from "@/lib/react-query/queryFactory";
 import { Steps, useStepsContext } from "@ark-ui/react/steps";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useDisclosure } from "@zayne-labs/toolkit-react";
@@ -15,6 +7,14 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { IconBox, Show } from "@/components/common";
+import { getElementList } from "@/components/common/for";
+import { CloseIcon, GreenSpinnerIcon } from "@/components/icons";
+import { Button, DateTimePicker, Dialog, Form, Select } from "@/components/ui";
+import { bookAppointmentQuery, matchDoctorsQuery } from "@/lib/react-query/queryFactory";
+import { capitalize } from "@/lib/utils";
+import { cnJoin, cnMerge } from "@/lib/utils/cn";
+import { appointmentPlaceholder, doctorAvatar } from "@/public/assets/images/dashboard";
 import { Main } from "../../-components";
 
 const stepperItems = [
@@ -259,9 +259,9 @@ function AppointmentPage() {
 												className="h-[48px] gap-4 rounded-[8px] border-[1.4px]
 													border-medinfo-primary-main px-4 py-3 text-[14px] md:h-[64px]
 													md:py-5 md:text-base"
-												dateValueString={field.value}
+												dateString={field.value}
 												placeholder="DD/MM/YYYY"
-												onChange={field.onChange}
+												onDateStringChange={field.onChange}
 											/>
 										)}
 									/>
@@ -311,9 +311,9 @@ function AppointmentPage() {
 												className="h-[48px] gap-4 rounded-[8px] border-[1.4px]
 													border-medinfo-primary-main px-4 py-3 text-[14px] md:h-[64px]
 													md:py-5 md:text-base"
-												dateValueString={field.value}
+												dateString={field.value}
 												placeholder="YYYY-MM-DD - 00:00:00"
-												onChange={field.onChange}
+												onDateStringChange={field.onChange}
 											/>
 										)}
 									/>

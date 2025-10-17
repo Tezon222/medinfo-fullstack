@@ -397,9 +397,9 @@ function SignUpPage(props: { searchParams: Promise<Record<string, string | strin
 												className="h-[48px] gap-4 rounded-[8px] border-[1.4px]
 													border-medinfo-primary-main px-4 py-3 text-[14px] md:h-[64px]
 													md:py-5 md:text-base"
-												dateValueString={field.value}
+												dateString={field.value}
 												placeholder="DD/MM/YYYY"
-												onChange={field.onChange}
+												onDateStringChange={field.onChange}
 											/>
 										)}
 									/>

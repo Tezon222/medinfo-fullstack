@@ -1,4 +1,4 @@
-/* eslint-disable react/no-nested-component-definitions */
+/* eslint-disable react-x/no-nested-component-definitions */
 "use client";
 
 import type { InferProps } from "@zayne-labs/toolkit-react/utils";

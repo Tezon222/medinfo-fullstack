@@ -1,7 +1,8 @@
+import { useControllableState } from "@zayne-labs/toolkit-react";
 import { format } from "date-fns";
 import { ForWithWrapper, IconBox } from "@/components/common";
 import { cnMerge } from "@/lib/utils/cn";
-import { Button } from "../button";
+import { buttonVariants } from "../button";
 import { Calendar, CalendarDayButton } from "../calender";
 import { shadcnButtonVariants } from "../constants";
 import * as Popover from "../popover";
@@ -10,22 +11,37 @@ import { getDateFromString } from "./getDateFromString";
 
 type DatePickerProps = {
 	className?: string;
-	dateValueString: string;
+	dateString?: string;
+	defaultDateString?: string;
 	formats?: {
 		onChangeDate?: string;
 		visibleDate?: string;
 	};
-	onChange: (dateValueString?: string) => void;
+	onDateStringChange?: (dateString?: string) => void;
 	placeholder?: string;
 	variant?: "date" | "datetime" | "time";
 };
 
 export function DateTimePicker(props: DatePickerProps) {
-	const { className, dateValueString = "", formats, onChange, placeholder, variant = "date" } = props;
+	const {
+		className,
+		dateString: dateStringProp,
+		defaultDateString = "",
+		formats,
+		onDateStringChange: onDateStringChangeProp,
+		placeholder,
+		variant = "date",
+	} = props;
 
-	const dateValue = getDateFromString(dateValueString);
+	const [dateString, setDateString] = useControllableState({
+		defaultValue: defaultDateString,
+		onChange: onDateStringChangeProp,
+		value: dateStringProp,
+	});
 
-	const isDateSelected = dateValueString !== "";
+	const date = getDateFromString(dateString);
+
+	const isDateSelected = dateString !== "";
 
 	const showTimePicker = variant === "time" || variant === "datetime";
 
@@ -34,20 +50,20 @@ export function DateTimePicker(props: DatePickerProps) {
 	return (
 		<Popover.Root>
 			<Popover.Trigger asChild={true}>
-				<Button
-					theme="secondary"
-					withInteractions={false}
+				<button
+					type="button"
 					className={cnMerge(
+						buttonVariants({ theme: "secondary", withInteractions: true }),
 						"w-full justify-between text-[14px] text-medinfo-body-color md:w-full",
 						className
 					)}
 				>
 					<span className={cnMerge(!isDateSelected && "text-medinfo-dark-4")}>
-						{isDateSelected ? format(dateValue, formats?.visibleDate ?? "PPP") : placeholder}
+						{isDateSelected ? format(date, formats?.visibleDate ?? "PPP") : placeholder}
 					</span>
 
 					<IconBox icon="solar:calendar-outline" className="size-5" />
-				</Button>
+				</button>
 			</Popover.Trigger>
 
 			<Popover.Content className="w-auto border-none p-0">
@@ -64,7 +80,7 @@ export function DateTimePicker(props: DatePickerProps) {
 								today: "bg-medinfo-primary-lighter",
 							}}
 							components={{
-								// eslint-disable-next-line react/no-nested-component-definitions
+								// eslint-disable-next-line react-x/no-nested-component-definitions
 								DayButton: ({ className: innerClassName, ...innerProps }) => (
 									<CalendarDayButton
 										className={cnMerge(
@@ -76,19 +92,21 @@ export function DateTimePicker(props: DatePickerProps) {
 									/>
 								),
 							}}
-							selected={dateValue}
-							onSelect={(date) => {
-								if (!date) return;
+							selected={date}
+							onSelect={(selectedDate) => {
+								if (!selectedDate) return;
 
-								const dateString = format(date, formats?.onChangeDate ?? "MM-dd-yyyy");
-
-								onChange(dateString);
+								setDateString(format(selectedDate, formats?.onChangeDate ?? "MM-dd-yyyy"));
 							}}
 						/>
 					)}
 
 					{showTimePicker && (
-						<TimeScrollArea dateValue={dateValue} onChange={onChange} formats={formats} />
+						<TimeScrollArea
+							dateValue={date}
+							onChange={setDateString as typeof onDateStringChangeProp}
+							formats={formats}
+						/>
 					)}
 				</div>
 			</Popover.Content>
@@ -99,7 +117,7 @@ export function DateTimePicker(props: DatePickerProps) {
 type TimeScrollAreaProps = {
 	dateValue: Date;
 	formats: DatePickerProps["formats"];
-	onChange: DatePickerProps["onChange"];
+	onChange: DatePickerProps["onDateStringChange"];
 };
 
 function TimeScrollArea(props: TimeScrollAreaProps) {
@@ -142,7 +160,7 @@ function TimeScrollArea(props: TimeScrollAreaProps) {
 			}
 		}
 
-		onChange(format(newDate, formats?.onChangeDate ?? "MM-dd-yyyy HH:mm:ss"));
+		onChange?.(format(newDate, formats?.onChangeDate ?? "MM-dd-yyyy HH:mm:ss"));
 	}
 	return (
 		<div className="flex h-[332px] divide-x divide-y-0 divide-medinfo-primary-main">
