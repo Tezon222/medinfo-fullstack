@@ -146,12 +146,12 @@ function SignInPage(props: { searchParams: Promise<Record<string, string | strin
 									</div>
 								</Show.Root>
 
-								<Form.SubscribeToFormState
-									render={({ isSubmitting }) => (
+								<Form.WatchFormState
+									render={(formState) => (
 										<Button
 											type="submit"
-											isLoading={isSubmitting}
-											disabled={isSubmitting}
+											isLoading={formState.isSubmitting}
+											disabled={formState.isSubmitting}
 											isDisabled={false}
 										>
 											Sign In

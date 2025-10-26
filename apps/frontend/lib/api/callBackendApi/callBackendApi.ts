@@ -1,6 +1,7 @@
-import { createFetchClient, defineBaseConfig } from "@zayne-labs/callapi";
-import { toastPlugin, type ToastPluginMeta } from "./plugins";
+import { createFetchClient } from "@zayne-labs/callapi";
+import { defineBaseConfig } from "@zayne-labs/callapi/utils";
 import { apiSchema } from "./apiSchema";
+import { toastPlugin, type ToastPluginMeta } from "./plugins";
 
 type GlobalMeta = ToastPluginMeta;
 
@@ -13,50 +14,35 @@ declare module "@zayne-labs/callapi" {
 
 const REMOTE_BACKEND_HOST = "https://medinfo-backend-xie7.onrender.com";
 
-// const BACKEND_HOST =
-// 	process.env.NODE_ENV === "development" ? "http://127.0.0.1:8000" : REMOTE_BACKEND_HOST;
+const BACKEND_HOST =
+	process.env.NODE_ENV === "development" ? "http://localhost:8000" : REMOTE_BACKEND_HOST;
 
-const BACKEND_HOST = REMOTE_BACKEND_HOST;
+// const BACKEND_HOST = REMOTE_BACKEND_HOST;
 
 const BASE_API_URL = BACKEND_HOST;
 
-export const sharedBaseConfig = defineBaseConfig((instanceCtx) => ({
+export const sharedBaseConfig = defineBaseConfig({
 	baseURL: BASE_API_URL,
 	credentials: "include",
-	dedupeCacheScope: "global",
-	dedupeCacheScopeKey: instanceCtx.options.baseURL,
-	dedupeStrategy: "cancel",
+	dedupe: {
+		cacheScope: "global",
+		cacheScopeKey: (ctx) => ctx.options.baseURL,
+	},
 
-	plugins: [toastPlugin()],
-
-	schema: apiSchema,
-
-	skipAutoMergeFor: "options",
-
-	...(instanceCtx.options as object),
-
-	meta: {
-		...instanceCtx.options.meta,
-
-		toast: {
-			// endpointsToSkip: {
-			// 	errorAndSuccess: ["/token-refresh"],
-			// 	success: ["/session"],
-			// },
+	plugins: [
+		toastPlugin({
 			errorAndSuccess: true,
 			errorsToSkip: ["AbortError"],
-			...instanceCtx.options.meta?.toast,
-		},
-	} satisfies GlobalMeta,
-}));
+		}),
+	],
+
+	schema: apiSchema,
+});
 
 export const callBackendApi = createFetchClient(sharedBaseConfig);
 
-export const callBackendApiForQuery = createFetchClient(
-	(instanceCtx) =>
-		({
-			...sharedBaseConfig(instanceCtx),
-			resultMode: "onlyData",
-			throwOnError: true,
-		}) satisfies ReturnType<typeof defineBaseConfig>
-);
+export const callBackendApiForQuery = createFetchClient({
+	...sharedBaseConfig,
+	resultMode: "onlyData",
+	throwOnError: true,
+});

@@ -18,13 +18,13 @@
 		"@medinfo/shared": "workspace:*",
 		"@zayne-labs/tsconfig": "catalog:",
 		"consola": "3.4.2",
-		"hono": "4.10.1",
+		"hono": "4.10.3",
 		"tsx": "4.20.6",
 		"zod": "catalog:"
 	},
 	"devDependencies": {
 		"@total-typescript/ts-reset": "0.6.1",
-		"@types/node": "24.8.1",
+		"@types/node": "24.9.1",
 		"tsdown": "catalog:",
 		"typescript": "catalog:"
 	}

@@ -1,9 +1,5 @@
 "use client";
 
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { use } from "react";
-import { useForm } from "react-hook-form";
 import { Main } from "@/app/(primary)/-components";
 import {
 	DropZoneInput,
@@ -16,6 +12,10 @@ import {
 import { Button, DateTimePicker, Form, Select } from "@/components/ui";
 import { DropZone } from "@/components/ui/drop-zone";
 import { callBackendApi } from "@/lib/api/callBackendApi";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { use } from "react";
+import { useForm } from "react-hook-form";
 
 function SignUpPage(props: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
 	const methods = useForm({
@@ -480,12 +480,12 @@ function SignUpPage(props: { searchParams: Promise<Record<string, string | strin
 									</div>
 								</Show.Root>
 
-								<Form.SubscribeToFormState
-									render={({ isSubmitting }) => (
+								<Form.WatchFormState
+									render={(formState) => (
 										<Button
 											type="submit"
-											isLoading={isSubmitting}
-											disabled={isSubmitting}
+											isLoading={formState.isSubmitting}
+											disabled={formState.isSubmitting}
 											isDisabled={false}
 										>
 											Sign Up

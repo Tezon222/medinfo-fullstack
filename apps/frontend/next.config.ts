@@ -1,23 +1,22 @@
-import { fileURLToPath } from "node:url";
 import type { NextConfig } from "next";
+// import { fileURLToPath } from "node:url";
 
-const getRoot = (rootPath = "/") => fileURLToPath(new URL(rootPath, import.meta.url));
+// const getRoot = (rootPath = "/") => fileURLToPath(new URL(rootPath, import.meta.url));
 
-// eslint-disable-next-line node/no-process-env
-const isDev = process.env.NODE_ENV !== "production";
+// const isDev = process.env.NODE_ENV !== "production";
 
 const nextConfig = {
 	devIndicators: {
 		position: "bottom-right",
 	},
 
-	...(isDev && {
-		outputFileTracingRoot: getRoot(),
-	}),
-
-	eslint: {
-		ignoreDuringBuilds: true,
+	experimental: {
+		turbopackFileSystemCacheForDev: true,
 	},
+
+	// ...(isDev && {
+	// 	outputFileTracingRoot: getRoot(),
+	// }),
 
 	images: {
 		remotePatterns: [
