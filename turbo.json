@@ -1,5 +1,6 @@
 {
 	"$schema": "https://turborepo.org/schema.json",
+	"globalEnv": ["DATABASE_URL", "PORT", "NODE_ENV"],
 
 	"tasks": {
 		"dev": {
@@ -8,7 +9,7 @@
 		},
 		"build": {
 			"dependsOn": ["^build"],
-			"outputs": ["./apps/backend/dist/**", "./apps/frontend/.next/**"]
+			"outputs": ["dist/**", ".next/**", "!.next/cache/**", "build", ".vercel"]
 		},
 		"lint:format": {},
 		"lint:eslint": {},
