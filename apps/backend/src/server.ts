@@ -11,7 +11,7 @@ app.use(logger());
 app.use(
 	"/*",
 	cors({
-		allowMethods: ["GET", "POST", "OPTIONS"],
+		credentials: true,
 		origin: ["http://localhost:3000"],
 	})
 );

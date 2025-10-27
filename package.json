@@ -9,7 +9,7 @@
 		"db:migrate": "turbo run --filter=@medinfo/backend-db db:migrate",
 		"db:push": "turbo run --filter=@medinfo/backend-db db:push",
 		"db:studio": "turbo run --filter=@medinfo/backend-db db:studio",
-		"dev:backend": "turbo run --filter=@medinfo/backend dev",
+		"dev:backend": "pnpm run --filter=@medinfo/backend dev",
 		"dev:frontend": "turbo run --filter=@medinfo/frontend dev",
 		"inspect:eslint-config": "pnpx @eslint/config-inspector@latest",
 		"lint:eslint": "eslint . --max-warnings=0",
