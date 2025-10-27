@@ -20,6 +20,10 @@ class AppError extends Error {
 		this.isOperational = true;
 		this.errors = errors;
 	}
+
+	static override isError(error: unknown): error is AppError {
+		return error instanceof AppError;
+	}
 }
 
 export { AppError };

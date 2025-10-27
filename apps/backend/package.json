@@ -20,11 +20,13 @@
 		"@zayne-labs/tsconfig": "^0.11.4",
 		"consola": "3.4.2",
 		"hono": "4.10.3",
+		"jsonwebtoken": "^9.0.2",
 		"tsx": "4.20.6",
 		"zod": "catalog:"
 	},
 	"devDependencies": {
 		"@total-typescript/ts-reset": "0.6.1",
+		"@types/jsonwebtoken": "^9.0.10",
 		"@types/node": "24.9.1",
 		"tsdown": "catalog:",
 		"typescript": "catalog:"
