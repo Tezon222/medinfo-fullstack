@@ -4,6 +4,7 @@ import { consola } from "consola";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
+import { tipsRouter } from "./app/tips/routes";
 import { corsOptions } from "./constants/corsOptions";
 import { errorHandler, notFoundHandler } from "./middlewares";
 
@@ -20,27 +21,21 @@ app.use("/*", cors(corsOptions));
  */
 app.use(logger((...args) => consola.log(...args)));
 
+/**
+ *  == Route - Health Check
+ */
 app.get("/", (c) => {
-	const message = "Ping!";
+	const message = "Server is up and running";
 
 	consola.log(message);
-	return c.json({ message });
-});
 
-/**
- *  == Routes - Health Check
- */
-app.get("/api/alive", (c) => {
-	return c.json({ message: "Server is up and running" });
+	return c.json({ message });
 });
 
 /**
  *  == Routes - v1
  */
-
-app.get("/api/v1/auth", (c) => {
-	return c.json({ message: "Auth endpoint" });
-});
+const ignoredRoutesV1 = app.basePath("/api/v1").route("/health-tips", tipsRouter);
 
 /**
  *  == Route 404 handler

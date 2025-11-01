@@ -30,6 +30,10 @@ export default zayne(
 	{
 		files: ["apps/frontend/**/*.ts"],
 		rules: { "node/no-process-env": "off" },
+	},
+	{
+		files: ["apps/backend/testing.ts"],
+		rules: { "unicorn/no-empty-file": "off" },
 	}
 ).overrides({
 	"zayne/node/security/recommended": {
