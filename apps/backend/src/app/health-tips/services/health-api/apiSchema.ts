@@ -10,7 +10,7 @@ const RelatedItemSchema = z.object({
 
 const SectionSchema = z.object({
 	Content: z.string(),
-	Title: z.string(),
+	Title: z.string().or(z.null()),
 });
 
 const ResourceSchema = z.object({
@@ -35,17 +35,20 @@ const ResourceSchema = z.object({
 const topicSearchResultSchema = z.object({
 	Error: z.string(),
 	Language: z.string(),
-	Resources: z.object({ Resource: z.tuple([ResourceSchema]) }),
+	Resources: z.object({ Resource: z.array(ResourceSchema) }),
 });
 
 export const healthApiSchema = defineSchema(
 	{
 		"@get/topicsearch.json": {
 			data: z.object({ Result: topicSearchResultSchema }),
-			query: z.object({
-				Lang: z.string().optional(),
-				TopicId: z.string().or(z.number()),
-			}),
+			query: z
+				.object({
+					Lang: z.string().optional(),
+					TopicId: z.string().or(z.number()),
+				})
+				.partial()
+				.optional(),
 		},
 	},
 	{ strict: true }

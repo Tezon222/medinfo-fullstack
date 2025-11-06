@@ -37,7 +37,6 @@ export const sharedBaseConfig = defineBaseConfig({
 		}),
 		loggerPlugin({
 			enabled: { onError: true },
-			mode: "verbose",
 		}),
 	],
 

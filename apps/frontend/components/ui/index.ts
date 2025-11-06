@@ -1,6 +1,7 @@
 export * as Accordion from "./accordion";
 export { Button } from "./button";
 export { Card } from "./card";
+export * as Carousel from "./carousel";
 export { DateTimePicker } from "./datetime-picker";
 export * as Dialog from "./dialog";
 export * as DropdownMenu from "./dropdown-menu";

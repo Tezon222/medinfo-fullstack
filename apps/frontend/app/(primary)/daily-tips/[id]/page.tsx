@@ -1,5 +1,4 @@
 import { Main } from "@/app/(primary)/-components";
-import { AwaitRoot } from "@/components/common/await";
 import { ForWithWrapper } from "@/components/common/for";
 import { callBackendApi } from "@/lib/api/callBackendApi";
 import Image from "next/image";
@@ -12,8 +11,6 @@ async function TipExpandedPage({ params }: PageProps<"/daily-tips/[id]">) {
 	const { data: singleTip, error: singleTipError } = await callBackendApi("@get/health-tips/one/:id", {
 		params: { id: tipId },
 	});
-
-	const tipsResultPromise = callBackendApi("@get/health-tips/all");
 
 	if (singleTipError) {
 		console.error(singleTipError.errorData);
@@ -65,9 +62,15 @@ async function TipExpandedPage({ params }: PageProps<"/daily-tips/[id]">) {
 					Checkout Other Tips
 				</h2>
 
-				<AwaitRoot promise={tipsResultPromise} asChild={true}>
+				{/*
+				 * NOTE - The Await passes the result of the promise to the ScrollableTipCards component as a `result` prop via the Slot component and the `asChild` prop
+				 * This is a hack necessary to avoid turning this page into a client component due to the use of the Await component's render prop
+				 */}
+				{/* <AwaitRoot promise={tipsResultPromise} asChild={true}>
 					<ScrollableTipCards />
-				</AwaitRoot>
+				</AwaitRoot> */}
+
+				<ScrollableTipCards />
 			</section>
 		</Main>
 	);

@@ -1,19 +1,12 @@
 "use client";
 
 import { IconBox, NavLink } from "@/components/common";
-import { ForWithWrapper } from "@/components/common/for";
-import { Card } from "@/components/ui";
-import type { callBackendApi } from "@/lib/api/callBackendApi";
-import type { TipsResponse } from "@/lib/api/callBackendApi/types";
+import { For } from "@/components/common/for";
+import { Card, Carousel } from "@/components/ui";
+import { healthTipsQuery } from "@/lib/react-query/queryFactory";
 import { cnMerge } from "@/lib/utils/cn";
-import type {
-	backendApiSchemaRoutes,
-	BaseApiErrorResponse,
-	BaseApiSuccessResponse,
-	HealthTipSchemaType,
-} from "@medinfo/shared/validation/backendApiSchema";
-import type { CallApiResult, CallApiSuccessOrErrorVariant } from "@zayne-labs/callapi";
-import { useDragScroll } from "@zayne-labs/ui-react/ui/drag-scroll";
+import type { backendApiSchemaRoutes } from "@medinfo/shared/validation/backendApiSchema";
+import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { z } from "zod";
 
@@ -58,42 +51,31 @@ export function DailyTipCard(props: DailyTipCardProps) {
 	);
 }
 
-type ScrollableCardProps = {
-	result?: CallApiResult<BaseApiSuccessResponse<HealthTipSchemaType[]>, BaseApiErrorResponse>;
-};
+// type ScrollableCardProps = {
+// 	result?: CallApiResult<BaseApiSuccessResponse<HealthTipSchemaType[]>, BaseApiErrorResponse>;
+// };
 
-export function ScrollableTipCards(props: ScrollableCardProps) {
-	const { result: tipsResult } = props;
-
-	const { getItemProps, getRootProps } = useDragScroll<HTMLUListElement>({
-		classNames: {
-			base: "mt-6 select-none gap-5 md:mt-14 md:justify-between",
-		},
-	});
-
-	if (!tipsResult) {
-		console.error("tipsResult is undefined");
-		return null;
-	}
-
-	if (tipsResult.error) {
-		return null;
-	}
+export function ScrollableTipCards() {
+	const healthTipsQueryResult = useQuery(healthTipsQuery());
 
 	return (
-		<ForWithWrapper
-			{...getRootProps()}
-			each={tipsResult.data.data}
-			renderItem={(tip) => (
-				<DailyTipCard
-					key={tip.id}
-					id={tip.id}
-					imageUrl={tip.imageUrl}
-					title={tip.title}
-					imageAlt={tip.imageAlt}
-					{...getItemProps()}
+		<Carousel.Root className="mt-6 flex w-full flex-col items-center gap-3.5 lg:gap-10">
+			<Carousel.Content className="gap-5 select-none">
+				<For
+					each={healthTipsQueryResult.data?.data ?? []}
+					renderItem={(tip) => (
+						<Carousel.Item asChild={true} className="cursor-grab active:cursor-grabbing">
+							<DailyTipCard
+								key={tip.id}
+								id={tip.id}
+								imageUrl={tip.imageUrl}
+								title={tip.title}
+								imageAlt={tip.imageAlt}
+							/>
+						</Carousel.Item>
+					)}
 				/>
-			)}
-		/>
+			</Carousel.Content>
+		</Carousel.Root>
 	);
 }

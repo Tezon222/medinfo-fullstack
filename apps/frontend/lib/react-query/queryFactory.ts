@@ -2,6 +2,15 @@ import { type MatchDoctorsResponse, callBackendApiForQuery } from "@/lib/api/cal
 import { queryOptions } from "@tanstack/react-query";
 import type { CallApiExtraOptions } from "@zayne-labs/callapi";
 
+export const healthTipsQuery = () => {
+	return queryOptions({
+		queryFn: () =>
+			callBackendApiForQuery("@get/health-tips/all", { meta: { toast: { success: false } } }),
+		queryKey: ["health-tips"],
+		staleTime: Infinity,
+	});
+};
+
 export const matchDoctorsQuery = (
 	options?: Pick<CallApiExtraOptions, "onError"> & {
 		formData?: Record<string, unknown> | null;
@@ -20,8 +29,6 @@ export const matchDoctorsQuery = (
 		},
 		// eslint-disable-next-line tanstack-query/exhaustive-deps
 		queryKey: ["appointments", "match-doctors", formData],
-		refetchOnReconnect: false,
-		refetchOnWindowFocus: false,
 		retry: false,
 		staleTime: Infinity,
 	});
