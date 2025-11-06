@@ -10,6 +10,6 @@
 		}
 	},
 
-	"include": ["src/**/*.ts", "**/*.ts"],
+	"include": ["src/**/*.ts", "testing.ts"],
 	"exclude": ["node_modules", "dist/**"]
 }
