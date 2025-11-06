@@ -1,5 +1,5 @@
 import { AppError } from "@/utils";
-import type { backendApiSchemaRoutes } from "@medinfo/shared/validation/backendApiSchema";
+import { backendApiSchemaRoutes } from "@medinfo/shared/validation/backendApiSchema";
 import fs from "node:fs/promises";
 import path from "node:path";
 import type { z } from "zod";
