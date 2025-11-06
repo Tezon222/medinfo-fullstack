@@ -6,6 +6,9 @@
 	"exports": {
 		"./*": "./src/*.ts"
 	},
+	"scripts": {
+		"build": "tsdown"
+	},
 	"dependencies": {
 		"@dotenvx/dotenvx": "catalog:",
 		"@zayne-labs/callapi": "1.11.21",
@@ -14,6 +17,7 @@
 	},
 	"devDependencies": {
 		"@zayne-labs/tsconfig": "^0.11.4",
+		"tsdown": "catalog:",
 		"typescript": "catalog:"
 	}
 }

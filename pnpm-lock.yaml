@@ -345,6 +345,9 @@ importers:
       '@zayne-labs/tsconfig':
         specifier: ^0.11.4
         version: 0.11.4
+      tsdown:
+        specifier: 'catalog:'
+        version: 0.16.0(typescript@5.9.3)
       typescript:
         specifier: 'catalog:'
         version: 5.9.3

@@ -5,7 +5,7 @@ export default defineConfig({
 	dts: { newContext: true },
 	entry: ["src/**/*.ts"],
 	format: ["esm"],
-	platform: "node",
+	platform: "neutral",
 	sourcemap: true,
 	target: "esnext",
 });
