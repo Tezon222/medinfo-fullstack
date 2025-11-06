@@ -52,3 +52,5 @@ app.onError(errorHandler);
 serve({ fetch: app.fetch, port: ENVIRONMENT.PORT }, (info) => {
 	consola.info(`Server is running on http://localhost:${info.port}`);
 });
+
+export default app;
