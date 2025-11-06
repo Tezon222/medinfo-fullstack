@@ -34,7 +34,6 @@
 		"lint-staged": "16.2.6",
 		"prettier": "3.6.2",
 		"tailwindcss": "4.1.16",
-		"turbo": "2.6.0",
-		"typescript": "catalog:"
+		"turbo": "2.6.0"
 	}
 }
