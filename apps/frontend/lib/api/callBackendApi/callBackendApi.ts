@@ -1,5 +1,6 @@
 import { backendApiSchema } from "@medinfo/shared/validation/backendApiSchema";
 import { createFetchClient } from "@zayne-labs/callapi";
+import { loggerPlugin } from "@zayne-labs/callapi-plugins";
 import { defineBaseConfig } from "@zayne-labs/callapi/utils";
 import { toastPlugin, type ToastPluginMeta } from "./plugins";
 
@@ -19,7 +20,7 @@ const BACKEND_HOST =
 
 // const BACKEND_HOST = REMOTE_BACKEND_HOST;
 
-const BASE_API_URL = BACKEND_HOST;
+const BASE_API_URL = `${BACKEND_HOST}/api/v1`;
 
 export const sharedBaseConfig = defineBaseConfig({
 	baseURL: BASE_API_URL,
@@ -33,6 +34,10 @@ export const sharedBaseConfig = defineBaseConfig({
 		toastPlugin({
 			errorAndSuccess: true,
 			errorsToSkip: ["AbortError"],
+		}),
+		loggerPlugin({
+			enabled: { onError: true },
+			mode: "verbose",
 		}),
 	],
 

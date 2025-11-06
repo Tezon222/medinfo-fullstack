@@ -12,9 +12,9 @@ const healthTipsRoutes = new Hono()
 		"/all",
 		validateWithZod("query", backendApiSchemaRoutes["@get/health-tips/all"].query),
 		async (ctx) => {
-			const { limit = 6 } = ctx.req.valid("query");
+			const { limit = 6 } = ctx.req.valid("query") ?? {};
 
-			const randomHealthTipIds = getRandomHealthTipIds(Number(limit));
+			const randomHealthTipIds = getRandomHealthTipIds(limit);
 
 			const results = await Promise.all(
 				randomHealthTipIds.map((id) => healthApi.getTopicDetails({ TopicId: id }))

@@ -11,23 +11,20 @@ async function DiseaseDetailsPage({ params }: PageProps<"/library/disease/[name]
 		callBackendApi("@get/diseases/one/:name", {
 			params: { name: decodeURIComponent(diseaseName) },
 		}),
-		callBackendApi("@get/diseases/all"),
+		callBackendApi("@get/diseases/all", {
+			query: { random: true },
+		}),
 	]);
 
 	if (singleDisease.error) {
-		console.error(singleDisease.error.errorData);
 		return null;
-	}
-
-	if (allDiseases.error) {
-		console.error(allDiseases.error.errorData);
 	}
 
 	const [List] = getElementList();
 
 	return (
 		<Main className="flex w-full flex-col">
-			<section className="lg:flex lg:gap-16">
+			<section className="lg:flex lg:justify-between lg:gap-16">
 				<Image
 					className="size-[272px] rounded-tl-[16px] rounded-br-[16px] lg:size-[460px]"
 					src={singleDisease.data.data.image}
@@ -84,7 +81,7 @@ async function DiseaseDetailsPage({ params }: PageProps<"/library/disease/[name]
 				</article>
 			</section>
 
-			<section id="Ads" className="mt-14 flex flex-col gap-2 lg:hidden">
+			<section id="Ads" className="mt-14 flex flex-col items-center gap-2 lg:hidden">
 				<AlternateDiseaseCard type="list" linkToAd="https://www.google.com" />
 				<AlternateDiseaseCard type="list" linkToAd="https://www.google.com" />
 				<AlternateDiseaseCard type="list" linkToAd="https://www.google.com" />

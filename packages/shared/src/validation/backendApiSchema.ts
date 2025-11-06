@@ -33,7 +33,7 @@ const BaseSuccessResponseSchema = z.object({
 });
 
 const BaseErrorResponseSchema = z.object({
-	errors: z.record(z.string(), z.string()).nullable(),
+	errors: z.record(z.string(), z.string().or(z.array(z.string()))).or(z.undefined()),
 	message: z.string(),
 	status: z.literal("error"),
 });
@@ -76,7 +76,7 @@ const defaultSchemaRoute = defineSchemaRoutes({
 
 const stringWithNumberValidation = (key: string) =>
 	z
-		.string()
+		.transform(String)
 		.transform(Number)
 		.refine((value) => !Number.isNaN(value), `${key} must be a number`)
 		.refine((value) => value > 0, `${key} must be greater than 0`);
@@ -86,7 +86,10 @@ const healthTipRoutes = defineSchemaRoutes({
 		data: withBaseSuccessResponse(
 			z.array(HealthTipSchema.omit({ lastUpdated: true, mainContent: true }))
 		),
-		query: z.object({ limit: stringWithNumberValidation("Limit") }).partial(),
+		query: z
+			.object({ limit: stringWithNumberValidation("Limit") })
+			.partial()
+			.optional(),
 	},
 
 	"@get/health-tips/one/:id": {
@@ -117,8 +120,21 @@ const diseaseRoutes = defineSchemaRoutes({
 			.object({
 				limit: stringWithNumberValidation("Limit"),
 				page: stringWithNumberValidation("Page"),
+				random: z
+					.transform(String)
+					.transform((value) => {
+						if (value === "true") {
+							return true;
+						}
+						if (value === "false") {
+							return false;
+						}
+						return "unknown";
+					})
+					.refine((value) => value !== "unknown", "random must be 'true' or 'false'"),
 			})
-			.partial(),
+			.partial()
+			.optional(),
 	},
 
 	"@get/diseases/one/:name": {

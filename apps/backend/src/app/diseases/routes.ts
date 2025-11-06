@@ -6,7 +6,7 @@ import {
 } from "@medinfo/shared/validation/backendApiSchema";
 import { pickKeys } from "@zayne-labs/toolkit-core";
 import { Hono } from "hono";
-import { readDiseases, writeToDiseases } from "./services/common";
+import { readDiseases, shuffleArray, writeToDiseases } from "./services/common";
 
 const diseasesRoutes = new Hono()
 	.basePath("/diseases")
@@ -14,14 +14,16 @@ const diseasesRoutes = new Hono()
 		"/all",
 		validateWithZod("query", backendApiSchemaRoutes["@get/diseases/all"].query),
 		async (ctx) => {
+			const { limit = 6, page = 1, random = false } = ctx.req.valid("query") ?? {};
+
 			const diseasesResult = await readDiseases();
 
-			const { limit = 6, page = 1 } = ctx.req.valid("query");
+			const shuffledDiseases = random ? shuffleArray(diseasesResult) : diseasesResult;
 
 			const startIndex = (page - 1) * limit;
 			const endIndex = startIndex + limit;
 
-			const paginatedDiseases = diseasesResult.slice(startIndex, endIndex);
+			const paginatedDiseases = shuffledDiseases.slice(startIndex, endIndex);
 
 			const diseases = paginatedDiseases.map((disease) =>
 				pickKeys(disease, ["name", "image", "description"])

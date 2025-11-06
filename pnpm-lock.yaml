@@ -150,6 +150,9 @@ importers:
       '@zayne-labs/callapi':
         specifier: 1.11.21
         version: 1.11.21
+      '@zayne-labs/callapi-plugins':
+        specifier: ^4.0.21
+        version: 4.0.21(@zayne-labs/callapi@1.11.21)(@zayne-labs/toolkit-type-helpers@0.12.12)(consola@3.4.2)
       '@zayne-labs/toolkit-core':
         specifier: 0.12.12
         version: 0.12.12
@@ -165,6 +168,9 @@ importers:
       clsx:
         specifier: 2.1.1
         version: 2.1.1
+      cross-env:
+        specifier: ^10.1.0
+        version: 10.1.0
       date-fns:
         specifier: 4.1.0
         version: 4.1.0
@@ -477,6 +483,9 @@ packages:
 
   '@emnapi/wasi-threads@1.1.0':
     resolution: {integrity: sha512-WI0DdZ8xFSbgMjR1sFsKABJ/C5OnRrjT06JXbZKexJGrDuPTzZdDYfFlsgcCXCyf+suG5QU2e/y1Wo2V/OapLQ==}
+
+  '@epic-web/invariant@1.0.0':
+    resolution: {integrity: sha512-lrTPqgvfFQtR/eY/qkIzp98OGdNJu0m5ji3q/nJI8v3SXkRKEnWiOxMmbvcSoAIzv/cGiuvRy57k4suKQSAdwA==}
 
   '@es-joy/jsdoccomment@0.76.0':
     resolution: {integrity: sha512-g+RihtzFgGTx2WYCuTHbdOXJeAlGnROws0TeALx9ow/ZmOROOZkVg5wp/B44n0WJgI4SQFP1eWM2iRPlU2Y14w==}
@@ -2541,6 +2550,14 @@ packages:
   '@zag-js/utils@1.27.0':
     resolution: {integrity: sha512-kKaqcQDogeUa3Q9+z1YICBAbBVTPC1RdFdDJ8HJ+RxpbwhsfRmgcYFdtiQu4+nruG82BgoIUtdt9KzQAbM4rHQ==}
 
+  '@zayne-labs/callapi-plugins@4.0.21':
+    resolution: {integrity: sha512-fyIs1B0k9pKJQFToZ6G3XvjXP2tVoZG7VI3IxjtzIBn/cTBtroGpJ9WkGxhQl2n1mQROPVv4jEw5FaiUmsblJA==}
+    engines: {node: '>=v18.17.0'}
+    peerDependencies:
+      '@zayne-labs/callapi': 1.11.21
+      '@zayne-labs/toolkit-type-helpers': '>=0.11.17'
+      consola: 3.x.x
+
   '@zayne-labs/callapi@1.11.21':
     resolution: {integrity: sha512-Q/ufoJEs0y1NYhYzTxwYaHR6tduMhlGgMVtI+8pUjy8e3REOYuFTSWOGOP4MApLEdI/vkzPB4AOcjLEy5aFHog==}
     engines: {node: '>=v18.17.0'}
@@ -2844,6 +2861,11 @@ packages:
 
   core-js-compat@3.46.0:
     resolution: {integrity: sha512-p9hObIIEENxSV8xIu+V68JjSeARg6UVMG5mR+JEUguG3sI6MsiS1njz2jHmyJDvA+8jX/sytkBHup6kxhM9law==}
+
+  cross-env@10.1.0:
+    resolution: {integrity: sha512-GsYosgnACZTADcmEyJctkJIoqAhHjttw7RsFrVoJNXbsWWqaq6Ym+7kZjq6mS45O0jij6vtiReppKQEtqWy6Dw==}
+    engines: {node: '>=20'}
+    hasBin: true
 
   cross-spawn@7.0.6:
     resolution: {integrity: sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==}
@@ -5045,6 +5067,8 @@ snapshots:
     dependencies:
       tslib: 2.8.1
     optional: true
+
+  '@epic-web/invariant@1.0.0': {}
 
   '@es-joy/jsdoccomment@0.76.0':
     dependencies:
@@ -7294,6 +7318,12 @@ snapshots:
 
   '@zag-js/utils@1.27.0': {}
 
+  '@zayne-labs/callapi-plugins@4.0.21(@zayne-labs/callapi@1.11.21)(@zayne-labs/toolkit-type-helpers@0.12.12)(consola@3.4.2)':
+    dependencies:
+      '@zayne-labs/callapi': 1.11.21
+      '@zayne-labs/toolkit-type-helpers': 0.12.12
+      consola: 3.4.2
+
   '@zayne-labs/callapi@1.11.21': {}
 
   '@zayne-labs/eslint-config@0.11.4(@eslint-react/eslint-plugin@2.3.1(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3))(@next/eslint-plugin-next@16.0.1)(@tanstack/eslint-plugin-query@5.91.2(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3))(@typescript-eslint/utils@8.46.3(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3))(eslint-plugin-better-tailwindcss@3.7.10(eslint@9.39.1(jiti@2.6.1))(tailwindcss@4.1.16))(eslint-plugin-react-hooks@7.0.1(eslint@9.39.1(jiti@2.6.1)))(eslint-plugin-react-refresh@0.4.24(eslint@9.39.1(jiti@2.6.1)))(eslint-plugin-react-you-might-not-need-an-effect@0.7.0(eslint@9.39.1(jiti@2.6.1)))(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3)':
@@ -7529,6 +7559,11 @@ snapshots:
   core-js-compat@3.46.0:
     dependencies:
       browserslist: 4.27.0
+
+  cross-env@10.1.0:
+    dependencies:
+      '@epic-web/invariant': 1.0.0
+      cross-spawn: 7.0.6
 
   cross-spawn@7.0.6:
     dependencies:

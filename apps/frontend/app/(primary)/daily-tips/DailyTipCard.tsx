@@ -71,9 +71,12 @@ export function ScrollableTipCards(props: ScrollableCardProps) {
 		},
 	});
 
-	if (!tipsResult || tipsResult.error) {
-		tipsResult && console.error(tipsResult.error.errorData);
+	if (!tipsResult) {
+		console.error("tipsResult is undefined");
+		return null;
+	}
 
+	if (tipsResult.error) {
 		return null;
 	}
 
