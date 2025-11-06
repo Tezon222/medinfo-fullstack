@@ -6,5 +6,8 @@ import path from "node:path";
  */
 export const resolvePathToCwd = (pathName: string) => {
 	const cleanPath = pathName.startsWith("/") ? pathName.slice(1) : pathName;
-	return path.resolve(process.cwd(), "../../", cleanPath);
+
+	const resolvedPath = path.resolve(process.cwd(), "../../", cleanPath);
+
+	return resolvedPath;
 };

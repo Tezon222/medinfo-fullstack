@@ -1,9 +1,12 @@
+import type {
+	BaseApiErrorResponse,
+	BaseApiSuccessResponse,
+} from "@medinfo/shared/validation/backendApiSchema";
 import type { CallApiResultErrorVariant, ErrorContext, SuccessContext } from "@zayne-labs/callapi";
 import { definePlugin, isHTTPError } from "@zayne-labs/callapi/utils";
 import { isBrowser } from "@zayne-labs/toolkit-core";
 import { isBoolean } from "@zayne-labs/toolkit-type-helpers";
 import { toast } from "sonner";
-import type { BaseApiErrorResponse, BaseApiSuccessResponse } from "../apiSchema";
 
 export type ToastPluginMeta = {
 	toast?: {

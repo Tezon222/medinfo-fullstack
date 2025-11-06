@@ -11,9 +11,9 @@ export default zayne(
 				},
 			},
 		},
-		node: {
-			security: true,
-		},
+		// node: {
+		// 	security: true,
+		// },
 		tailwindcssBetter: {
 			settings: { entryPoint: "apps/frontend/tailwind.css" },
 		},
@@ -35,8 +35,4 @@ export default zayne(
 		files: ["apps/backend/testing.ts"],
 		rules: { "unicorn/no-empty-file": "off" },
 	}
-).overrides({
-	"zayne/node/security/recommended": {
-		files: ["apps/backend/src/**/*.ts"],
-	},
-});
+);

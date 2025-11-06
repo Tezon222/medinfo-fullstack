@@ -1,20 +1,27 @@
 "use client";
 
-import { useDragScroll } from "@zayne-labs/ui-react/ui/drag-scroll";
-import Image from "next/image";
 import { IconBox, NavLink } from "@/components/common";
 import { getElementList } from "@/components/common/for";
 import { Button, Card } from "@/components/ui";
-import type { Disease, DiseasesResponse } from "@/lib/api/callBackendApi/types";
 import { cnJoin } from "@/lib/utils/cn";
 import { tipPlaceHolder } from "@/public/assets/images/landing-page";
+import type { backendApiSchemaRoutes } from "@medinfo/shared/validation/backendApiSchema";
+import { useDragScroll } from "@zayne-labs/ui-react/ui/drag-scroll";
+import Image from "next/image";
+import type { z } from "zod";
+
+type DiseaseResponseType = z.infer<
+	(typeof backendApiSchemaRoutes)["@get/diseases/all"]["data"]
+>["data"]["diseases"][number];
 
 export type DiseaseCardProps = {
-	disease: Disease;
+	disease: DiseaseResponseType;
 	type: "grid" | "list";
 };
 
-export function DiseaseCard({ disease, type }: DiseaseCardProps) {
+export function DiseaseCard(props: DiseaseCardProps) {
+	const { disease, type } = props;
+
 	return (
 		<Card.Root
 			as="li"
@@ -33,8 +40,8 @@ export function DiseaseCard({ disease, type }: DiseaseCardProps) {
 							&& "h-[176px] rounded-[7px] lg:h-[400px] lg:max-w-[368px] lg:rounded-[16px]",
 						type === "list" && "size-[68px] rounded-[4px] lg:size-[202px] lg:rounded-[12px]"
 					)}
-					src={disease.Image}
-					alt=""
+					src={disease.image}
+					alt={disease.name}
 					priority={true}
 					width={type === "grid" ? 161 : 68}
 					height={type === "grid" ? 176 : 68}
@@ -58,24 +65,24 @@ export function DiseaseCard({ disease, type }: DiseaseCardProps) {
 							type === "list" && "lg:text-[32px] lg:font-bold"
 						)}
 					>
-						{disease.Disease}
+						{disease.name}
 					</h4>
 
 					{type === "list" && (
 						<p className="mt-[16px] hidden text-sm text-medinfo-dark-1 lg:block">
-							{disease.Description}
+							{disease.description}
 						</p>
 					)}
 				</div>
 
 				{type === "grid" && (
 					<p className="hidden text-sm text-medinfo-dark-1 lg:block">
-						{disease.Description.slice(0, 40)}...
+						{disease.description.slice(0, 40)}...
 					</p>
 				)}
 
 				<NavLink
-					href={`/library/disease/${disease.Disease}`}
+					href={`/library/disease/${disease.name}`}
 					className="inline-flex w-fit items-center gap-[14px] text-medinfo-primary-main lg:gap-4
 						lg:text-[20px] lg:font-medium"
 				>
@@ -90,7 +97,7 @@ export function DiseaseCard({ disease, type }: DiseaseCardProps) {
 type AlternateDiseaseCardProps =
 	| {
 			className?: string;
-			disease: Disease;
+			disease: DiseaseResponseType;
 			linkToAd?: null;
 			type: "grid";
 	  }
@@ -122,7 +129,7 @@ export function AlternateDiseaseCard(props: AlternateDiseaseCardProps) {
 						type === "grid" && "h-[132px] rounded-[7.5px] lg:h-[280px] lg:rounded-[16px]",
 						type === "list" && "size-[92px] rounded-[6px] lg:size-[120px] lg:rounded-[8px]"
 					)}
-					src={type === "grid" ? disease.Image : (tipPlaceHolder as string)}
+					src={type === "grid" ? disease.image : (tipPlaceHolder as string)}
 					alt=""
 					priority={true}
 					width={type === "grid" ? 161 : 92}
@@ -145,7 +152,7 @@ export function AlternateDiseaseCard(props: AlternateDiseaseCardProps) {
 							type === "grid" && "text-medinfo-dark-1 lg:text-[32px] lg:font-semibold"
 						)}
 					>
-						{type === "grid" ? disease.Disease : "Potential Advertisement"}
+						{type === "grid" ? disease.name : "Potential Advertisement"}
 					</h4>
 
 					{type === "list" && (
@@ -158,12 +165,12 @@ export function AlternateDiseaseCard(props: AlternateDiseaseCardProps) {
 				<p
 					className={cnJoin(
 						"text-xs",
-						type === "list" && "text-medinfo-dark-1 lg:text-base lg:leading-[24px]",
+						type === "list" && "text-medinfo-dark-1 lg:text-base lg:leading-6",
 						type === "grid" && "text-medinfo-body-color lg:text-[18px] lg:leading-[26px]"
 					)}
 				>
 					{type === "grid" ?
-						`${disease.Description.slice(0, 40)}...`
+						`${disease.description.slice(0, 40)}...`
 					:	"Lorem ipsum dolor sit amet consectetur. Et a diam adipiscing."}
 				</p>
 
@@ -175,8 +182,8 @@ export function AlternateDiseaseCard(props: AlternateDiseaseCardProps) {
 
 				{type === "grid" && (
 					<NavLink
-						href={`/library/disease/${disease.Disease}`}
-						className="inline-flex w-fit items-center gap-[14px] text-medinfo-primary-main lg:gap-4
+						href={`/library/disease/${disease.name}`}
+						className="inline-flex w-fit items-center gap-3.5 text-medinfo-primary-main lg:gap-4
 							lg:text-[20px]"
 					>
 						Read post
@@ -188,11 +195,13 @@ export function AlternateDiseaseCard(props: AlternateDiseaseCardProps) {
 	);
 }
 
-export function ScrollableAlternateDiseaseCards({
-	diseases,
-}: {
-	diseases: DiseasesResponse["data"]["diseases"];
-}) {
+export type ScrollableAlternateDiseaseCardsProps = {
+	diseases: DiseaseResponseType[];
+};
+
+export function ScrollableAlternateDiseaseCards(props: ScrollableAlternateDiseaseCardsProps) {
+	const { diseases } = props;
+
 	const { getItemProps, getRootProps } = useDragScroll<HTMLUListElement>({
 		classNames: {
 			base: "flex justify-between gap-5 lg:mt-10",

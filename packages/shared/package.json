@@ -8,6 +8,7 @@
 	},
 	"dependencies": {
 		"@dotenvx/dotenvx": "catalog:",
+		"@zayne-labs/callapi": "1.11.21",
 		"consola": "3.4.2",
 		"zod": "catalog:"
 	},

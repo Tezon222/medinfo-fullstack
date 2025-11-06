@@ -1,10 +1,11 @@
 import { serve } from "@hono/node-server";
-import { ENVIRONMENT } from "@medinfo/shared/config/env-backend";
+import { ENVIRONMENT } from "@medinfo/shared/config/env/backend";
 import { consola } from "consola";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
-import { tipsRouter } from "./app/tips/routes";
+import { diseasesRoutes } from "./app/diseases/routes";
+import { healthTipsRoutes } from "./app/health-tips/routes";
 import { corsOptions } from "./constants/corsOptions";
 import { errorHandler, notFoundHandler } from "./middlewares";
 
@@ -25,7 +26,7 @@ app.use(logger((...args) => consola.log(...args)));
  *  == Route - Health Check
  */
 app.get("/", (c) => {
-	const message = "Server is up and running";
+	const message = "Server is up and running!";
 
 	consola.log(message);
 
@@ -35,7 +36,8 @@ app.get("/", (c) => {
 /**
  *  == Routes - v1
  */
-const ignoredRoutesV1 = app.basePath("/api/v1").route("/health-tips", tipsRouter);
+// const ignoredRoutesV1 = app.basePath("/api/v1").route("", healthTipsRoutes).route("", diseasesRoutes);
+app.basePath("/api/v1").route("", healthTipsRoutes).route("", diseasesRoutes);
 
 /**
  *  == Route 404 handler

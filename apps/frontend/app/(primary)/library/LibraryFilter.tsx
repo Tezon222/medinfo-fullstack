@@ -4,12 +4,13 @@ import { IconBox } from "@/components/common";
 import { getElementList } from "@/components/common/for";
 import { SearchIcon } from "@/components/icons";
 import { DropdownMenu } from "@/components/ui";
-import type { DiseasesResponse } from "@/lib/api/callBackendApi/types";
 import { cnJoin } from "@/lib/utils/cn";
 import { useState } from "react";
-import { DiseaseCard } from "./DiseaseCard";
+import { DiseaseCard, type ScrollableAlternateDiseaseCardsProps } from "./DiseaseCard";
 
-function LibraryFilter({ diseases }: { diseases: DiseasesResponse["data"]["diseases"] }) {
+function LibraryFilter(props: ScrollableAlternateDiseaseCardsProps) {
+	const { diseases } = props;
+
 	const [filter, setFilter] = useState<"grid" | "list">("grid");
 	const [CardList] = getElementList();
 

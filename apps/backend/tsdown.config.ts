@@ -2,8 +2,11 @@ import { defineConfig } from "tsdown";
 
 export default defineConfig({
 	clean: true,
-	entry: "./src/app/server.ts",
-	format: "esm",
-	noExternal: [/@medinfo\/backend-\/.*/],
+	entry: "./src/server.ts",
+	format: ["esm"],
+	noExternal: [/@medinfo\/.*/],
 	outDir: "./dist",
+	platform: "node",
+	target: "esnext",
+	treeshake: true,
 });

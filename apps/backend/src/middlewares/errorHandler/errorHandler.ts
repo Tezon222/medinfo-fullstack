@@ -2,7 +2,8 @@ import { consola } from "consola";
 import type { ErrorHandler } from "hono";
 import type { HTTPException } from "hono/http-exception";
 import type { BlankEnv } from "hono/types";
-import { type ErrorCodesUnion, errorCodes } from "../../constants";
+import type { ContentfulStatusCode } from "hono/utils/http-status";
+import { errorCodes } from "../../constants";
 import { AppError } from "../../utils";
 import { transformError } from "./transformError";
 
@@ -25,7 +26,7 @@ const errorHandler: ErrorHandler<BlankEnv> = (error: AppError | Error | HTTPExce
 	});
 
 	/* eslint-enable perfectionist/sort-objects */
-	const ERROR_LOOKUP = new Map<ErrorCodesUnion, () => unknown>([
+	const ERROR_LOOKUP = new Map<ContentfulStatusCode, () => unknown>([
 		[errorCodes.BAD_REQUEST, () => ctx.json(errorInfo, 400)],
 
 		[errorCodes.CONFLICT, () => ctx.json(errorInfo, 409)],

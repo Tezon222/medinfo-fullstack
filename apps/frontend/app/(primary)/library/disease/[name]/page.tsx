@@ -1,18 +1,17 @@
-import Image from "next/image";
 import { Main } from "@/app/(primary)/-components";
 import { getElementList } from "@/components/common/for";
 import { callBackendApi } from "@/lib/api/callBackendApi";
-import type { DiseasesResponse, SingleDisease } from "@/lib/api/callBackendApi/types";
+import Image from "next/image";
 import { AlternateDiseaseCard, ScrollableAlternateDiseaseCards } from "../../DiseaseCard";
 
 async function DiseaseDetailsPage({ params }: PageProps<"/library/disease/[name]">) {
 	const { name: diseaseName } = await params;
 
 	const [singleDisease, allDiseases] = await Promise.all([
-		callBackendApi<SingleDisease>("/diseases/oneDisease", {
-			query: { name: decodeURIComponent(diseaseName) },
+		callBackendApi("@get/diseases/one/:name", {
+			params: { name: decodeURIComponent(diseaseName) },
 		}),
-		callBackendApi<DiseasesResponse>("/diseases/allDiseases"),
+		callBackendApi("@get/diseases/all"),
 	]);
 
 	if (singleDisease.error) {
@@ -31,7 +30,7 @@ async function DiseaseDetailsPage({ params }: PageProps<"/library/disease/[name]
 			<section className="lg:flex lg:gap-16">
 				<Image
 					className="size-[272px] rounded-tl-[16px] rounded-br-[16px] lg:size-[460px]"
-					src={singleDisease.data.data.Image}
+					src={singleDisease.data.data.image}
 					alt=""
 					priority={true}
 					width={272}
@@ -53,16 +52,16 @@ async function DiseaseDetailsPage({ params }: PageProps<"/library/disease/[name]
 					className="text-[32px] font-semibold text-medinfo-primary-darker lg:text-[52px]
 						lg:font-bold"
 				>
-					{singleDisease.data.data.Disease}
+					{singleDisease.data.data.name}
 				</h1>
 
-				<p className="text-[18px]">{singleDisease.data.data.Description}</p>
+				<p className="text-[18px]">{singleDisease.data.data.description}</p>
 
 				<article>
 					<h4>Symptoms</h4>
 					<List
 						className="pl-12"
-						each={singleDisease.data.data.Symptoms}
+						each={singleDisease.data.data.symptoms}
 						renderItem={(symptom) => (
 							<li key={symptom} className="list-['-_']">
 								{symptom}
@@ -75,7 +74,7 @@ async function DiseaseDetailsPage({ params }: PageProps<"/library/disease/[name]
 					<h4>Precautions</h4>
 					<List
 						className="pl-12"
-						each={singleDisease.data.data.Precautions}
+						each={singleDisease.data.data.precautions}
 						renderItem={(precaution) => (
 							<li key={precaution} className="list-['-_']">
 								{precaution}

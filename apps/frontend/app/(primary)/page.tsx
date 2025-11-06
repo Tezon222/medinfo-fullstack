@@ -2,7 +2,7 @@ import { IconBox, NavLink } from "@/components/common";
 import { AwaitRoot } from "@/components/common/await";
 import { getElementList } from "@/components/common/for";
 import { Button } from "@/components/ui";
-import { getTipsResponse } from "@/lib/api/callBackendApi/utils";
+import { callBackendApi } from "@/lib/api/callBackendApi";
 import { cnJoin } from "@/lib/utils/cn";
 import { feature1, feature2, feature3, hero } from "@/public/assets/images/landing-page";
 import Image from "next/image";
@@ -63,7 +63,7 @@ const [FeatureList] = getElementList();
 const [AdvantageList] = getElementList();
 
 function HomePage() {
-	const tipsResponsePromise = getTipsResponse();
+	const tipsResultPromise = callBackendApi("@get/health-tips/all");
 
 	return (
 		<Main className="w-full gap-14 max-md:max-w-[400px] md:gap-[92px]">
@@ -93,12 +93,11 @@ function HomePage() {
 
 				<div
 					className="relative ml-(--offset) w-max shrink-0 [--offset:19px]
-						max-md:mt-[calc(40px_+_var(--offset))]"
+						max-md:mt-[calc(40px+var(--offset))]"
 				>
 					<span
 						className="absolute right-(--offset) bottom-(--offset) z-[-1] block size-full
-							rounded-[16px] bg-medinfo-primary-main md:right-[28px] md:bottom-[28px]
-							md:rounded-[24px]"
+							rounded-[16px] bg-medinfo-primary-main md:right-7 md:bottom-7 md:rounded-[24px]"
 					/>
 					<Image
 						className="aspect-223/273 min-h-[273px] md:aspect-340/415 md:min-h-[415px]"
@@ -121,7 +120,7 @@ function HomePage() {
 
 				<CoreServiceList
 					className="mt-6 flex flex-col items-center gap-4 text-center md:mt-14 md:flex-row
-						md:justify-between md:gap-[28px]"
+						md:justify-between md:gap-7"
 					each={coreServices}
 					renderItem={(coreService, index) => (
 						<li key={coreService.title} className="group">
@@ -167,7 +166,7 @@ function HomePage() {
 
 				<FeatureList
 					className="mt-12 grid grid-cols-2 justify-center gap-x-5 gap-y-10 text-center md:mt-[88px]
-						md:grid-cols-[repeat(4,minmax(161px,248px))] md:justify-between md:gap-x-[28px]"
+						md:grid-cols-[repeat(4,minmax(161px,248px))] md:justify-between md:gap-x-7"
 					each={features}
 					renderItem={(feature, index) => (
 						<li
@@ -177,7 +176,7 @@ function HomePage() {
 								md:px-[47px] md:py-[67px]"
 						>
 							<span
-								className="absolute top-[-24px] block size-12 rounded-full bg-white p-3 text-[24px]
+								className="absolute -top-6 block size-12 rounded-full bg-white p-3 text-[24px]
 									[box-shadow:0_4px_4px_hsl(0,0%,0%,0.12)] md:size-16 md:text-[40px]"
 							>
 								<IconBox icon={feature.icon} />
@@ -196,7 +195,7 @@ function HomePage() {
 					Advantages of Virtual Healthcare
 				</h2>
 				<AdvantageList
-					className="mt-6 flex flex-col gap-6 md:mt-14 md:flex-row md:gap-[28px]"
+					className="mt-6 flex flex-col gap-6 md:mt-14 md:flex-row md:gap-7"
 					each={advantages}
 					renderItem={(advantage, index) => (
 						<li key={index}>
@@ -227,7 +226,7 @@ function HomePage() {
 				 * NOTE - The Await passes the result of the promise to the ScrollableTipCards component as a `result` prop via the Slot component and the `asChild` prop
 				 * This is a hack necessary to avoid turning this page into a client component due to the use of the Await component's render prop
 				 */}
-				<AwaitRoot promise={tipsResponsePromise} asChild={true}>
+				<AwaitRoot promise={tipsResultPromise} asChild={true}>
 					<ScrollableTipCards />
 				</AwaitRoot>
 			</section>

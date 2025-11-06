@@ -1,19 +1,14 @@
-import { notFound } from "next/navigation";
 import { Main } from "@/app/(primary)/-components";
 import { NavLink } from "@/components/common";
 import { callBackendApi } from "@/lib/api/callBackendApi";
-import type { DiseasesResponse } from "@/lib/api/callBackendApi/types";
+import { notFound } from "next/navigation";
 import LibraryFilter from "./LibraryFilter";
 
 async function LibraryPage() {
-	const allDiseases = await callBackendApi<DiseasesResponse>("/diseases/allDiseases", {
-		query: {
-			limit: 6,
-		},
-	});
+	const allDiseasesResult = await callBackendApi("@get/diseases/all");
 
-	if (allDiseases.error) {
-		console.error(allDiseases.error.errorData);
+	if (allDiseasesResult.error) {
+		console.error(allDiseasesResult.error.errorData);
 		return notFound();
 	}
 
@@ -30,7 +25,7 @@ async function LibraryPage() {
 				</p>
 			</section>
 
-			<LibraryFilter diseases={allDiseases.data.data.diseases} />
+			<LibraryFilter diseases={allDiseasesResult.data.data.diseases} />
 
 			<section className="flex justify-center">
 				<NavLink
@@ -38,7 +33,7 @@ async function LibraryPage() {
 					transitionType="regular"
 					className="inline-block text-center text-medinfo-primary-main lg:text-[20px] lg:font-medium"
 				>
-					More results ...({allDiseases.data.data.totalDiseases})
+					More results ...({allDiseasesResult.data.data.total})
 				</NavLink>
 			</section>
 		</Main>

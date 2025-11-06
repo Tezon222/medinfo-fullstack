@@ -1,4 +1,4 @@
-import { ENVIRONMENT } from "@medinfo/shared/config/env-backend";
+import { ENVIRONMENT } from "@medinfo/shared/config/env/backend";
 import { defineEnum } from "@zayne-labs/toolkit-type-helpers";
 
 export const isDevMode = ENVIRONMENT.NODE_ENV === "development";

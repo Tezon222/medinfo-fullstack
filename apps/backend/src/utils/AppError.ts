@@ -1,17 +1,13 @@
-import type { ErrorCodesUnion } from "../constants";
+import type { ContentfulStatusCode } from "hono/utils/http-status";
 
 class AppError extends Error {
 	errors?: unknown;
 	errorStatus: string;
 	isOperational: boolean;
-	statusCode: ErrorCodesUnion;
+	statusCode: ContentfulStatusCode;
 
-	constructor(
-		statusCode: ErrorCodesUnion,
-		message: string,
-		options: ErrorOptions & { errors?: unknown } = {}
-	) {
-		const { cause, errors } = options;
+	constructor(options: ErrorOptions & { errors?: unknown; message: string; code: ContentfulStatusCode }) {
+		const { cause, errors, message, code: statusCode } = options;
 
 		super(message, { cause });
 

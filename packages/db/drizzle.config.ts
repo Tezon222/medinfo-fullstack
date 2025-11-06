@@ -1,4 +1,4 @@
-import { ENVIRONMENT } from "@medinfo/shared/config/env-backend";
+import { ENVIRONMENT } from "@medinfo/shared/config/env/backend";
 import { defineConfig } from "drizzle-kit";
 
 export const dbConnectionString = ENVIRONMENT.DATABASE_URL;

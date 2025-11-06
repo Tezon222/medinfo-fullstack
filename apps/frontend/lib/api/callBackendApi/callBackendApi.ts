@@ -1,6 +1,6 @@
+import { backendApiSchema } from "@medinfo/shared/validation/backendApiSchema";
 import { createFetchClient } from "@zayne-labs/callapi";
 import { defineBaseConfig } from "@zayne-labs/callapi/utils";
-import { apiSchema } from "./apiSchema";
 import { toastPlugin, type ToastPluginMeta } from "./plugins";
 
 type GlobalMeta = ToastPluginMeta;
@@ -36,7 +36,9 @@ export const sharedBaseConfig = defineBaseConfig({
 		}),
 	],
 
-	schema: apiSchema,
+	resultMode: "withoutResponse",
+
+	schema: backendApiSchema,
 });
 
 export const callBackendApi = createFetchClient(sharedBaseConfig);

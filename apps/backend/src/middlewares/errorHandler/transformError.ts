@@ -1,14 +1,20 @@
+/* eslint-disable import/no-named-as-default-member */
 import type { HTTPException } from "hono/http-exception";
-import * as jwt from "jsonwebtoken";
+// eslint-disable-next-line import/default
+import jwt from "jsonwebtoken";
 import { AppError } from "../../utils";
 
-const handleTimeoutError = (error: Error) => new AppError(408, "Request timeout", { cause: error });
+const handleTimeoutError = (error: Error) => {
+	return new AppError({ cause: error, code: 408, message: "Request timeout" });
+};
 
-// prettier-ignore
-const handleJWTError = (error: jwt.JsonWebTokenError) => new AppError(401, "Invalid token!", { cause: error });
+const handleJWTError = (error: jwt.JsonWebTokenError) => {
+	return new AppError({ cause: error, code: 401, message: "Invalid token!" });
+};
 
-// prettier-ignore
-const handleJWTExpiredError = (error: jwt.TokenExpiredError) => new AppError(401, "Your token has expired!", { cause: error });
+const handleJWTExpiredError = (error: jwt.TokenExpiredError) => {
+	return new AppError({ cause: error, code: 401, message: " Your token has expired!" });
+};
 
 export const transformError = (error: AppError | Error | HTTPException) => {
 	let modifiedError = error;
@@ -30,7 +36,6 @@ export const transformError = (error: AppError | Error | HTTPException) => {
 		}
 
 		default: {
-			modifiedError = new AppError(500, error.message, { cause: error });
 			break;
 		}
 	}

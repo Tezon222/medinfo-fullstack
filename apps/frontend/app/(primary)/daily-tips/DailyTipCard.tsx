@@ -6,17 +6,26 @@ import { Card } from "@/components/ui";
 import type { callBackendApi } from "@/lib/api/callBackendApi";
 import type { TipsResponse } from "@/lib/api/callBackendApi/types";
 import { cnMerge } from "@/lib/utils/cn";
+import type {
+	backendApiSchemaRoutes,
+	BaseApiErrorResponse,
+	BaseApiSuccessResponse,
+	HealthTipSchemaType,
+} from "@medinfo/shared/validation/backendApiSchema";
+import type { CallApiResult, CallApiSuccessOrErrorVariant } from "@zayne-labs/callapi";
 import { useDragScroll } from "@zayne-labs/ui-react/ui/drag-scroll";
 import Image from "next/image";
+import { z } from "zod";
 
-export type DailyTipCardProps = {
+export type DailyTipCardProps = z.infer<
+	(typeof backendApiSchemaRoutes)["@get/health-tips/all"]["data"]
+>["data"][number] & {
 	className?: string;
-	id: string;
-	imageUrl: string;
-	title: string;
 };
 
-export function DailyTipCard({ className, id, imageUrl, title }: DailyTipCardProps) {
+export function DailyTipCard(props: DailyTipCardProps) {
+	const { className, id, imageAlt, imageUrl, title } = props;
+
 	return (
 		<Card.Root
 			as="li"
@@ -30,7 +39,7 @@ export function DailyTipCard({ className, id, imageUrl, title }: DailyTipCardPro
 				<Image
 					className="h-full rounded-t-[16px] object-cover"
 					src={imageUrl}
-					alt=""
+					alt={imageAlt}
 					draggable={false}
 					width={161}
 					height={117}
@@ -50,7 +59,7 @@ export function DailyTipCard({ className, id, imageUrl, title }: DailyTipCardPro
 }
 
 type ScrollableCardProps = {
-	result?: Awaited<ReturnType<typeof callBackendApi<TipsResponse>>>;
+	result?: CallApiResult<BaseApiSuccessResponse<HealthTipSchemaType[]>, BaseApiErrorResponse>;
 };
 
 export function ScrollableTipCards(props: ScrollableCardProps) {
@@ -78,6 +87,7 @@ export function ScrollableTipCards(props: ScrollableCardProps) {
 					id={tip.id}
 					imageUrl={tip.imageUrl}
 					title={tip.title}
+					imageAlt={tip.imageAlt}
 					{...getItemProps()}
 				/>
 			)}
