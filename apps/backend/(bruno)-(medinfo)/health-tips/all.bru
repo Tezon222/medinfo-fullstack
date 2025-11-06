@@ -1,0 +1,81 @@
+meta {
+  name: all
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseURL-dev}}/health-tips/all?limit=6
+  body: none
+  auth: inherit
+}
+
+params:query {
+  limit: 6
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  # Get All Health Tips
+
+  Retrieves a random selection of health tips from the health.gov API.
+
+  ## Query Parameters
+
+  - `limit` (number, optional): Number of health tips to retrieve. Defaults to 6 if not provided.
+    - Must be greater than 0
+    - Example: `?limit=10` returns 10 random health tips
+
+  ## Success Response (200 OK)
+
+  ```json
+  {
+    "status": "success",
+    "message": "Health tips retrieved successfully",
+    "data": [
+      {
+        "id": "350",
+        "title": "Get Tested for Chlamydia and Gonorrhea",
+        "imageUrl": "https://odphp.health.gov/sites/default/files/2024-01/Get_Tested_Chlamydia_Gonorrhea.jpg",
+        "imageAlt": "A man and woman smiling"
+      },
+      {
+        "id": "514",
+        "title": "Get Screened for Breast Cancer",
+        "imageUrl": "https://odphp.health.gov/sites/default/files/...",
+        "imageAlt": "Woman at doctor's office"
+      }
+    ]
+  }
+  ```
+
+  Note: The response excludes `lastUpdated` and `mainContent` fields for this endpoint.
+
+  ## Error Response (422 Validation Error)
+
+  ```json
+  {
+    "status": "error",
+    "message": "Validation Error: ✖ Limit must be a number → at limit",
+    "errors": {
+      "limit": ["Limit must be a number"]
+    }
+  }
+  ```
+
+  Or if limit is invalid:
+
+  ```json
+  {
+    "status": "error",
+    "message": "Validation Error: ✖ Limit must be greater than 0 → at limit",
+    "errors": {
+      "limit": ["Limit must be greater than 0"]
+    }
+  }
+  ```
+}

@@ -1,0 +1,68 @@
+meta {
+  name: delete
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{baseURL-dev}}/diseases/delete
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "madness"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  # Delete Disease
+  
+  Deletes a disease from the local database by its name.
+  
+  ## Request Body
+  
+  The body must contain the `name` field.
+  
+  ### Request Structure
+  
+  - `name` (string, required): The name of the disease to delete (case-insensitive)
+    - Example: `"diabetes"`, `"Diabetes"`, or `"DIABETES"` all work
+  
+  ## Success Response (200 OK)
+  
+  ```json
+  {
+    "status": "success",
+    "message": "Disease deleted successfully",
+    "data": null
+  }
+  ```
+  
+  ## Error Response (404 Not Found)
+  
+  ```json
+  {
+    "status": "error",
+    "message": "Disease not found"
+  }
+  ```
+  
+  ## Error Response (422 Validation Error)
+  
+  ```json
+  {
+    "status": "error",
+    "message": "Validation Error: ✖ Required → at name",
+    "errors": {
+      "name": ["Required"]
+    }
+  }
+  ```
+}

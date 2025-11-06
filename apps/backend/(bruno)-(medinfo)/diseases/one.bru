@@ -1,0 +1,80 @@
+meta {
+  name: one
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseURL-dev}}/diseases/one/:name
+  body: none
+  auth: inherit
+}
+
+params:path {
+  name: diabetes
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  # Get Single Disease
+
+  Retrieves detailed information for a specific disease by its name.
+
+  ## Path Parameters
+
+  - `name` (string, required): The name of the disease (case-insensitive)
+    - Example: `diabetes`, `Diabetes`, or `DIABETES` all work
+
+  ## Success Response (200 OK)
+
+  ```json
+  {
+    "status": "success",
+    "message": "Disease retrieved successfully",
+    "data": {
+      "name": "Diabetes",
+      "image": "https://example.com/diabetes.jpg",
+      "description": "A chronic condition that affects how your body processes blood sugar (glucose)",
+      "symptoms": [
+        "Increased thirst",
+        "Frequent urination",
+        "Extreme fatigue",
+        "Blurred vision",
+        "Slow-healing sores"
+      ],
+      "precautions": [
+        "Monitor blood sugar regularly",
+        "Maintain a healthy diet",
+        "Exercise regularly",
+        "Take prescribed medications",
+        "Regular check-ups with healthcare provider"
+      ]
+    }
+  }
+  ```
+
+  ## Error Response (404 Not Found)
+
+  ```json
+  {
+    "status": "error",
+    "message": "Disease not found"
+  }
+  ```
+
+  ## Error Response (422 Validation Error)
+
+  ```json
+  {
+    "status": "error",
+    "message": "Validation Error: ✖ Required → at name",
+    "errors": {
+      "name": ["Required"]
+    }
+  }
+  ```
+}

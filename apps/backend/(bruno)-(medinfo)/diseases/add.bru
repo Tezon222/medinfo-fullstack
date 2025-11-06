@@ -1,0 +1,112 @@
+meta {
+  name: add
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseURL-dev}}/diseases/add
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "details": {
+      "name": "Madness",
+      "image": "https://example.com/hypertension.jpg",
+      "description": "High blood pressure condition",
+      "symptoms": ["Headaches", "Shortness of breath", "Nosebleeds"],
+      "precautions": ["Regular exercise", "Healthy diet", "Stress management", "Regular monitoring"]
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  # Add New Disease
+
+  Adds a new disease to the local database. The disease name must be unique.
+
+  ## Request Body
+
+  The body must contain a `details` field with a single disease object.
+
+  ### Request Structure
+
+  ```json
+  {
+    "details": {
+      "name": "Disease Name",
+      "image": "https://example.com/image.jpg",
+      "description": "Disease description",
+      "symptoms": ["symptom1", "symptom2"],
+      "precautions": ["precaution1", "precaution2"]
+    }
+  }
+  ```
+
+  ### Disease Object Structure
+
+  - `name` (string, required): Name of the disease (must be unique)
+  - `image` (string, required): Valid URL to the disease image
+  - `description` (string, required): Detailed description
+  - `symptoms` (array of strings, required): List of symptoms
+  - `precautions` (array of strings, required): List of precautions
+
+  ## Success Response (200 OK)
+
+  ```json
+  {
+    "status": "success",
+    "message": "Diseases add successfully",
+    "data": {
+      "name": "Hypertension",
+      "image": "https://example.com/hypertension.jpg",
+      "description": "High blood pressure condition",
+      "symptoms": ["Headaches", "Shortness of breath", "Nosebleeds"],
+      "precautions": ["Regular exercise", "Healthy diet", "Stress management", "Regular monitoring"]
+    }
+  }
+  ```
+
+  ## Error Response (409 Conflict)
+
+  If a disease with the same name already exists:
+
+  ```json
+  {
+    "status": "error",
+    "message": "Disease already exists"
+  }
+  ```
+
+  ## Error Response (422 Validation Error)
+
+  ```json
+  {
+    "status": "error",
+    "message": "Validation Error: ✖ Required → at details",
+    "errors": {
+      "details": ["Required"]
+    }
+  }
+  ```
+
+  Or if disease fields are invalid:
+
+  ```json
+  {
+    "status": "error",
+    "message": "Validation Error: ✖ Required → at details.name | ✖ Invalid url → at details.image",
+    "errors": {
+      "details.name": ["Required"],
+      "details.image": ["Invalid url"]
+    }
+  }
+  ```
+}

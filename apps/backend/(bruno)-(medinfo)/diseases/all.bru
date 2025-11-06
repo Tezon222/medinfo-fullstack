@@ -1,0 +1,84 @@
+meta {
+  name: all
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseURL-dev}}/diseases/all?page=1&limit=6
+  body: none
+  auth: inherit
+}
+
+params:query {
+  page: 1
+  limit: 6
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  # Get All Diseases
+
+  Retrieves a paginated list of diseases from the local database.
+
+  ## Query Parameters
+
+  - `page` (number, optional): Page number for pagination. Defaults to 1.
+    - Must be greater than 0
+    - Example: `?page=2` returns the second page of results
+  - `limit` (number, optional): Number of diseases per page. Defaults to 6.
+    - Must be greater than 0
+    - Example: `?limit=10` returns 10 diseases per page
+
+  ## Success Response (200 OK)
+
+  ```json
+  {
+    "status": "success",
+    "message": "Diseases retrieved successfully",
+    "data": [
+      {
+        "name": "Diabetes",
+        "image": "https://example.com/diabetes.jpg",
+        "description": "A chronic condition affecting blood sugar regulation"
+      },
+      {
+        "name": "Hypertension",
+        "image": "https://example.com/hypertension.jpg",
+        "description": "High blood pressure condition"
+      }
+    ]
+  }
+  ```
+
+  Note: This endpoint returns a simplified version without `symptoms` and `precautions` fields.
+
+  ## Error Response (422 Validation Error)
+
+  ```json
+  {
+    "status": "error",
+    "message": "Validation Error: ✖ Page must be a number → at page",
+    "errors": {
+      "page": ["Page must be a number"]
+    }
+  }
+  ```
+
+  Or if values are invalid:
+
+  ```json
+  {
+    "status": "error",
+    "message": "Validation Error: ✖ Limit must be greater than 0 → at limit | ✖ Page must be greater than 0 → at page",
+    "errors": {
+      "limit": ["Limit must be greater than 0"],
+      "page": ["Page must be greater than 0"]
+    }
+  }
+  ```
+}

@@ -1,0 +1,84 @@
+meta {
+  name: one
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseURL-dev}}/health-tips/one/:id
+  body: none
+  auth: inherit
+}
+
+params:path {
+  id: 350
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  # Get Single Health Tip
+
+  Retrieves detailed information for a specific health tip by its ID.
+
+  ## Path Parameters
+
+  - `id` (string, required): The unique identifier of the health tip
+    - Example: `350` for "Get Tested for Chlamydia and Gonorrhea"
+
+  ## Success Response (200 OK)
+
+  ```json
+  {
+    "status": "success",
+    "message": "Health tip retrieved successfully",
+    "data": {
+      "id": "350",
+      "title": "Get Tested for Chlamydia and Gonorrhea",
+      "imageUrl": "https://odphp.health.gov/sites/default/files/2024-01/Get_Tested_Chlamydia_Gonorrhea.jpg",
+      "imageAlt": "A man and woman smiling",
+      "lastUpdated": "10/21/2025 3:45:54 PM",
+      "mainContent": [
+        {
+          "title": "The Basics: Overview",
+          "content": "<p>Chlamydia and gonorrhea are sexually transmitted infections...</p>"
+        },
+        {
+          "title": "The Basics: Who Needs Testing?",
+          "content": "<h4>Who needs to get tested for chlamydia and gonorrhea?</h4>..."
+        },
+        {
+          "title": "Take Action: Get Tested",
+          "content": "<p>Get tested for chlamydia and gonorrhea if you're at risk...</p>"
+        }
+      ]
+    }
+  }
+  ```
+
+  ## Error Response (422 Validation Error)
+
+  ```json
+  {
+    "status": "error",
+    "message": "Validation Error: ✖ Required → at id",
+    "errors": {
+      "id": ["Required"]
+    }
+  }
+  ```
+
+  ## Error Response (404 Not Found)
+
+  If the health tip doesn't exist in the external API:
+
+  ```json
+  {
+    "status": "error",
+    "message": "Health tip not found"
+  }
+  ```
+}
