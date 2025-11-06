@@ -6,7 +6,6 @@
 		"./*": "./src/*.ts"
 	},
 	"scripts": {
-		"build": "tsdown",
 		"db:generate": "drizzle-kit generate",
 		"db:migrate": "drizzle-kit migrate",
 		"db:push": "drizzle-kit push",
