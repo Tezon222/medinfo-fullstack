@@ -13,7 +13,7 @@ declare module "@zayne-labs/callapi" {
 	}
 }
 
-const REMOTE_BACKEND_HOST = "https://api-medical-info.vercel.app";
+const REMOTE_BACKEND_HOST = "https://api-medical-info.onrender.com";
 
 const BACKEND_HOST =
 	process.env.NODE_ENV === "development" ? "http://localhost:8000" : REMOTE_BACKEND_HOST;
