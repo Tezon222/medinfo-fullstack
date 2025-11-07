@@ -74,12 +74,14 @@ const defaultSchemaRoute = defineSchemaRoutes({
 	},
 });
 
-const stringWithNumberValidation = (key: string) =>
-	z
-		.transform(String)
-		.transform(Number)
-		.refine((value) => !Number.isNaN(value), `${key} must be a number`)
-		.refine((value) => value > 0, `${key} must be greater than 0`);
+const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
+
+const stringWithNumberValidation = (key: "limit" | "page") => {
+	return z
+		.transform((value: string) => Number(value))
+		.refine((value) => !Number.isNaN(value), `${capitalize(key)} must be a number`)
+		.refine((value) => value > 0, `${capitalize(key)} must be greater than 0`);
+};
 
 const healthTipRoutes = defineSchemaRoutes({
 	"@get/health-tips/all": {
@@ -87,7 +89,7 @@ const healthTipRoutes = defineSchemaRoutes({
 			z.array(HealthTipSchema.omit({ lastUpdated: true, mainContent: true }))
 		),
 		query: z
-			.object({ limit: stringWithNumberValidation("Limit") })
+			.object({ limit: stringWithNumberValidation("limit") })
 			.partial()
 			.optional(),
 	},
@@ -111,18 +113,17 @@ const diseaseRoutes = defineSchemaRoutes({
 			z.object({
 				// eslint-disable-next-line perfectionist/sort-objects
 				diseases: z.array(DiseaseSchema.pick({ name: true, description: true, image: true })),
-				limit: z.number(),
-				page: z.number(),
+				limit: z.int().positive(),
+				page: z.int().positive(),
 				total: z.number(),
 			})
 		),
 		query: z
 			.object({
-				limit: stringWithNumberValidation("Limit"),
-				page: stringWithNumberValidation("Page"),
+				limit: stringWithNumberValidation("limit"),
+				page: stringWithNumberValidation("page"),
 				random: z
-					.transform(String)
-					.transform((value) => {
+					.transform((value: string) => {
 						if (value === "true") {
 							return true;
 						}

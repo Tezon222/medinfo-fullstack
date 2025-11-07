@@ -62,10 +62,6 @@ const [FeatureList] = getElementList();
 const [AdvantageList] = getElementList();
 
 function HomePage() {
-	const tipsResultPromise = callBackendApi("@get/health-tips/all", {
-		query: { limit: 8 },
-	});
-
 	return (
 		<Main className="w-full gap-14 max-md:max-w-[400px] md:gap-[92px]">
 			<section className="flex flex-col items-center md:flex-row-reverse md:gap-[67px]">

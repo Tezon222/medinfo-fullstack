@@ -16,7 +16,7 @@
 		"zod": "catalog:"
 	},
 	"devDependencies": {
-		"@zayne-labs/tsconfig": "^0.11.4",
+		"@zayne-labs/tsconfig": "^0.11.5",
 		"tsdown": "catalog:",
 		"typescript": "catalog:"
 	}

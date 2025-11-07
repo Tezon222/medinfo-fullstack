@@ -4,8 +4,12 @@ import type { CallApiExtraOptions } from "@zayne-labs/callapi";
 
 export const healthTipsQuery = () => {
 	return queryOptions({
-		queryFn: () =>
-			callBackendApiForQuery("@get/health-tips/all", { meta: { toast: { success: false } } }),
+		queryFn: () => {
+			return callBackendApiForQuery("@get/health-tips/all", {
+				meta: { toast: { success: false } },
+				query: { limit: 8 },
+			});
+		},
 		queryKey: ["health-tips"],
 		staleTime: Infinity,
 	});

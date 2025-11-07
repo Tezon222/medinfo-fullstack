@@ -20,7 +20,7 @@
 		"@zayne-labs/callapi": "1.11.21",
 		"@zayne-labs/toolkit-core": "0.12.12",
 		"@zayne-labs/toolkit-type-helpers": "0.12.12",
-		"@zayne-labs/tsconfig": "^0.11.4",
+		"@zayne-labs/tsconfig": "^0.11.5",
 		"consola": "3.4.2",
 		"hono": "4.10.4",
 		"jsonwebtoken": "^9.0.2",
