@@ -1,12 +1,12 @@
 import { AppError } from "@/utils";
-import { backendApiSchemaRoutes } from "@medinfo/shared/validation/backendApiSchema";
+import { DiseaseSchema } from "@medinfo/shared/validation/backendApiSchema";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { z } from "zod";
 
 const pathToDiseases = path.join(import.meta.dirname, "..", "db", "diseases.json");
 
-const DiseaseArraySchema = backendApiSchemaRoutes["@get/diseases/all"].data.shape.data.shape.diseases;
+const DiseaseArraySchema = z.array(DiseaseSchema);
 
 export type Disease = z.infer<typeof DiseaseArraySchema>[number];
 
@@ -41,15 +41,15 @@ export const writeToDiseases = async (diseases: Disease[]) => {
 };
 
 export const shuffleArray = <TArray extends unknown[]>(array: TArray) => {
-	const shuffledArray = structuredClone(array);
+	const shuffledArray = [...array] as TArray;
 
 	// == Using Fisher-Yates algorithm
-	for (let lastElementIndex = shuffledArray.length - 1; lastElementIndex > 0; lastElementIndex--) {
-		const randomIndex = Math.floor(Math.random() * (lastElementIndex + 1));
+	for (let lastIndex = shuffledArray.length - 1; lastIndex > 0; lastIndex--) {
+		const randomIndex = Math.floor(Math.random() * (lastIndex + 1));
 
-		[shuffledArray[lastElementIndex], shuffledArray[randomIndex]] = [
+		[shuffledArray[lastIndex], shuffledArray[randomIndex]] = [
 			shuffledArray[randomIndex],
-			shuffledArray[lastElementIndex],
+			shuffledArray[lastIndex],
 		];
 	}
 

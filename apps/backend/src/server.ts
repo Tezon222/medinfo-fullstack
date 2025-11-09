@@ -18,7 +18,7 @@ app.use("/*", cors(corsOptions));
 
 /**
  *  == Middleware - Logger
- *  FIXME: Add winston later following guide for logging in brave tabs
+ *  FIXME: Add winston or pino logger later following guide for logging in brave tabs
  */
 app.use(logger((...args) => consola.log(...args)));
 

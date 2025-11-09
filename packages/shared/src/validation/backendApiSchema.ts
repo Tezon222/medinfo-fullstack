@@ -16,7 +16,7 @@ const HealthTipSchema = z.object({
 	title: z.string(),
 });
 
-const DiseaseSchema = z.object({
+export const DiseaseSchema = z.object({
 	/* eslint-disable perfectionist/sort-objects */
 	name: z.string(),
 	description: z.string(),
