@@ -6,11 +6,11 @@ const RelatedItemSchema = z.object({
 	Id: z.string(),
 	Title: z.string(),
 	Type: z.string(),
-	Url: z.string()
+	Url: z.string(),
 });
 const SectionSchema = z.object({
 	Content: z.string(),
-	Title: z.string()
+	Title: z.string(),
 });
 const ResourceSchema = z.object({
 	AccessibleVersion: z.string(),
@@ -28,20 +28,25 @@ const ResourceSchema = z.object({
 	Sections: z.object({ section: z.array(SectionSchema) }),
 	Title: z.string(),
 	TranslationId: z.string(),
-	Type: z.string()
+	Type: z.string(),
 });
 const topicSearchResultSchema = z.object({
 	Error: z.string(),
 	Language: z.string(),
-	Resources: z.object({ Resource: z.tuple([ResourceSchema]) })
+	Resources: z.object({ Resource: z.tuple([ResourceSchema]) }),
 });
-const healthApiSchema = defineSchema({ "@get/topicsearch.json": {
-	data: z.object({ Result: topicSearchResultSchema }),
-	query: z.object({
-		Lang: z.string().optional(),
-		TopicId: z.string().or(z.number())
-	})
-} }, { strict: true });
+const healthApiSchema = defineSchema(
+	{
+		"@get/topicsearch.json": {
+			data: z.object({ Result: topicSearchResultSchema }),
+			query: z.object({
+				Lang: z.string().optional(),
+				TopicId: z.string().or(z.number()),
+			}),
+		},
+	},
+	{ strict: true }
+);
 const healthApiSchemaRoutes = healthApiSchema.routes;
 
 //#endregion
