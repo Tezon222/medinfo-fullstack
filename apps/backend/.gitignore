@@ -1,4 +1,5 @@
 # prod
+dist/
 /build
 /out/
 
