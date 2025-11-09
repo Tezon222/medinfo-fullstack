@@ -1,4 +1,5 @@
 dist
+.next
 pnpm-lock.yaml
 package.json
 *.md

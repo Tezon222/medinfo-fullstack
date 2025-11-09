@@ -2,24 +2,19 @@ import { AppError } from "@/utils";
 import { backendApiSchemaRoutes } from "@medinfo/shared/validation/backendApiSchema";
 import fs from "node:fs/promises";
 import path from "node:path";
+import { z } from "zod";
 
 const pathToDiseases = path.join(import.meta.dirname, "..", "db", "diseases.json");
 
 const DiseaseSchema = backendApiSchemaRoutes["@get/diseases/all"].data.shape.data.shape.diseases;
 
-type Disease = {
-	description: string;
-	image: string;
-	name: string;
-	precautions: string[];
-	symptoms: string[];
-};
+export type Disease = z.infer<typeof DiseaseSchema>[number];
 
 export const readDiseases = async () => {
 	try {
 		const result = await fs.readFile(pathToDiseases, "utf8");
 
-		return DiseaseSchema.parse(JSON.parse(result)) as Disease[];
+		return DiseaseSchema.parse(JSON.parse(result));
 	} catch (error) {
 		throw new AppError({ cause: error, code: 500, message: "Error reading from db" });
 	}
