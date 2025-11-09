@@ -8,7 +8,7 @@ export const users = pg.pgTable("users", {
 	gender: pg.text({ enum: ["male", "female"] }).notNull(),
 	googleId: pg.text(),
 	id: pg.uuid().defaultRandom().primaryKey(),
+	lastLoginAt: pg.timestamp({ withTimezone: true }).defaultNow().notNull(),
 	lastName: pg.text().notNull(),
 	passwordHash: pg.text().notNull(),
-	updatedAt: pg.timestamp({ withTimezone: true }).defaultNow().notNull(),
 });

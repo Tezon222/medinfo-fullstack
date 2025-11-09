@@ -8,6 +8,7 @@ const BASE_URL = "https://odphp.health.gov/myhealthfinder/api/v4";
 
 const callHealthApi = createFetchClient({
 	baseURL: BASE_URL,
+	dedupeStrategy: "defer",
 	schema: healthApiSchema,
 });
 

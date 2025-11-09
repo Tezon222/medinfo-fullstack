@@ -2,7 +2,9 @@ import { type MatchDoctorsResponse, callBackendApiForQuery } from "@/lib/api/cal
 import { queryOptions } from "@tanstack/react-query";
 import type { CallApiExtraOptions } from "@zayne-labs/callapi";
 
-export const healthTipsQuery = () => {
+export const healthTipsQuery = (options?: { pageName?: string }) => {
+	const { pageName = "home-page" } = options ?? {};
+
 	return queryOptions({
 		queryFn: () => {
 			return callBackendApiForQuery("@get/health-tips/all", {
@@ -10,7 +12,7 @@ export const healthTipsQuery = () => {
 				query: { limit: 8 },
 			});
 		},
-		queryKey: ["health-tips"],
+		queryKey: ["health-tips", pageName],
 		staleTime: Infinity,
 	});
 };

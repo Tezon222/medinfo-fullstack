@@ -42,7 +42,7 @@ export function DailyTipCard(props: DailyTipCardProps) {
 			<Card.Content className="grow px-3 md:p-7">{title}</Card.Content>
 
 			<Card.Footer className="px-3 md:px-7" asChild={true}>
-				<NavLink href={`/daily-tips/${id}`} className="flex items-center gap-4">
+				<NavLink href={`/daily-tips/${id}`} className="flex items-center gap-2">
 					Learn More
 					<IconBox icon="lucide:chevron-right" className="text-[20px]" />
 				</NavLink>
@@ -54,9 +54,10 @@ export function DailyTipCard(props: DailyTipCardProps) {
 // type ScrollableCardProps = {
 // 	result?: CallApiResult<BaseApiSuccessResponse<HealthTipSchemaType[]>, BaseApiErrorResponse>;
 // };
+export function ScrollableTipCards(props: { pageName?: string }) {
+	const { pageName } = props;
 
-export function ScrollableTipCards() {
-	const healthTipsQueryResult = useQuery(healthTipsQuery());
+	const healthTipsQueryResult = useQuery(healthTipsQuery({ pageName }));
 
 	return (
 		<Carousel.Root className="mt-6 flex w-full flex-col items-center gap-3.5 lg:gap-10">
@@ -64,9 +65,12 @@ export function ScrollableTipCards() {
 				<For
 					each={healthTipsQueryResult.data?.data ?? []}
 					renderItem={(tip) => (
-						<Carousel.Item asChild={true} className="cursor-grab active:cursor-grabbing">
+						<Carousel.Item
+							key={tip.id}
+							className="cursor-grab active:cursor-grabbing"
+							asChild={true}
+						>
 							<DailyTipCard
-								key={tip.id}
 								id={tip.id}
 								imageUrl={tip.imageUrl}
 								title={tip.title}

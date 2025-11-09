@@ -5,7 +5,7 @@ meta {
 }
 
 get {
-  url: {{baseURL-dev}}/diseases/all?page=1&limit=6
+  url: {{baseURL-dev}}/diseases/all?page=1&limit=6&random=false
   body: none
   auth: inherit
 }
@@ -13,6 +13,7 @@ get {
 params:query {
   page: 1
   limit: 6
+  random: false
 }
 
 settings {
@@ -33,6 +34,9 @@ docs {
   - `limit` (number, optional): Number of diseases per page. Defaults to 6.
     - Must be greater than 0
     - Example: `?limit=10` returns 10 diseases per page
+  - `random` (boolean, optional): Whether to shuffle diseases randomly. Defaults to false.
+    - Must be 'true' or 'false' (as string)
+    - Example: `?random=true` returns diseases in random order
 
   ## Success Response (200 OK)
 
@@ -40,22 +44,29 @@ docs {
   {
     "status": "success",
     "message": "Diseases retrieved successfully",
-    "data": [
-      {
-        "name": "Diabetes",
-        "image": "https://example.com/diabetes.jpg",
-        "description": "A chronic condition affecting blood sugar regulation"
-      },
-      {
-        "name": "Hypertension",
-        "image": "https://example.com/hypertension.jpg",
-        "description": "High blood pressure condition"
-      }
-    ]
+    "data": {
+      "diseases": [
+        {
+          "name": "Diabetes",
+          "image": "https://example.com/diabetes.jpg",
+          "description": "A chronic condition affecting blood sugar regulation"
+        },
+        {
+          "name": "Hypertension",
+          "image": "https://example.com/hypertension.jpg",
+          "description": "High blood pressure condition"
+        }
+      ],
+      "limit": 6,
+      "page": 1,
+      "total": 25
+    }
   }
   ```
 
-  Note: This endpoint returns a simplified version without `symptoms` and `precautions` fields.
+  Note:
+  - The `diseases` array contains simplified disease objects without `symptoms` and `precautions` fields.
+  - The response includes pagination metadata: `limit`, `page`, and `total` count.
 
   ## Error Response (422 Validation Error)
 
@@ -78,6 +89,18 @@ docs {
     "errors": {
       "limit": ["Limit must be greater than 0"],
       "page": ["Page must be greater than 0"]
+    }
+  }
+  ```
+
+  Or if random parameter is invalid:
+
+  ```json
+  {
+    "status": "error",
+    "message": "Validation Error: ✖ random must be 'true' or 'false' → at random",
+    "errors": {
+      "random": ["random must be 'true' or 'false'"]
     }
   }
   ```

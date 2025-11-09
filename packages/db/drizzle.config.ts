@@ -1,6 +1,5 @@
-import { ENVIRONMENT } from "@medinfo/shared/config/env/backend";
+import { ENVIRONMENT } from "@/config/env";
 import { defineConfig } from "drizzle-kit";
-import * as schema from "./src/schema";
 
 export const dbConnectionString =
 	ENVIRONMENT.NODE_ENV === "development" ? ENVIRONMENT.DATABASE_URL_DEV : ENVIRONMENT.DATABASE_URL_PROD;

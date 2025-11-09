@@ -21,7 +21,8 @@ const prettifyValidationIssues = (issues: z.core.$ZodIssue[]) => {
 
 export const getValidatedValue = async <TSchema extends z.ZodType>(
 	input: z.infer<TSchema>,
-	schema: TSchema | undefined
+	schema: TSchema | undefined,
+	schemaName?: string
 ) => {
 	if (!schema) {
 		return input;
@@ -32,9 +33,16 @@ export const getValidatedValue = async <TSchema extends z.ZodType>(
 	if (!result.success) {
 		const message = prettifyValidationIssues(result.error.issues);
 
-		const errorObject = z.flattenError(result.error).fieldErrors;
+		const fieldErrors = z.flattenError(result.error).fieldErrors;
 
-		throw new AppError({ code: 422, errors: errorObject, message: `Validation Error: ${message}` });
+		throw new AppError({
+			code: 422,
+			errors: fieldErrors,
+			message:
+				schemaName ?
+					`(${schemaName.toUpperCase()}) Validation Error: ${message}`
+				:	`Validation Error: ${message}`,
+		});
 	}
 
 	return result.data;

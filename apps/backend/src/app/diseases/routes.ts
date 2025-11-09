@@ -118,9 +118,7 @@ const diseasesRoutes = new Hono()
 
 			const updatedDisease = { ...disease, ...diseaseDetails } as DiseaseSchemaType;
 
-			const diseaseIndex = diseasesResult.indexOf(disease);
-
-			diseasesResult.splice(diseaseIndex, 1, updatedDisease);
+			diseasesResult.splice(diseasesResult.indexOf(disease), 1, updatedDisease);
 
 			await writeToDiseases(diseasesResult);
 

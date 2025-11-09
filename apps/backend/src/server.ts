@@ -1,5 +1,5 @@
+import { ENVIRONMENT } from "@/config/env";
 import { serve } from "@hono/node-server";
-import { ENVIRONMENT } from "@medinfo/shared/config/env/backend";
 import { consola } from "consola";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
@@ -36,7 +36,6 @@ app.get("/", (c) => {
 /**
  *  == Routes - v1
  */
-// const ignoredRoutesV1 = app.basePath("/api/v1").route("", healthTipsRoutes).route("", diseasesRoutes);
 app.basePath("/api/v1").route("", healthTipsRoutes).route("", diseasesRoutes);
 
 /**

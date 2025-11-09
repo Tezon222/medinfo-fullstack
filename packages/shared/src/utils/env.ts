@@ -1,6 +1,12 @@
+import * as dotenvx from "@dotenvx/dotenvx";
 import { consola } from "consola";
 import { z } from "zod";
 import { envSchema } from "../validation/envSchema";
+import { resolvePathToCwd } from "./url";
+
+dotenvx.config({
+	path: resolvePathToCwd("/apps/backend/.env"),
+});
 
 export const getEnvironmentVars = () => {
 	// eslint-disable-next-line node/no-process-env

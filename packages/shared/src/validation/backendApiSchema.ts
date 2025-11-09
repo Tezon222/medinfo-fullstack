@@ -33,7 +33,7 @@ const BaseSuccessResponseSchema = z.object({
 });
 
 const BaseErrorResponseSchema = z.object({
-	errors: z.record(z.string(), z.string().or(z.array(z.string()))).or(z.undefined()),
+	errors: z.record(z.string(), z.array(z.string())).optional(),
 	message: z.string(),
 	status: z.literal("error"),
 });

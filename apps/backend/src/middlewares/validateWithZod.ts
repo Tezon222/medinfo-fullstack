@@ -8,7 +8,7 @@ export const validateWithZod = <TTarget extends keyof ValidationTargets, TSchema
 	schema: TSchema
 ) => {
 	return validator(target, async (value) => {
-		const validatedValue = await getValidatedValue(value, schema);
+		const validatedValue = await getValidatedValue(value, schema, target);
 
 		return validatedValue;
 	});

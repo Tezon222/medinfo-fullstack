@@ -21,7 +21,7 @@ const AppJsonResponse = async <TRouteSchemaKey extends RouteSchemaKeys>(
 
 	const routeSchema = routeSchemaKey && backendApiSchemaRoutes[routeSchemaKey];
 
-	const validatedData = await getValidatedValue(data, routeSchema?.data.shape.data);
+	const validatedData = await getValidatedValue(data, routeSchema?.data.shape.data, "data");
 
 	/* eslint-disable perfectionist/sort-objects */
 	const jsonBody = {

@@ -4,7 +4,7 @@ import { backendApiSchemaRoutes } from "@medinfo/shared/validation/backendApiSch
 import { omitKeys } from "@zayne-labs/toolkit-core";
 import { Hono } from "hono";
 import { getRandomHealthTipIds } from "./services/common";
-import { healthApi } from "./services/health-api";
+import { healthApi } from "./services/api";
 
 const healthTipsRoutes = new Hono()
 	.basePath("/health-tips")

@@ -6,8 +6,8 @@ class AppError extends Error {
 	isOperational: boolean;
 	statusCode: ContentfulStatusCode;
 
-	constructor(options: ErrorOptions & { errors?: unknown; message: string; code: ContentfulStatusCode }) {
-		const { cause, errors, message, code: statusCode } = options;
+	constructor(options: ErrorOptions & { code: ContentfulStatusCode; errors?: unknown; message: string }) {
+		const { cause, code: statusCode, errors, message } = options;
 
 		super(message, { cause });
 
