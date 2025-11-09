@@ -5,11 +5,11 @@
 	"scripts": {
 		"build": "tsdown",
 		"compile": "bun build --compile --minify --sourcemap --bytecode ./src/server.ts --outfile server",
-		"dev": "tsx watch src/server.ts --clear-screen=false",
+		"dev": "cross-env NODE_ENV=development tsx watch src/server.ts --clear-screen=false",
 		"lint:eslint": "eslint . --max-warnings 0",
 		"lint:format": "prettier --write .",
 		"lint:type-check": "tsc --pretty -p tsconfig.json",
-		"start": "tsx src/server.ts",
+		"start": "cross-env NODE_ENV=production tsx src/server.ts",
 		"test:code": "tsx testing.ts"
 	},
 	"dependencies": {
@@ -22,6 +22,7 @@
 		"@zayne-labs/toolkit-type-helpers": "0.12.12",
 		"@zayne-labs/tsconfig": "^0.11.5",
 		"consola": "3.4.2",
+		"cross-env": "^10.1.0",
 		"hono": "4.10.4",
 		"jsonwebtoken": "^9.0.2",
 		"tsx": "4.20.6",
