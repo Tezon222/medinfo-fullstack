@@ -4,7 +4,6 @@ export default defineConfig({
 	clean: true,
 	dts: true,
 	entry: "./src/server.ts",
-	fixedExtension: false,
 	format: ["esm"],
 	noExternal: [/@medinfo\/.*/],
 	outDir: "./dist",
