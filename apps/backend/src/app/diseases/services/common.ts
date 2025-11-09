@@ -6,15 +6,17 @@ import { z } from "zod";
 
 const pathToDiseases = path.join(import.meta.dirname, "..", "db", "diseases.json");
 
-const DiseaseSchema = backendApiSchemaRoutes["@get/diseases/all"].data.shape.data.shape.diseases;
+const DiseaseArraySchema = backendApiSchemaRoutes["@get/diseases/all"].data.shape.data.shape.diseases;
 
-export type Disease = z.infer<typeof DiseaseSchema>[number];
+export type Disease = z.infer<typeof DiseaseArraySchema>[number];
 
 export const readDiseases = async () => {
 	try {
 		const result = await fs.readFile(pathToDiseases, "utf8");
 
-		return DiseaseSchema.parse(JSON.parse(result));
+		const parsedResult = JSON.parse(result);
+
+		return DiseaseArraySchema.parse(parsedResult);
 	} catch (error) {
 		throw new AppError({ cause: error, code: 500, message: "Error reading from db" });
 	}
