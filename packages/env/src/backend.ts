@@ -1,0 +1,46 @@
+import * as dotenvx from "@dotenvx/dotenvx";
+import { consola } from "consola";
+import { z } from "zod";
+import { evaluateString } from "./utils/common";
+import { resolvePathToCwd } from "./utils/url";
+
+const stringBoolean = z.stringbool({ falsy: ["false"], truthy: ["true"] });
+
+export const envSchema = z.object({
+	ACCESS_JWT_EXPIRES_IN: z.string().transform((value) => evaluateString<number>(value)),
+	ACCESS_SECRET: z.string(),
+	BACKEND_URL: z.string().default("http://localhost:8000"),
+	DATABASE_URL_DEV: z.string(),
+	DATABASE_URL_PROD: z.string(),
+	DB_MIGRATING: stringBoolean,
+	DB_SEEDING: stringBoolean,
+	NODE_ENV: z.literal(["development", "production"]).default("development"),
+	PORT: z.coerce.number().default(8000),
+	REFRESH_JWT_EXPIRES_IN: z.string().transform((value) => evaluateString<number>(value)),
+	REFRESH_SECRET: z.string(),
+});
+
+dotenvx.config({
+	path: resolvePathToCwd("/apps/backend/.env"),
+});
+
+export const getBackendEnv = () => {
+	// eslint-disable-next-line node/no-process-env
+	const result = envSchema.safeParse(process.env);
+
+	if (!result.success) {
+		const missingKeys = Object.keys(z.flattenError(result.error).fieldErrors);
+
+		const errorMessage = `Missing required environment variable(s):\n → ${missingKeys.join("\n → ")}`;
+
+		const error = new Error(errorMessage, { cause: z.flattenError(result.error).fieldErrors });
+
+		error.stack = "";
+
+		consola.error(error);
+
+		throw error;
+	}
+
+	return result.data;
+};

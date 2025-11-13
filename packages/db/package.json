@@ -1,23 +1,24 @@
 {
 	"name": "@medinfo/backend-db",
 	"type": "module",
+	"private": true,
 	"exports": {
 		".": "./src/db.ts",
-		"./*": "./src/*.ts"
+		"./schema/*": "./src/schema/*.ts"
 	},
 	"scripts": {
 		"db:generate": "drizzle-kit generate",
 		"db:migrate": "drizzle-kit migrate",
 		"db:push": "drizzle-kit push",
 		"db:studio": "drizzle-kit studio",
-		"dev": "tsx watch src/index",
+		"dev": "tsx watch src/db.ts",
 		"lint:eslint": "eslint . --max-warnings 0",
 		"lint:format": "prettier --write .",
 		"lint:type-check": "tsc --pretty -p tsconfig.json"
 	},
 	"dependencies": {
 		"@dotenvx/dotenvx": "catalog:",
-		"@medinfo/shared": "workspace:*",
+		"@medinfo/env": "workspace:*",
 		"@zayne-labs/tsconfig": "0.11.5",
 		"drizzle-orm": "0.44.7",
 		"drizzle-zod": "0.8.3",

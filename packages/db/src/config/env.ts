@@ -1,3 +1,3 @@
-import { getEnvironmentVars } from "@medinfo/shared/utils/env";
+import { getBackendEnv } from "@medinfo/env/backend";
 
-export const ENVIRONMENT = getEnvironmentVars();
+export const ENVIRONMENT = getBackendEnv();

@@ -1,9 +1,10 @@
 import * as pg from "drizzle-orm/pg-core";
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
 export const users = pg.pgTable("users", {
 	avatar: pg.text().notNull(),
 	country: pg.text().notNull(),
-	createdAt: pg.timestamp({ withTimezone: true }).defaultNow(),
+	createdAt: pg.timestamp({ withTimezone: true }).notNull().defaultNow(),
 	dob: pg.timestamp({ mode: "string", withTimezone: true }).notNull(),
 	email: pg.text().notNull().unique(),
 	emailVerifiedAt: pg.timestamp({ withTimezone: true }),
@@ -11,14 +12,31 @@ export const users = pg.pgTable("users", {
 	gender: pg.text({ enum: ["male", "female"] }).notNull(),
 	googleId: pg.text(),
 	id: pg.uuid().defaultRandom().primaryKey(),
-	isSuspended: pg.boolean().default(false).notNull(),
-	lastLoginAt: pg.timestamp({ mode: "string", withTimezone: true }).defaultNow().notNull(),
+	isDeleted: pg.boolean().notNull().default(false),
+	isSuspended: pg.boolean().notNull().default(false),
+	lastLoginAt: pg.timestamp({ withTimezone: true }).notNull().defaultNow(),
 	lastName: pg.text().notNull(),
 	medicalCertificate: pg.text(),
 	passwordHash: pg.text().notNull(),
-	role: pg
-		.text({ enum: ["doctor", "patient"] })
-		.default("doctor")
-		.notNull(),
+	refreshTokenArray: pg.jsonb().notNull().$type<string[]>().default([]),
+	role: pg.text({ enum: ["doctor", "patient"] }).notNull(),
 	specialty: pg.text(),
+	updatedAt: pg.timestamp({ withTimezone: true }).notNull().defaultNow(),
 });
+
+export const InsertUserSchema = createInsertSchema(users);
+
+export const SelectUserSchema = createSelectSchema(users);
+
+export type InsertUserType = typeof users.$inferInsert;
+export type SelectUserType = typeof users.$inferSelect;
+
+// export const refreshTokens = pg.pgTable("refresh_tokens", {
+// 	createdAt: pg.timestamp({ withTimezone: true }).notNull().defaultNow(),
+// 	id: pg.uuid().primaryKey().defaultRandom(),
+// 	refreshToken: pg.text().notNull(),
+// 	userId: pg
+// 		.uuid()
+// 		.references(() => users.id, { onDelete: "cascade" })
+// 		.notNull(),
+// });

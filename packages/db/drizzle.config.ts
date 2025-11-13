@@ -4,9 +4,8 @@ import { defineConfig } from "drizzle-kit";
 export const dbConnectionString =
 	ENVIRONMENT.NODE_ENV === "development" ? ENVIRONMENT.DATABASE_URL_DEV : ENVIRONMENT.DATABASE_URL_PROD;
 
-export const dbDataCasing = "snake_case";
-
-export default defineConfig({
+export const drizzleConfig = defineConfig({
+	casing: "snake_case",
 	dbCredentials: {
 		url: dbConnectionString,
 	},
@@ -14,3 +13,5 @@ export default defineConfig({
 	out: "./src/migrations",
 	schema: "./src/schema",
 });
+
+export default drizzleConfig;

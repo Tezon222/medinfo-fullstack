@@ -4,6 +4,8 @@ import { consola } from "consola";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
+import { appointmentsRoutes } from "./app/appointments/routes";
+import { authRoutes } from "./app/auth/routes";
 import { diseasesRoutes } from "./app/diseases/routes";
 import { healthTipsRoutes } from "./app/health-tips/routes";
 import { corsOptions } from "./constants/corsOptions";
@@ -36,7 +38,11 @@ app.get("/", (c) => {
 /**
  *  == Routes - v1
  */
-app.basePath("/api/v1").route("", healthTipsRoutes).route("", diseasesRoutes);
+app.basePath("/api/v1")
+	.route("", healthTipsRoutes)
+	.route("", diseasesRoutes)
+	.route("", authRoutes)
+	.route("", appointmentsRoutes);
 
 /**
  *  == Route 404 handler

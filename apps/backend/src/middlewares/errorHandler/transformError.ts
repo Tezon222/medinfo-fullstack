@@ -1,8 +1,9 @@
 /* eslint-disable import/no-named-as-default-member */
 import type { HTTPException } from "hono/http-exception";
+import { AppError } from "../../utils";
+
 // eslint-disable-next-line import/default
 import jwt from "jsonwebtoken";
-import { AppError } from "../../utils";
 
 const handleTimeoutError = (error: Error) => {
 	return new AppError({ cause: error, code: 408, message: "Request timeout" });

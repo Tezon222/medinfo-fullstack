@@ -1,9 +1,9 @@
 {
-	"name": "@medinfo/shared",
+	"name": "@medinfo/env",
 	"type": "module",
 	"private": true,
 	"exports": {
-		"./*": "./src/*.ts"
+		"./backend": "./src/backend.ts"
 	},
 	"scripts": {
 		"build": "tsdown",
@@ -13,8 +13,6 @@
 	},
 	"dependencies": {
 		"@dotenvx/dotenvx": "catalog:",
-		"@medinfo/backend-db": "workspace:*",
-		"@zayne-labs/callapi": "1.11.23",
 		"consola": "3.4.2",
 		"zod": "catalog:"
 	},

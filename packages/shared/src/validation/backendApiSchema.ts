@@ -1,3 +1,4 @@
+import { InsertUserSchema, SelectUserSchema } from "@medinfo/backend-db/schema/auth";
 import { fallBackRouteSchemaKey, type FallBackRouteSchemaKey } from "@zayne-labs/callapi/constants";
 import { defineSchema, defineSchemaRoutes } from "@zayne-labs/callapi/utils";
 import { z } from "zod";
@@ -159,11 +160,51 @@ const diseaseRoutes = defineSchemaRoutes({
 	},
 });
 
+const authRoutes = defineSchemaRoutes({
+	"@post/auth/signup": {
+		body: InsertUserSchema.pick({
+			country: true,
+			dob: true,
+			email: true,
+			firstName: true,
+			gender: true,
+			lastName: true,
+			medicalCertificate: true,
+			role: true,
+			specialty: true,
+		})
+			.extend({
+				password: z.string().min(8, "Password must be at least 8 characters long"),
+			})
+			.superRefine((data, ctx) => {
+				if (data.role === "doctor" && !data.medicalCertificate) {
+					ctx.addIssue({
+						code: "custom",
+						message: "Medical certificate is required for doctors",
+						path: ["medicalCertificate"],
+					});
+				}
+
+				if (data.role === "doctor" && !data.specialty) {
+					ctx.addIssue({
+						code: "custom",
+						message: "Specialty is required for doctors",
+						path: ["specialty"],
+					});
+				}
+			}),
+		data: withBaseSuccessResponse(
+			SelectUserSchema.pick({ avatar: true, email: true, firstName: true, lastName: true, role: true })
+		),
+	},
+});
+
 export const backendApiSchema = defineSchema(
 	{
 		...defaultSchemaRoute,
 		...diseaseRoutes,
 		...healthTipRoutes,
+		...authRoutes,
 	},
 	{ strict: true }
 );
