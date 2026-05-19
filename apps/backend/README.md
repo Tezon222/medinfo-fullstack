@@ -53,4 +53,3 @@ You can find the collection in the root directory under `(bruno)-(medinfo)`.
 
 The backend integrates with HuggingFace for AI capabilities.
 Configuration can be found in `src/services/ai/huggingFace.ts`.
-

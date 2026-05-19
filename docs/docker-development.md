@@ -56,12 +56,12 @@ pnpm dev:frontend
 
 ### Port Mapping
 
-| Service | Container | Host Port | Internal Port | Purpose |
-|---|---|---|---|---|
-| PostgreSQL | `medinfo-postgres-db` | 5432 | 5432 | Primary database |
-| Redis Cache | `medinfo-redis-cache` | 6379 | 6379 | Session storage |
-| Redis Queue | `medinfo-redis-queue` | 6380 | 6379 | Job processing |
-| Backend API | `medinfo-backend` | 8000 | 8000 | API server |
+| Service     | Container             | Host Port | Internal Port | Purpose          |
+| ----------- | --------------------- | --------- | ------------- | ---------------- |
+| PostgreSQL  | `medinfo-postgres-db` | 5432      | 5432          | Primary database |
+| Redis Cache | `medinfo-redis-cache` | 6379      | 6379          | Session storage  |
+| Redis Queue | `medinfo-redis-queue` | 6380      | 6379          | Job processing   |
+| Backend API | `medinfo-backend`     | 8000      | 8000          | API server       |
 
 ## External Services Setup
 
