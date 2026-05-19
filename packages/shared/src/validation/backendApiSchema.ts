@@ -304,9 +304,9 @@ const authRoutes = () => {
 		},
 
 		"@post/auth/signin": {
-			body: z.object({
-				email: z.email("Please enter a valid email"),
-				password: PasswordSchema,
+			body: SignUpSchema.pick({
+				email: true,
+				password: true,
 			}),
 			data: withBaseSuccessResponse(
 				z.object({

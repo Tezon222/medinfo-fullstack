@@ -26,7 +26,7 @@ function NavLink<TRouteType extends string = AppRoutes>(
 
 	return (
 		<Link
-			href={href}
+			href={href as never}
 			data-active={isActive}
 			className={cnMerge(
 				transitionType !== "no-transition" && "nav-link-transition",

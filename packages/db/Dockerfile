@@ -1,7 +1,7 @@
 # ================================================================
 # Stage 1: Base - Setup pnpm
 # ================================================================
-FROM node:24.14.0-slim AS base
+FROM node:24.15.0-slim AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable && corepack prepare pnpm@10.33.3 --activate

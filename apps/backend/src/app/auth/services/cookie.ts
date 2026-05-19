@@ -3,7 +3,7 @@ import * as cookieHelpers from "hono/cookie";
 import type { CookieOptions } from "hono/utils/cookie";
 import { ENVIRONMENT } from "@/config/env";
 
-type ZayneCookieNames = "zayneAccessToken" | "zayneRefreshToken";
+type ZayneCookieNames = "zayneMedinfoAccessToken" | "zayneMedinfoRefreshToken";
 
 type GoogleCookieNames = "google_code_verifier" | "google_oauth_state";
 

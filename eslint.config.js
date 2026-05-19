@@ -2,7 +2,12 @@ import { zayne } from "@zayne-labs/eslint-config";
 
 export default zayne(
 	{
-		ignores: [".next/**", "eslint.config.js", "apps/frontend/next-env.d.ts"],
+		ignores: [
+			".next/**",
+			"eslint.config.js",
+			"apps/frontend/next-env.d.ts",
+			"packages/db/src/migrations/**/*",
+		],
 		type: "app-strict",
 		comments: {
 			overrides: {
@@ -22,7 +27,9 @@ export default zayne(
 		tailwindcssBetter: {
 			settings: { entryPoint: "apps/frontend/tailwind.css" },
 		},
-		tanstack: true,
+		tanstack: {
+			query: true,
+		},
 		typescript: {
 			tsconfigPath: ["packages/*/tsconfig.json", "apps/*/tsconfig.json"],
 		},
@@ -38,10 +45,6 @@ export default zayne(
 	{
 		files: ["apps/backend/src/**/*"],
 		rules: { "security/detect-object-injection": "off" },
-	},
-	{
-		files: ["packages/db/src/migrations/**/*"],
-		rules: { "unicorn/filename-case": "off" },
 	}
 ).overrides({
 	"zayne/node/security/recommended": (config) => ({

@@ -36,6 +36,7 @@ import {
 
 const authRoutes = new Hono()
 	.basePath("/auth")
+
 	.post("/signup", rateLimiter(authRateLimiterOptions), async (ctx) => {
 		const formDataBody = await ctx.req.parseBody();
 
@@ -117,13 +118,11 @@ const authRoutes = new Hono()
 				});
 			}
 
-			// Send verification email within transaction to ensure atomicity
 			await sendVerificationEmail(updatedUser, tx as unknown as typeof db);
 
 			return { newUser: updatedUser, newZayneRefreshTokenResult };
 		});
 
-		// Cache user data after successful transaction
 		await setCache(`user:${result.newUser.id}`, result.newUser);
 
 		return AppJsonResponse(ctx, {
@@ -134,6 +133,7 @@ const authRoutes = new Hono()
 			schema: backendApiSchemaRoutes["@post/auth/signup"].data,
 		});
 	})
+
 	.post(
 		"/signin",
 		rateLimiter(authRateLimiterOptions),
@@ -214,7 +214,7 @@ const authRoutes = new Hono()
 
 			const updatedTokenArray = getUpdatedTokenResultArray({
 				currentUser,
-				zayneRefreshToken: getCookie(ctx, "zayneRefreshToken"),
+				zayneRefreshToken: getCookie(ctx, "zayneMedinfoRefreshToken"),
 			});
 
 			const [updatedUser] = await db
@@ -240,13 +240,13 @@ const authRoutes = new Hono()
 
 			setCookie(ctx, {
 				expires: newZayneAccessTokenResult.expiresAt,
-				name: "zayneAccessToken",
+				name: "zayneMedinfoAccessToken",
 				value: newZayneAccessTokenResult.token,
 			});
 
 			setCookie(ctx, {
 				expires: newZayneRefreshTokenResult.expiresAt,
-				name: "zayneRefreshToken",
+				name: "zayneMedinfoRefreshToken",
 				value: newZayneRefreshTokenResult.token,
 			});
 
@@ -260,6 +260,7 @@ const authRoutes = new Hono()
 			});
 		}
 	)
+
 	.get(
 		"/google",
 		rateLimiter(authRateLimiterOptions),
@@ -295,6 +296,7 @@ const authRoutes = new Hono()
 			});
 		}
 	)
+
 	.get(
 		"/google/callback",
 		rateLimiter(authRateLimiterOptions),
@@ -336,7 +338,7 @@ const authRoutes = new Hono()
 
 				const updatedTokenArray = getUpdatedTokenResultArray({
 					currentUser: user,
-					zayneRefreshToken: getCookie(ctx, "zayneRefreshToken"),
+					zayneRefreshToken: getCookie(ctx, "zayneMedinfoRefreshToken"),
 				});
 
 				const [updatedUser] = await tx
@@ -364,13 +366,13 @@ const authRoutes = new Hono()
 
 			setCookie(ctx, {
 				expires: newZayneAccessTokenResult.expiresAt,
-				name: "zayneAccessToken",
+				name: "zayneMedinfoAccessToken",
 				value: newZayneAccessTokenResult.token,
 			});
 
 			setCookie(ctx, {
 				expires: result.newZayneRefreshTokenResult.expiresAt,
-				name: "zayneRefreshToken",
+				name: "zayneMedinfoRefreshToken",
 				value: result.newZayneRefreshTokenResult.token,
 			});
 
@@ -379,6 +381,7 @@ const authRoutes = new Hono()
 			return ctx.redirect(result.redirectURL);
 		}
 	)
+
 	.post(
 		"/verify-email",
 		rateLimiter(authRateLimiterOptions),
@@ -451,6 +454,7 @@ const authRoutes = new Hono()
 			});
 		}
 	)
+
 	.post(
 		"/resend-verification-email",
 		rateLimiter(authRateLimiterOptions),
@@ -490,6 +494,7 @@ const authRoutes = new Hono()
 			});
 		}
 	)
+
 	.post(
 		"/forgot-password",
 		rateLimiter(authRateLimiterOptions),
@@ -509,6 +514,7 @@ const authRoutes = new Hono()
 				.where(eq(users.email, email))
 				.limit(1);
 
+			// NOTE - Always respond generically to avoid user enumeration
 			if (!existingUser) {
 				return AppJsonResponse(ctx, {
 					data: null,
@@ -563,6 +569,7 @@ const authRoutes = new Hono()
 			});
 		}
 	)
+
 	.post(
 		"/reset-password",
 		rateLimiter(authRateLimiterOptions),
@@ -654,13 +661,16 @@ const authRoutes = new Hono()
 			});
 		}
 	)
-	.use(authMiddleware)
-	.post("/signout", async (ctx) => {
-		const zayneRefreshToken = getCookie(ctx, "zayneRefreshToken");
 
+	.use(authMiddleware)
+
+	.post("/signout", async (ctx) => {
 		const currentUser = ctx.get("currentUser");
 
-		const updatedTokenArray = getUpdatedTokenResultArray({ currentUser, zayneRefreshToken });
+		const updatedTokenArray = getUpdatedTokenResultArray({
+			currentUser,
+			zayneRefreshToken: getCookie(ctx, "zayneMedinfoRefreshToken"),
+		});
 
 		await Promise.all([
 			db
@@ -670,9 +680,9 @@ const authRoutes = new Hono()
 			removeFromCache(`user:${currentUser.id}`),
 		]);
 
-		deleteCookie(ctx, "zayneAccessToken");
+		deleteCookie(ctx, "zayneMedinfoAccessToken");
 
-		deleteCookie(ctx, "zayneRefreshToken");
+		deleteCookie(ctx, "zayneMedinfoRefreshToken");
 
 		return AppJsonResponse(ctx, {
 			data: null,
@@ -680,6 +690,7 @@ const authRoutes = new Hono()
 			schema: backendApiSchemaRoutes["@get/auth/signout"].data,
 		});
 	})
+
 	.post("/signout/all", async (ctx) => {
 		const currentUser = ctx.get("currentUser");
 
@@ -688,8 +699,8 @@ const authRoutes = new Hono()
 			removeFromCache(`user:${currentUser.id}`),
 		]);
 
-		deleteCookie(ctx, "zayneAccessToken");
-		deleteCookie(ctx, "zayneRefreshToken");
+		deleteCookie(ctx, "zayneMedinfoAccessToken");
+		deleteCookie(ctx, "zayneMedinfoRefreshToken");
 
 		return AppJsonResponse(ctx, {
 			data: null,
@@ -697,6 +708,7 @@ const authRoutes = new Hono()
 			schema: backendApiSchemaRoutes["@get/auth/signout"].data,
 		});
 	})
+
 	.get("/session", (ctx) => {
 		const currentUser = ctx.get("currentUser");
 
@@ -706,6 +718,7 @@ const authRoutes = new Hono()
 			schema: backendApiSchemaRoutes["@get/auth/session"].data,
 		});
 	})
+
 	.patch(
 		"/change-password",
 		rateLimiter(authRateLimiterOptions),
@@ -731,15 +744,13 @@ const authRoutes = new Hono()
 				});
 			}
 
-			const zayneRefreshToken = getCookie(ctx, "zayneRefreshToken");
-
 			const newPasswordHash = await hashValue(newPassword);
 
 			// Sign out from other devices aside from current one
 			const updatedTokenArray = getUpdatedTokenResultArray({
 				currentUser,
 				variant: "keep-current",
-				zayneRefreshToken,
+				zayneRefreshToken: getCookie(ctx, "zayneMedinfoRefreshToken"),
 			});
 
 			const [updatedUser] = await db
@@ -768,6 +779,7 @@ const authRoutes = new Hono()
 			});
 		}
 	)
+
 	.patch(
 		"/update-profile",
 		rateLimiter(authRateLimiterOptions),

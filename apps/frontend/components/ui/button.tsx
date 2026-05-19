@@ -32,7 +32,6 @@ export const buttonVariants = tv({
 			isLoading: true,
 			loadingStyle: "side-by-side",
 		},
-		t
 		{
 			className: "hover:rounded-[16px]",
 			size: "medium",

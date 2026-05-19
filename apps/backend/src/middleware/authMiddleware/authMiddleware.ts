@@ -6,18 +6,15 @@ import { validateUserSession } from "./validateUserSession";
 
 const authMiddleware = createMiddleware<HonoAppBindings>(async (ctx, next) => {
 	await requestContext.run({ userAgent: ctx.req.header("user-agent") }, async () => {
-		const zayneAccessToken = getCookie(ctx, "zayneAccessToken");
-		const zayneRefreshToken = getCookie(ctx, "zayneRefreshToken");
-
 		const { currentUser, newZayneAccessTokenResult } = await validateUserSession({
-			zayneAccessToken,
-			zayneRefreshToken,
+			zayneAccessToken: getCookie(ctx, "zayneMedinfoAccessToken"),
+			zayneRefreshToken: getCookie(ctx, "zayneMedinfoRefreshToken"),
 		});
 
 		if (newZayneAccessTokenResult) {
 			setCookie(ctx, {
 				expires: newZayneAccessTokenResult.expiresAt,
-				name: "zayneAccessToken",
+				name: "zayneMedinfoAccessToken",
 				value: newZayneAccessTokenResult.token,
 			});
 		}
