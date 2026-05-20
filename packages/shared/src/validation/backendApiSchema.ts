@@ -6,20 +6,6 @@ import { fallBackRouteSchemaKey } from "@zayne-labs/callapi/constants";
 import { defineSchema, defineSchemaRoutes } from "@zayne-labs/callapi/utils";
 import { z } from "zod";
 
-const HealthTipSchema = z.object({
-	id: z.string(),
-	imageAlt: z.string(),
-	imageUrl: z.string(),
-	lastUpdated: z.string(),
-	mainContent: z.array(
-		z.object({
-			content: z.string(),
-			title: z.string(),
-		})
-	),
-	title: z.string(),
-});
-
 const BaseSuccessResponseSchema = z.object({
 	data: z.record(z.string(), z.unknown()),
 	message: z.string(),
@@ -35,30 +21,59 @@ const BaseErrorResponseSchema = z.object({
 export type BaseApiSuccessResponse<TData = z.infer<typeof BaseSuccessResponseSchema.shape.data>> = Omit<
 	z.infer<typeof BaseSuccessResponseSchema>,
 	"data"
-> & {
-	data: TData;
-};
+> & { data: TData };
 
 export type BaseApiErrorResponse<TErrors = z.infer<typeof BaseErrorResponseSchema>["errors"]> = Omit<
 	z.infer<typeof BaseErrorResponseSchema>,
 	"errors"
-> & {
-	errors: TErrors;
-};
+> & { errors: TErrors };
 
-const withBaseSuccessResponse = <TSchemaObject extends z.ZodType>(dataSchema: TSchemaObject) => {
-	return BaseSuccessResponseSchema.extend({
-		data: dataSchema,
+const withBaseSuccessResponse = <T extends z.ZodType>(dataSchema: T) =>
+	BaseSuccessResponseSchema.extend({ data: dataSchema });
+
+const withBaseErrorResponse = <T extends z.ZodType = typeof BaseErrorResponseSchema.shape.errors>(
+	errorSchema?: T
+) =>
+	BaseErrorResponseSchema.extend({
+		errors: (errorSchema ?? BaseErrorResponseSchema.shape.errors) as NonNullable<T>,
 	});
-};
 
-const withBaseErrorResponse = <
-	TSchemaObject extends z.ZodType = typeof BaseErrorResponseSchema.shape.errors,
->(
-	errorSchema?: TSchemaObject
-) => {
-	return BaseErrorResponseSchema.extend({
-		errors: (errorSchema ?? BaseErrorResponseSchema.shape.errors) as NonNullable<TSchemaObject>,
+const PasswordSchema = z.string().min(8, "Password must be at least 8 characters long");
+
+const TokenObjectSchema = z.object({
+	expiresAt: z.preprocess((v: string) => new Date(v), z.date()),
+	token: z.string(),
+});
+
+const stringWithNumberValidation = () => z.preprocess((v: string) => Number(v), z.int().positive());
+
+const stringWithBooleanValidation = () =>
+	z.preprocess((value: string) => {
+		if (value === "true") {
+			return true;
+		}
+
+		if (value === "false") {
+			return false;
+		}
+
+		return value;
+	}, z.boolean());
+
+const withMatchingPasswordFields = <
+	TPasswordKey extends "newPassword" | "password",
+	TConfirmPasswordKey extends "confirmNewPassword" | "confirmPassword",
+	TSchema extends z.ZodObject<Record<TConfirmPasswordKey | TPasswordKey, z.ZodType>>,
+>(options: {
+	confirmPasswordKey: TConfirmPasswordKey;
+	passwordKey: TPasswordKey;
+	schema: TSchema;
+}) => {
+	const { confirmPasswordKey, passwordKey, schema } = options;
+
+	return schema.refine((data) => data[passwordKey as never] === data[confirmPasswordKey as never], {
+		error: "Passwords do not match",
+		path: [confirmPasswordKey],
 	});
 };
 
@@ -68,21 +83,201 @@ const defaultSchemaRoute = defineSchemaRoutes({
 	},
 });
 
-const stringWithNumberValidation = () => {
-	return z.preprocess((value: string) => Number(value), z.int().positive());
+export const SignUpSchema = InsertUserSchema.pick({
+	dob: true,
+	gender: true,
+	role: true,
+})
+	.extend({
+		country: z.string(),
+		email: z.email("Please enter a valid email"),
+		firstName: z.string().min(1, "First name is required"),
+		lastName: z.string().min(1, "Last name is required"),
+		medicalLicense: z.file().optional(),
+		password: PasswordSchema,
+		specialty: z.string().optional(),
+	})
+	.superRefine((data, ctx) => {
+		if (data.role === "doctor" && !data.medicalLicense) {
+			ctx.addIssue({
+				code: "custom",
+				message: "Medical certificate is required for doctors",
+				path: ["medicalLicense"],
+			});
+		}
+
+		if (data.role === "doctor" && !data.specialty) {
+			ctx.addIssue({
+				code: "custom",
+				message: "Specialty is required for doctors",
+				path: ["specialty"],
+			});
+		}
+	});
+
+const authRoutes = () => {
+	const PatientSchema = SelectUserSchema.pick({
+		avatar: true,
+		bio: true,
+		city: true,
+		country: true,
+		email: true,
+		firstName: true,
+		fullName: true,
+		gender: true,
+		lastName: true,
+		role: true,
+	});
+
+	const DoctorRequiredSchema = SelectUserSchema.pick({
+		medicalLicense: true,
+		specialty: true,
+	});
+
+	const UserDataSchema = z.object({
+		...PatientSchema.shape,
+		...DoctorRequiredSchema.shape,
+	});
+
+	const AuthTokensSchema = z.object({
+		access: TokenObjectSchema,
+		refresh: TokenObjectSchema,
+	});
+
+	const AuthSuccessResponseSchema = withBaseSuccessResponse(
+		z.object({
+			user: UserDataSchema,
+		})
+	);
+
+	const NullSuccessResponseSchema = withBaseSuccessResponse(z.null());
+
+	return defineSchemaRoutes({
+		"@get/auth/google": {
+			data: withBaseSuccessResponse(
+				z.object({
+					authURL: z.url(),
+				})
+			),
+			query: UserDataSchema.pick({ role: true }).superRefine((data, ctx) => {
+				if (data.role === "doctor") {
+					ctx.addIssue({
+						code: "custom",
+						message:
+							"Doctors cannot signup with google due to requirements like license and specialty",
+					});
+				}
+			}),
+		},
+
+		"@get/auth/google/callback": {
+			query: z.object({
+				code: z.string(),
+				state: z.string(),
+			}),
+		},
+
+		"@get/auth/session": {
+			data: AuthSuccessResponseSchema,
+		},
+
+		"@get/auth/signout": {
+			data: NullSuccessResponseSchema,
+		},
+
+		"@patch/auth/change-password": {
+			body: withMatchingPasswordFields({
+				confirmPasswordKey: "confirmNewPassword",
+				passwordKey: "newPassword",
+				schema: z.object({
+					confirmNewPassword: PasswordSchema,
+					currentPassword: z.string().min(1, "Current password is required"),
+					newPassword: PasswordSchema,
+				}),
+			}),
+			data: NullSuccessResponseSchema,
+		},
+
+		"@patch/auth/update-profile": {
+			body: PatientSchema.pick({
+				bio: true,
+				city: true,
+				country: true,
+				email: true,
+				firstName: true,
+				gender: true,
+				lastName: true,
+			}).partial(),
+			data: AuthSuccessResponseSchema,
+		},
+
+		"@post/auth/forgot-password": {
+			body: SignUpSchema.pick({ email: true }),
+			data: NullSuccessResponseSchema,
+		},
+
+		"@post/auth/resend-verification-email": {
+			body: SignUpSchema.pick({ email: true }),
+			data: NullSuccessResponseSchema,
+		},
+
+		"@post/auth/reset-password": {
+			body: withMatchingPasswordFields({
+				confirmPasswordKey: "confirmNewPassword",
+				passwordKey: "newPassword",
+				schema: z.object({
+					confirmNewPassword: PasswordSchema,
+					newPassword: PasswordSchema,
+					token: z.string().min(1, "Reset token is required"),
+				}),
+			}),
+			data: NullSuccessResponseSchema,
+		},
+
+		"@post/auth/signin": {
+			body: SignUpSchema.pick({
+				email: true,
+				password: true,
+			}),
+			data: withBaseSuccessResponse(
+				z.object({
+					tokens: AuthTokensSchema,
+					user: UserDataSchema,
+				})
+			),
+		},
+
+		"@post/auth/signup": {
+			body: z.instanceof(FormData),
+			data: AuthSuccessResponseSchema,
+		},
+
+		"@post/auth/verify-email": {
+			body: SignUpSchema.pick({ email: true }).extend({
+				code: z.string().length(6, "Code must be 6 digits long"),
+			}),
+			data: withBaseSuccessResponse(
+				z.object({
+					user: UserDataSchema.pick({ email: true, role: true }),
+				})
+			),
+		},
+	});
 };
 
-const stringWithBooleanValidation = () => {
-	return z.preprocess((value: string) => {
-		if (value === "true") {
-			return true;
-		}
-		if (value === "false") {
-			return false;
-		}
-		return value;
-	}, z.boolean());
-};
+const HealthTipSchema = z.object({
+	id: z.string(),
+	imageAlt: z.string(),
+	imageUrl: z.string(),
+	lastUpdated: z.string(),
+	mainContent: z.array(
+		z.object({
+			content: z.string(),
+			title: z.string(),
+		})
+	),
+	title: z.string(),
+});
 
 const healthTipRoutes = defineSchemaRoutes({
 	"@get/health-tips/all": {
@@ -150,195 +345,6 @@ const diseaseRoutes = () => {
 		"@post/diseases/add": {
 			body: DiseaseDataSchema,
 			data: withBaseSuccessResponse(DiseaseDataSchema),
-		},
-	});
-};
-
-const PasswordSchema = z.string().min(8, "Password must be at least 8 characters long");
-
-export const SignUpSchema = InsertUserSchema.pick({
-	dob: true,
-	gender: true,
-	role: true,
-})
-	.extend({
-		country: z.string(),
-		email: z.email("Please enter a valid email"),
-		firstName: z.string().min(1, "First name is required"),
-		lastName: z.string().min(1, "Last name is required"),
-		medicalLicense: z.file().optional(),
-		password: PasswordSchema,
-		specialty: z.string().optional(),
-	})
-	.superRefine((data, ctx) => {
-		if (data.role === "doctor" && !data.medicalLicense) {
-			ctx.addIssue({
-				code: "custom",
-				message: "Medical certificate is required for doctors",
-				path: ["medicalLicense"],
-			});
-		}
-
-		if (data.role === "doctor" && !data.specialty) {
-			ctx.addIssue({
-				code: "custom",
-				message: "Specialty is required for doctors",
-				path: ["specialty"],
-			});
-		}
-	});
-
-const authRoutes = () => {
-	const PatientSchema = SelectUserSchema.pick({
-		avatar: true,
-		bio: true,
-		city: true,
-		country: true,
-		email: true,
-		firstName: true,
-		fullName: true,
-		gender: true,
-		lastName: true,
-		role: true,
-	});
-
-	const DoctorRequiredSchema = SelectUserSchema.pick({
-		medicalLicense: true,
-		specialty: true,
-	});
-
-	const UserDataSchema = z.object({
-		...PatientSchema.shape,
-		...DoctorRequiredSchema.shape,
-	});
-
-	const TokenObjectSchema = z.object({
-		expiresAt: z.preprocess((value: string) => new Date(value), z.date()),
-		token: z.string(),
-	});
-
-	return defineSchemaRoutes({
-		"@get/auth/google": {
-			data: withBaseSuccessResponse(
-				z.object({
-					authURL: z.url(),
-				})
-			),
-			query: UserDataSchema.pick({ role: true }).superRefine((data, ctx) => {
-				if (data.role === "doctor") {
-					ctx.addIssue({
-						code: "custom",
-						message:
-							"Doctors cannot signup with google due to requirements like license and specialty",
-					});
-				}
-			}),
-		},
-
-		"@get/auth/google/callback": {
-			query: z.object({
-				code: z.string(),
-				state: z.string(),
-			}),
-		},
-
-		"@get/auth/session": {
-			data: withBaseSuccessResponse(
-				z.object({
-					user: UserDataSchema,
-				})
-			),
-		},
-
-		"@get/auth/signout": {
-			data: withBaseSuccessResponse(z.null()),
-		},
-
-		"@patch/auth/change-password": {
-			body: z
-				.object({
-					confirmNewPassword: PasswordSchema,
-					currentPassword: z.string().min(1, "Current password is required"),
-					newPassword: PasswordSchema,
-				})
-				.refine((data) => data.newPassword === data.confirmNewPassword, {
-					message: "Passwords do not match",
-					path: ["confirmNewPassword"],
-				}),
-			data: withBaseSuccessResponse(z.null()),
-		},
-
-		"@patch/auth/update-profile": {
-			body: PatientSchema.pick({
-				bio: true,
-				city: true,
-				country: true,
-				email: true,
-				firstName: true,
-				gender: true,
-				lastName: true,
-			}).partial(),
-			data: withBaseSuccessResponse(z.object({ user: UserDataSchema })),
-		},
-
-		"@post/auth/forgot-password": {
-			body: SignUpSchema.pick({ email: true }),
-			data: withBaseSuccessResponse(z.null()),
-		},
-
-		"@post/auth/resend-verification-email": {
-			body: SignUpSchema.pick({ email: true }),
-			data: withBaseSuccessResponse(z.null()),
-		},
-
-		"@post/auth/reset-password": {
-			body: z
-				.object({
-					confirmNewPassword: PasswordSchema,
-					newPassword: PasswordSchema,
-					token: z.string().min(1, "Reset token is required"),
-				})
-				.refine((data) => data.newPassword === data.confirmNewPassword, {
-					message: "Passwords do not match",
-					path: ["confirmNewPassword"],
-				}),
-			data: withBaseSuccessResponse(z.null()),
-		},
-
-		"@post/auth/signin": {
-			body: SignUpSchema.pick({
-				email: true,
-				password: true,
-			}),
-			data: withBaseSuccessResponse(
-				z.object({
-					tokens: z.object({
-						access: TokenObjectSchema,
-						refresh: TokenObjectSchema,
-					}),
-					user: UserDataSchema,
-				})
-			),
-		},
-
-		"@post/auth/signup": {
-			body: z.instanceof(FormData),
-			data: withBaseSuccessResponse(
-				z.object({
-					user: UserDataSchema,
-				})
-			),
-		},
-
-		"@post/auth/verify-email": {
-			body: SignUpSchema.pick({ email: true }).extend({
-				code: z.string().length(6, "Code must be 6 digits long"),
-			}),
-			data: withBaseSuccessResponse(
-				z.object({
-					user: UserDataSchema.pick({ email: true, role: true }),
-				})
-			),
 		},
 	});
 };

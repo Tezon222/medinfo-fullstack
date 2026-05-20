@@ -1,0 +1,69 @@
+meta {
+  name: signout-all
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{baseURL}}/auth/signout/all
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  # Sign Out From All Devices
+
+  Signs out the user from **all devices** by clearing all refresh tokens in their token array. This is different from `/auth/signout` which only clears the current session.
+
+  ## Authentication
+
+  Requires valid `zayneAccessToken` and `zayneRefreshToken` cookies.
+
+  ## Success Response (200 OK)
+
+  ```json
+  {
+    "status": "success",
+    "message": "Signed out from all devices successfully",
+    "data": null
+  }
+  ```
+
+  **Note**:
+  - Clears `zayneAccessToken` cookie
+  - Clears `zayneRefreshToken` cookie
+  - Invalidates all refresh tokens in user's token array (completely signs out all sessions)
+  - User must sign in again on all devices
+
+  ## Error Response (401 Unauthorized)
+
+  If no valid session exists:
+
+  ```json
+  {
+    "status": "error",
+    "message": "Unauthorized"
+  }
+  ```
+
+  ## Error Response (401 Unauthorized - Session Expired)
+
+  If both tokens are expired:
+
+  ```json
+  {
+    "status": "error",
+    "message": "Session expired"
+  }
+  ```
+
+  ## Difference from /auth/signout
+
+  - **`/auth/signout`**: Signs out current device only (removes current token from array)
+  - **`/auth/signout/all`**: Signs out all devices (clears entire token array)
+}

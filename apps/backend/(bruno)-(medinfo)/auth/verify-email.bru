@@ -1,0 +1,78 @@
+meta {
+  name: verify-email
+  type: http
+  seq: 8
+}
+
+post {
+  url: {{baseURL}}/auth/verify-email
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "email": "doctor@example.com",
+    "code": "123456"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  # Verify Email
+
+  Verifies the user's email address using a verification code sent to their inbox.
+
+  ## Request Body
+
+  - `email` (string, required): The email address to verify
+  - `code` (string, required): The 6-digit verification code sent to the email
+
+  ## Success Response (200 OK)
+
+  ```json
+  {
+    "status": "success",
+    "message": "Account successfully verified!",
+    "data": {
+      "user": {
+        "email": "doctor@example.com",
+        "role": "doctor"
+      }
+    }
+  }
+  ```
+
+  **Note**:
+  - Updates `emailVerifiedAt` timestamp
+  - Deletes the verification code record
+  - User must verify email before accessing most features
+
+  ## Error Response (400 Bad Request)
+
+  If the code is invalid or expired:
+
+  ```json
+  {
+    "status": "error",
+    "message": "Invalid or expired verification code"
+  }
+  ```
+
+  If no verification code found for email:
+
+  ```json
+  {
+    "status": "error",
+    "message": "Invalid or expired verification code"
+  }
+  ```
+
+  **Note**:
+  - Verification codes expire after a set duration
+  - If expired, user must request a new code via /resend-verification-email
+}
