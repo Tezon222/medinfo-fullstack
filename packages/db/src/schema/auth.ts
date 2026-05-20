@@ -24,14 +24,10 @@ export const users = pg.pgTable(
 		medicalLicense: pg.text(),
 		passwordChangedAt: pg.timestamp({ withTimezone: true }),
 		passwordHash: pg.text(),
-		passwordResetRetriedAt: pg.timestamp({ withTimezone: true }),
-		passwordResetRetryCount: pg.integer().notNull().default(0),
-		passwordResetToken: pg.text(),
-		passwordResetTokenExpiresAt: pg.timestamp({ withTimezone: true }),
 		refreshTokenArray: pg
 			.jsonb()
 			.notNull()
-			.$type<Array<{ expiresAt: Date; issuedAt: Date; token: string }>>()
+			.$type<Array<{ expiresAt: Date; issuedAt: Date; tokenHash: string }>>()
 			.default([]),
 		role: pg.text({ enum: ["doctor", "patient"] }).notNull(),
 		specialty: pg.text(),
@@ -74,12 +70,13 @@ export type SelectUserType = typeof users.$inferSelect;
 // );
 
 export const emailVerificationCodes = pg.pgTable("email_verification_codes", {
-	code: pg.text().notNull().unique(),
+	codeHash: pg.text().notNull().unique(),
 	createdAt: pg.timestamp({ withTimezone: true }).defaultNow().notNull(),
 	expiresAt: pg.timestamp({ withTimezone: true }).notNull(),
 	id: pg.uuid().defaultRandom().primaryKey(),
 	userId: pg
 		.uuid()
+		.unique()
 		.notNull()
 		.references(() => users.id, { onDelete: "cascade" }),
 });
@@ -89,7 +86,9 @@ export const passwordResetTokens = pg.pgTable("password_reset_tokens", {
 	email: pg.text().unique().notNull(),
 	expiresAt: pg.timestamp({ withTimezone: true }).notNull(),
 	id: pg.uuid().defaultRandom().primaryKey(),
-	token: pg.text().notNull().unique(),
+	retriedAt: pg.timestamp({ withTimezone: true }).defaultNow().notNull(),
+	retryCount: pg.integer().notNull().default(1),
+	tokenHash: pg.text().notNull().unique(),
 	userId: pg
 		.uuid()
 		.unique()

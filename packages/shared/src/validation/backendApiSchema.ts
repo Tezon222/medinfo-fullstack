@@ -219,7 +219,11 @@ const authRoutes = () => {
 
 	return defineSchemaRoutes({
 		"@get/auth/google": {
-			data: withBaseSuccessResponse(z.object({ authURL: z.url() })),
+			data: withBaseSuccessResponse(
+				z.object({
+					authURL: z.url(),
+				})
+			),
 			query: UserDataSchema.pick({ role: true }).superRefine((data, ctx) => {
 				if (data.role === "doctor") {
 					ctx.addIssue({
@@ -278,14 +282,12 @@ const authRoutes = () => {
 		},
 
 		"@post/auth/forgot-password": {
-			body: z.object({ email: z.email("Please enter a valid email") }),
+			body: SignUpSchema.pick({ email: true }),
 			data: withBaseSuccessResponse(z.null()),
 		},
 
 		"@post/auth/resend-verification-email": {
-			body: z.object({
-				email: z.email("Please enter a valid email"),
-			}),
+			body: SignUpSchema.pick({ email: true }),
 			data: withBaseSuccessResponse(z.null()),
 		},
 
@@ -329,9 +331,8 @@ const authRoutes = () => {
 		},
 
 		"@post/auth/verify-email": {
-			body: z.object({
+			body: SignUpSchema.pick({ email: true }).extend({
 				code: z.string().length(6, "Code must be 6 digits long"),
-				email: z.email("Please enter a valid email"),
 			}),
 			data: withBaseSuccessResponse(
 				z.object({

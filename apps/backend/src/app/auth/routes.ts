@@ -1,5 +1,5 @@
 import { db } from "@medinfo/db";
-import { emailVerificationCodes, users } from "@medinfo/db/schema/auth";
+import { emailVerificationCodes, passwordResetTokens, users } from "@medinfo/db/schema/auth";
 import { backendApiSchemaRoutes, SignUpSchema } from "@medinfo/shared/validation/backendApiSchema";
 import { pickKeys } from "@zayne-labs/toolkit-core";
 import { differenceInHours, isPast } from "date-fns";
@@ -21,7 +21,7 @@ import {
 	sendVerificationEmail,
 	TokenSchema,
 } from "./services/emails";
-import { hashValue, verifyHashedValue } from "./services/hash";
+import { hashToken, hashValue, verifyHashedValue } from "./services/hash";
 import {
 	createGoogleAuthURL,
 	findOrCreateUserFromGoogle,
@@ -31,6 +31,7 @@ import {
 	decodeJwtToken,
 	generateAccessToken,
 	generateRefreshToken,
+	getRefreshTokenResultWithHash,
 	getUpdatedTokenResultArray,
 } from "./services/token";
 
@@ -104,10 +105,12 @@ const authRoutes = new Hono()
 			}
 
 			const newZayneRefreshTokenResult = generateRefreshToken(insertedUser);
+			const newZayneRefreshTokenResultWithHash =
+				getRefreshTokenResultWithHash(newZayneRefreshTokenResult);
 
 			const [updatedUser] = await tx
 				.update(users)
-				.set({ refreshTokenArray: [newZayneRefreshTokenResult] })
+				.set({ refreshTokenArray: [newZayneRefreshTokenResultWithHash] })
 				.where(eq(users.id, insertedUser.id))
 				.returning();
 
@@ -211,6 +214,8 @@ const authRoutes = new Hono()
 			}
 
 			const newZayneRefreshTokenResult = generateRefreshToken(currentUser);
+			const newZayneRefreshTokenResultWithHash =
+				getRefreshTokenResultWithHash(newZayneRefreshTokenResult);
 
 			const updatedTokenArray = getUpdatedTokenResultArray({
 				currentUser,
@@ -222,7 +227,7 @@ const authRoutes = new Hono()
 				.set({
 					lastLoginAt: new Date(),
 					loginRetryCount: 0,
-					refreshTokenArray: [...updatedTokenArray, newZayneRefreshTokenResult],
+					refreshTokenArray: [...updatedTokenArray, newZayneRefreshTokenResultWithHash],
 				})
 				.where(eq(users.id, currentUser.id))
 				.returning();
@@ -335,6 +340,8 @@ const authRoutes = new Hono()
 				);
 
 				const newZayneRefreshTokenResult = generateRefreshToken(user);
+				const newZayneRefreshTokenResultWithHash =
+					getRefreshTokenResultWithHash(newZayneRefreshTokenResult);
 
 				const updatedTokenArray = getUpdatedTokenResultArray({
 					currentUser: user,
@@ -345,8 +352,8 @@ const authRoutes = new Hono()
 					.update(users)
 					.set(
 						variant === "new-user" ?
-							{ refreshTokenArray: [newZayneRefreshTokenResult] }
-						:	{ refreshTokenArray: [...updatedTokenArray, newZayneRefreshTokenResult] }
+							{ refreshTokenArray: [newZayneRefreshTokenResultWithHash] }
+						:	{ refreshTokenArray: [...updatedTokenArray, newZayneRefreshTokenResultWithHash] }
 					)
 					.where(eq(users.id, user.id))
 					.returning();
@@ -391,7 +398,7 @@ const authRoutes = new Hono()
 
 			const [result] = await db
 				.select({
-					code: emailVerificationCodes.code,
+					codeHash: emailVerificationCodes.codeHash,
 					expiresAt: emailVerificationCodes.expiresAt,
 					userId: emailVerificationCodes.userId,
 				})
@@ -420,7 +427,7 @@ const authRoutes = new Hono()
 				});
 			}
 
-			const isCodeValid = await verifyHashedValue(result.code, code);
+			const isCodeValid = await verifyHashedValue(result.codeHash, code);
 
 			if (!isCodeValid) {
 				throw new AppError({
@@ -433,7 +440,7 @@ const authRoutes = new Hono()
 			const [updatedUser] = await db
 				.update(users)
 				.set({ emailVerifiedAt: new Date() })
-				.where(eq(users.email, email))
+				.where(eq(users.id, result.userId))
 				.returning({ email: users.email, role: users.role });
 
 			if (!updatedUser) {
@@ -471,21 +478,10 @@ const authRoutes = new Hono()
 				.where(eq(users.email, email))
 				.limit(1);
 
-			if (!existingUser) {
-				throw new AppError({
-					code: 404,
-					message: "No account found with this email address",
-				});
+			// NOTE - Always respond generically to avoid user enumeration
+			if (existingUser && !existingUser.emailVerifiedAt) {
+				await sendVerificationEmail(existingUser, db);
 			}
-
-			if (existingUser.emailVerifiedAt) {
-				throw new AppError({
-					code: 400,
-					message: "Email is already verified",
-				});
-			}
-
-			await sendVerificationEmail(existingUser, db);
 
 			return AppJsonResponse(ctx, {
 				data: null,
@@ -502,69 +498,51 @@ const authRoutes = new Hono()
 		async (ctx) => {
 			const { email } = ctx.req.valid("json");
 
-			const [existingUser] = await db
+			const [result] = await db
 				.select({
-					email: users.email,
-					firstName: users.firstName,
-					id: users.id,
-					passwordResetRetriedAt: users.passwordResetRetriedAt,
-					passwordResetRetryCount: users.passwordResetRetryCount,
+					token: {
+						retriedAt: passwordResetTokens.retriedAt,
+						retryCount: passwordResetTokens.retryCount,
+					},
+					user: {
+						email: users.email,
+						firstName: users.firstName,
+						id: users.id,
+					},
 				})
 				.from(users)
+				.leftJoin(passwordResetTokens, eq(users.id, passwordResetTokens.userId))
 				.where(eq(users.email, email))
 				.limit(1);
 
 			// NOTE - Always respond generically to avoid user enumeration
-			if (!existingUser) {
-				return AppJsonResponse(ctx, {
-					data: null,
-					message: `Password reset link sent to ${email}`,
-					schema: backendApiSchemaRoutes["@post/auth/forgot-password"].data,
-				});
-			}
+			if (result) {
+				const hoursSincePasswordRetryWindowStart =
+					result.token?.retriedAt ? differenceInHours(new Date(), result.token.retriedAt) : null;
 
-			const hoursSincePasswordRetryWindowStart =
-				existingUser.passwordResetRetriedAt ?
-					differenceInHours(new Date(), existingUser.passwordResetRetriedAt)
-				:	null;
+				const passwordResetWindowActive =
+					hoursSincePasswordRetryWindowStart !== null && hoursSincePasswordRetryWindowStart < 24;
 
-			const passwordResetWindowActive =
-				hoursSincePasswordRetryWindowStart !== null && hoursSincePasswordRetryWindowStart < 24;
+				if (result.token && result.token.retryCount >= 3 && passwordResetWindowActive) {
+					await db
+						.update(users)
+						.set({
+							suspendedAt: new Date(),
+						})
+						.where(eq(users.id, result.user.id));
 
-			if (existingUser.passwordResetRetryCount >= 3 && passwordResetWindowActive) {
-				await db.update(users).set({ suspendedAt: new Date() }).where(eq(users.id, existingUser.id));
-
-				throw new AppError({
-					code: 401,
-					message: "Password reset retries exceeded! Account suspended temporarily",
-				});
-			}
-
-			await db.transaction(async (tx) => {
-				const [updatedUser] = await tx
-					.update(users)
-					.set({
-						passwordResetRetriedAt:
-							passwordResetWindowActive ? existingUser.passwordResetRetriedAt : new Date(),
-						passwordResetRetryCount:
-							passwordResetWindowActive ? sql`${users.passwordResetRetryCount} + 1` : 1,
-					})
-					.where(eq(users.id, existingUser.id))
-					.returning({ email: users.email, firstName: users.firstName, id: users.id });
-
-				if (!updatedUser) {
 					throw new AppError({
-						code: 500,
-						message: "Failed to update user",
+						code: 401,
+						message: "Password reset retries exceeded! Account suspended temporarily",
 					});
 				}
 
-				await sendPasswordResetEmail(updatedUser, tx as unknown as typeof db);
-			});
+				await sendPasswordResetEmail(result.user, db, passwordResetWindowActive);
+			}
 
 			return AppJsonResponse(ctx, {
 				data: null,
-				message: `Password reset link sent to ${email}`,
+				message: `Password reset link sent to ${email} if it's registered`,
 				schema: backendApiSchemaRoutes["@post/auth/forgot-password"].data,
 			});
 		}
@@ -588,19 +566,26 @@ const authRoutes = new Hono()
 				schema: TokenSchema,
 			});
 
+			const hashedIncomingToken = hashToken(decodedPayload.token);
+
 			const [result] = await db
 				.select({
-					email: users.email,
-					firstName: users.firstName,
-					id: users.id,
-					passwordResetToken: users.passwordResetToken,
-					passwordResetTokenExpiresAt: users.passwordResetTokenExpiresAt,
+					token: {
+						expiresAt: passwordResetTokens.expiresAt,
+						id: passwordResetTokens.id,
+					},
+					user: {
+						email: users.email,
+						firstName: users.firstName,
+						id: users.id,
+					},
 				})
-				.from(users)
-				.where(and(eq(users.passwordResetToken, decodedPayload.token), isNull(users.suspendedAt)))
+				.from(passwordResetTokens)
+				.innerJoin(users, eq(passwordResetTokens.userId, users.id))
+				.where(and(eq(passwordResetTokens.tokenHash, hashedIncomingToken), isNull(users.suspendedAt)))
 				.limit(1);
 
-			if (!result?.passwordResetToken || !result.passwordResetTokenExpiresAt) {
+			if (!result?.token) {
 				throw new AppError({
 					cause: "No user or reset token found",
 					code: 400,
@@ -608,14 +593,8 @@ const authRoutes = new Hono()
 				});
 			}
 
-			if (isPast(result.passwordResetTokenExpiresAt)) {
-				await db
-					.update(users)
-					.set({
-						passwordResetToken: null,
-						passwordResetTokenExpiresAt: null,
-					})
-					.where(eq(users.id, result.id));
+			if (isPast(result.token.expiresAt)) {
+				await db.delete(passwordResetTokens).where(eq(passwordResetTokens.id, result.token.id));
 
 				throw new AppError({
 					cause: "Reset token has expired",
@@ -626,21 +605,23 @@ const authRoutes = new Hono()
 
 			const newPasswordHash = await hashValue(newPassword);
 
-			const [updatedUser] = await db
-				.update(users)
-				.set({
-					passwordChangedAt: new Date(),
-					passwordHash: newPasswordHash,
-					passwordResetRetriedAt: null,
-					passwordResetRetryCount: 0,
-					passwordResetToken: null,
-					passwordResetTokenExpiresAt: null,
-					// Sign out from all devices
-					refreshTokenArray: [],
-					suspendedAt: null,
-				})
-				.where(eq(users.id, result.id))
-				.returning({ email: users.email, firstName: users.firstName, id: users.id });
+			const [updatedUser] = await db.transaction(async (tx) => {
+				const [userUpdate] = await tx
+					.update(users)
+					.set({
+						passwordChangedAt: new Date(),
+						passwordHash: newPasswordHash,
+						// Sign out from all devices
+						refreshTokenArray: [],
+						suspendedAt: null,
+					})
+					.where(eq(users.id, result.user.id))
+					.returning({ email: users.email, firstName: users.firstName, id: users.id });
+
+				await tx.delete(passwordResetTokens).where(eq(passwordResetTokens.id, result.token.id));
+
+				return [userUpdate];
+			});
 
 			if (!updatedUser) {
 				throw new AppError({

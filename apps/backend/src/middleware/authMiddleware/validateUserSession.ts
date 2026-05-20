@@ -68,6 +68,8 @@ const getAndVerifyUserFromToken = async (options: VerifyOptions) => {
 		});
 	}
 
+	const requestContextValue = requestContext.get();
+
 	// == At this point, the refresh token is still valid but is not in the refreshTokenArray (whitelist)
 	// == So it can be seen as a token reuse situation
 	// == So clear the refreshTokenArray to log the user out from all devices including current device, greatly diminishing the risk of another token reuse attack
@@ -75,7 +77,7 @@ const getAndVerifyUserFromToken = async (options: VerifyOptions) => {
 		warnAboutTokenReuse({
 			compromisedRefreshToken: zayneRefreshToken,
 			compromisedUser: currentUser,
-			requestUserAgent: requestContext.get().userAgent ?? "unknown",
+			requestUserAgent: requestContextValue.userAgent ?? "unknown",
 		});
 
 		await Promise.all([
