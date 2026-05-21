@@ -201,15 +201,20 @@ const authRoutes = () => {
 		},
 
 		"@patch/auth/update-profile": {
-			body: UserSchema.pick({
-				bio: true,
-				city: true,
+			body: BaseSignUpSchema.pick({
 				country: true,
 				email: true,
 				firstName: true,
 				gender: true,
 				lastName: true,
-			}).partial(),
+			})
+				.extend(
+					UserSchema.pick({
+						bio: true,
+						city: true,
+					}).shape
+				)
+				.partial(),
 			data: AuthSuccessResponseSchema,
 		},
 

@@ -149,7 +149,7 @@ function VerifyEmailPage(props: PageProps<"/auth/verify-email">) {
 										Didn't receive the code?
 									</p>
 									<Button
-										theme="primary-ghost"
+										theme="primary-outline"
 										size="large"
 										isLoading={resendCodeMutationResult.isPending}
 										disabled={resendCodeMutationResult.isPending}
@@ -204,7 +204,7 @@ function VerifyEmailPage(props: PageProps<"/auth/verify-email">) {
 						the code to verify your account.
 					</p>
 
-					<Button theme="secondary-ghost" className="mt-9.5" asChild={true}>
+					<Button theme="secondary-outline" className="mt-9.5" asChild={true}>
 						<NavLink href="/auth/signin">Back to Sign in</NavLink>
 					</Button>
 				</aside>

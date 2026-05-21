@@ -76,7 +76,7 @@ export function DateTimePicker(props: DatePickerProps) {
 				<button
 					type="button"
 					className={cnMerge(
-						buttonVariants({ theme: "primary-ghost", withInteractions: true }),
+						buttonVariants({ theme: "primary-outline", withInteractions: true }),
 						"w-full justify-between text-[14px] text-medinfo-body-color md:w-full",
 						className
 					)}

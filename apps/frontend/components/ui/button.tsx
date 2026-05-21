@@ -47,7 +47,7 @@ export const buttonVariants = tv({
 			className: `hover:border-medinfo-primary-darker active:border-medinfo-primary-lighter
 			active:text-medinfo-primary-lighter`,
 			isDisabled: false,
-			theme: "primary-ghost",
+			theme: "primary-outline",
 			withInteractions: true,
 		},
 		{
@@ -93,9 +93,9 @@ export const buttonVariants = tv({
 		theme: {
 			primary: "bg-medinfo-primary-main text-white",
 
-			"primary-ghost": "border-2 border-medinfo-primary-main bg-white text-medinfo-primary-main",
+			"primary-outline": "border-2 border-medinfo-primary-main bg-white text-medinfo-primary-main",
 
-			"secondary-ghost":
+			"secondary-outline":
 				"border-2 border-medinfo-secondary-lighter bg-transparent text-medinfo-secondary-lighter",
 		},
 

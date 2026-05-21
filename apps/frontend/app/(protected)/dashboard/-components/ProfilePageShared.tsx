@@ -106,7 +106,7 @@ function ProfilePageShared() {
 				</div>
 
 				<div className="flex gap-4">
-					<Button theme="primary-ghost">Remove</Button>
+					<Button theme="primary-outline">Remove</Button>
 					<Button theme="primary">Change</Button>
 				</div>
 			</section>
@@ -219,7 +219,7 @@ function ProfilePageShared() {
 					</Form.Field>
 
 					<div className="flex gap-6 self-center lg:self-end">
-						<Button type="button" theme="primary-ghost" onClick={() => userIdentityForm.reset()}>
+						<Button type="button" theme="primary-outline" onClick={() => userIdentityForm.reset()}>
 							Cancel
 						</Button>
 						<Form.StateSubscribe
@@ -276,7 +276,7 @@ function ProfilePageShared() {
 				</Form.Root>
 
 				<div className="invisible flex gap-6 self-center lg:self-end">
-					<Button theme="primary-ghost">Cancel</Button>
+					<Button theme="primary-outline">Cancel</Button>
 					<Button theme="primary">Save</Button>
 				</div>
 			</section>
@@ -321,7 +321,7 @@ function ProfilePageShared() {
 					</Form.Field>
 
 					<div className="flex gap-6 self-center lg:self-end">
-						<Button type="button" theme="primary-ghost" onClick={() => locationForm.reset()}>
+						<Button type="button" theme="primary-outline" onClick={() => locationForm.reset()}>
 							Cancel
 						</Button>
 						<Form.StateSubscribe
@@ -404,7 +404,7 @@ function ProfilePageShared() {
 					</Form.Field>
 
 					<div className="flex gap-6 self-center lg:self-end">
-						<Button type="button" theme="primary-ghost" onClick={() => changePasswordForm.reset()}>
+						<Button type="button" theme="primary-outline" onClick={() => changePasswordForm.reset()}>
 							Cancel
 						</Button>
 						<Form.StateSubscribe

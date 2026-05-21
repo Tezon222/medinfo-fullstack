@@ -51,7 +51,7 @@ function DesktopNavigation(props: { className?: string }) {
 			/>
 
 			<div className="flex min-w-fit items-center gap-8">
-				<Button size="icon" theme="primary-ghost">
+				<Button size="icon" theme="primary-outline">
 					<SearchIcon variant="green" />
 				</Button>
 
@@ -99,7 +99,7 @@ function MobileNavigation(props: { className?: string }) {
 						<SearchIcon variant="white" />
 					</Button>
 
-					<CallToActionLink buttonProps={{ theme: "secondary-ghost" }} />
+					<CallToActionLink buttonProps={{ theme: "secondary-outline" }} />
 				</div>
 			</section>
 

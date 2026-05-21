@@ -110,7 +110,7 @@ export function PatientAppointmentCard(props: PatientAppointmentCardProps) {
 
 					<DialogAnimated.Footer className="flex justify-end gap-3">
 						<Button
-							theme="primary-ghost"
+							theme="primary-outline"
 							onClick={handleCancel}
 							isLoading={cancelMutation.isPending}
 							disabled={cancelMutation.isPending}
