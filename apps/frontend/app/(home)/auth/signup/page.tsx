@@ -2,7 +2,10 @@
 
 import { useRouter } from "@bprogress/next";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SignUpSchema as SignUpSchemaPrimitive } from "@medinfo/shared/validation/backendApiSchema";
+import {
+	SignUpSchema as SignUpSchemaPrimitive,
+	withMatchingPasswordFields,
+} from "@medinfo/shared/validation/backendApiSchema";
 import { useQueryClient } from "@tanstack/react-query";
 import { toFormData } from "@zayne-labs/callapi/utils";
 import { use } from "react";
@@ -21,11 +24,12 @@ import { sessionQuery } from "@/lib/react-query/queryOptions";
 import { Main } from "../../-components";
 import { OAuthSection } from "../OAuthSection";
 
-const SignUpSchema = SignUpSchemaPrimitive.safeExtend({
-	confirmPassword: z.string().min(1, "Confirm password is required"),
-}).refine((data) => data.password === data.confirmPassword, {
-	message: "Passwords do not match",
-	path: ["confirmPassword"],
+const SignUpSchema = withMatchingPasswordFields({
+	confirmPasswordKey: "confirmPassword",
+	passwordKey: "password",
+	schema: SignUpSchemaPrimitive.safeExtend({
+		confirmPassword: z.string().min(1, "Confirm password is required"),
+	}),
 });
 
 function SignUpPage(props: PageProps<"/auth/signup">) {

@@ -8,10 +8,10 @@
 		},
 		"build": {
 			"dependsOn": ["^build"],
-			"outputs": ["dist/**", ".next/**", "!.next/cache/**", ".vercel", ".outputs/**"]
+			"outputs": ["dist/**", ".next/**", "!.next/cache/**", ".vercel", ".output/**"]
 		},
 		"build:nitro": {
-			"outputs": [".vercel", ".outputs/**"]
+			"outputs": [".vercel", ".output/**"]
 		},
 		"db:studio": {
 			"cache": false,

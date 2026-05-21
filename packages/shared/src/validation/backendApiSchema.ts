@@ -60,7 +60,7 @@ const stringWithBooleanValidation = () =>
 		return value;
 	}, z.boolean());
 
-const withMatchingPasswordFields = <
+export const withMatchingPasswordFields = <
 	TPasswordKey extends "newPassword" | "password",
 	TConfirmPasswordKey extends "confirmNewPassword" | "confirmPassword",
 	TSchema extends z.ZodObject<Record<TConfirmPasswordKey | TPasswordKey, z.ZodType>>,
@@ -159,7 +159,9 @@ const authRoutes = () => {
 					authURL: z.url(),
 				})
 			),
-			query: UserSchema.pick({ role: true }).superRefine((data, ctx) => {
+			query: UserSchema.pick({
+				role: true,
+			}).superRefine((data, ctx) => {
 				if (data.role === "doctor") {
 					ctx.addIssue({
 						code: "custom",
@@ -212,12 +214,16 @@ const authRoutes = () => {
 		},
 
 		"@post/auth/forgot-password": {
-			body: BaseSignUpSchema.pick({ email: true }),
+			body: BaseSignUpSchema.pick({
+				email: true,
+			}),
 			data: NullSuccessResponseSchema,
 		},
 
 		"@post/auth/resend-verification-email": {
-			body: BaseSignUpSchema.pick({ email: true }),
+			body: BaseSignUpSchema.pick({
+				email: true,
+			}),
 			data: NullSuccessResponseSchema,
 		},
 
@@ -253,12 +259,17 @@ const authRoutes = () => {
 		},
 
 		"@post/auth/verify-email": {
-			body: BaseSignUpSchema.pick({ email: true }).extend({
+			body: BaseSignUpSchema.pick({
+				email: true,
+			}).extend({
 				code: z.string().length(6, "Code must be 6 digits long"),
 			}),
 			data: withBaseSuccessResponse(
 				z.object({
-					user: UserSchema.pick({ email: true, role: true }),
+					user: UserSchema.pick({
+						email: true,
+						role: true,
+					}),
 				})
 			),
 		},
@@ -292,7 +303,9 @@ const healthTipRoutes = defineSchemaRoutes({
 
 	"@get/health-tips/one/:id": {
 		data: withBaseSuccessResponse(HealthTipSchema),
-		params: z.object({ id: z.string() }),
+		params: z.object({
+			id: z.string(),
+		}),
 	},
 });
 
@@ -307,7 +320,9 @@ const diseaseRoutes = () => {
 
 	return defineSchemaRoutes({
 		"@delete/diseases/delete": {
-			body: DiseaseDataSchema.pick({ name: true }),
+			body: DiseaseDataSchema.pick({
+				name: true,
+			}),
 			data: withBaseSuccessResponse(z.null()),
 		},
 
@@ -334,11 +349,15 @@ const diseaseRoutes = () => {
 
 		"@get/diseases/one/:name": {
 			data: withBaseSuccessResponse(DiseaseDataSchema),
-			params: z.object({ name: z.string() }),
+			params: z.object({
+				name: z.string(),
+			}),
 		},
 
 		"@patch/diseases/update": {
-			body: DiseaseDataSchema.partial().extend({ name: InsertDiseaseSchema.shape.name }),
+			body: DiseaseDataSchema.partial().extend({
+				name: InsertDiseaseSchema.shape.name,
+			}),
 			data: withBaseSuccessResponse(DiseaseDataSchema),
 		},
 
