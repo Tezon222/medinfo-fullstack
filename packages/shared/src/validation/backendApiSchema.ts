@@ -83,37 +83,37 @@ const defaultSchemaRoute = defineSchemaRoutes({
 	},
 });
 
-export const SignUpSchema = InsertUserSchema.pick({
+const BaseSignUpSchema = InsertUserSchema.pick({
 	dob: true,
 	gender: true,
 	role: true,
-})
-	.extend({
-		country: z.string(),
-		email: z.email("Please enter a valid email"),
-		firstName: z.string().min(1, "First name is required"),
-		lastName: z.string().min(1, "Last name is required"),
-		medicalLicense: z.file().optional(),
-		password: PasswordSchema,
-		specialty: z.string().optional(),
-	})
-	.superRefine((data, ctx) => {
-		if (data.role === "doctor" && !data.medicalLicense) {
-			ctx.addIssue({
-				code: "custom",
-				message: "Medical certificate is required for doctors",
-				path: ["medicalLicense"],
-			});
-		}
+}).extend({
+	country: z.string(),
+	email: z.email("Please enter a valid email"),
+	firstName: z.string().min(1, "First name is required"),
+	lastName: z.string().min(1, "Last name is required"),
+	medicalLicense: z.file().optional(),
+	password: PasswordSchema,
+	specialty: z.string().optional(),
+});
 
-		if (data.role === "doctor" && !data.specialty) {
-			ctx.addIssue({
-				code: "custom",
-				message: "Specialty is required for doctors",
-				path: ["specialty"],
-			});
-		}
-	});
+export const SignUpSchema = BaseSignUpSchema.superRefine((data, ctx) => {
+	if (data.role === "doctor" && !data.medicalLicense) {
+		ctx.addIssue({
+			code: "custom",
+			message: "Medical certificate is required for doctors",
+			path: ["medicalLicense"],
+		});
+	}
+
+	if (data.role === "doctor" && !data.specialty) {
+		ctx.addIssue({
+			code: "custom",
+			message: "Specialty is required for doctors",
+			path: ["specialty"],
+		});
+	}
+});
 
 const authRoutes = () => {
 	const PatientSchema = SelectUserSchema.pick({
@@ -134,7 +134,7 @@ const authRoutes = () => {
 		specialty: true,
 	});
 
-	const UserDataSchema = z.object({
+	const UserSchema = z.object({
 		...PatientSchema.shape,
 		...DoctorRequiredSchema.shape,
 	});
@@ -146,7 +146,7 @@ const authRoutes = () => {
 
 	const AuthSuccessResponseSchema = withBaseSuccessResponse(
 		z.object({
-			user: UserDataSchema,
+			user: UserSchema,
 		})
 	);
 
@@ -159,7 +159,7 @@ const authRoutes = () => {
 					authURL: z.url(),
 				})
 			),
-			query: UserDataSchema.pick({ role: true }).superRefine((data, ctx) => {
+			query: UserSchema.pick({ role: true }).superRefine((data, ctx) => {
 				if (data.role === "doctor") {
 					ctx.addIssue({
 						code: "custom",
@@ -199,7 +199,7 @@ const authRoutes = () => {
 		},
 
 		"@patch/auth/update-profile": {
-			body: PatientSchema.pick({
+			body: UserSchema.pick({
 				bio: true,
 				city: true,
 				country: true,
@@ -212,12 +212,12 @@ const authRoutes = () => {
 		},
 
 		"@post/auth/forgot-password": {
-			body: SignUpSchema.pick({ email: true }),
+			body: BaseSignUpSchema.pick({ email: true }),
 			data: NullSuccessResponseSchema,
 		},
 
 		"@post/auth/resend-verification-email": {
-			body: SignUpSchema.pick({ email: true }),
+			body: BaseSignUpSchema.pick({ email: true }),
 			data: NullSuccessResponseSchema,
 		},
 
@@ -235,14 +235,14 @@ const authRoutes = () => {
 		},
 
 		"@post/auth/signin": {
-			body: SignUpSchema.pick({
+			body: BaseSignUpSchema.pick({
 				email: true,
 				password: true,
 			}),
 			data: withBaseSuccessResponse(
 				z.object({
 					tokens: AuthTokensSchema,
-					user: UserDataSchema,
+					user: UserSchema,
 				})
 			),
 		},
@@ -253,12 +253,12 @@ const authRoutes = () => {
 		},
 
 		"@post/auth/verify-email": {
-			body: SignUpSchema.pick({ email: true }).extend({
+			body: BaseSignUpSchema.pick({ email: true }).extend({
 				code: z.string().length(6, "Code must be 6 digits long"),
 			}),
 			data: withBaseSuccessResponse(
 				z.object({
-					user: UserDataSchema.pick({ email: true, role: true }),
+					user: UserSchema.pick({ email: true, role: true }),
 				})
 			),
 		},
