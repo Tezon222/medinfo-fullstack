@@ -16,10 +16,7 @@ export const backendEnvSchema = z.object({
 	CLOUDINARY_CLOUD_NAME: z.string(),
 	DATABASE_URL: z.string(),
 	DATABASE_URL_DEV: z
-		.literal([
-			"postgresql://postgres:postgres@localhost:5433/medinfo",
-			"postgresql://postgres:postgres@medinfo-postgres-db:5432/medinfo",
-		])
+		.literal("postgresql://postgres:postgres@localhost:5433/medinfo")
 		.default("postgresql://postgres:postgres@localhost:5433/medinfo"),
 	DB_MIGRATING: stringBoolean.default(false),
 	DB_SEEDING: stringBoolean.default(false),
@@ -34,13 +31,9 @@ export const backendEnvSchema = z.object({
 	NODE_ENV: z.literal(["development", "production"]).default("development"),
 	PORT: z.coerce.number().default(8000),
 	REDIS_CACHE_URL: z.url(),
-	REDIS_CACHE_URL_DEV: z
-		.literal(["redis://localhost:6381", "redis://medinfo-redis-cache:6379"])
-		.default("redis://localhost:6381"),
+	REDIS_CACHE_URL_DEV: z.literal("redis://localhost:6381").default("redis://localhost:6381"),
 	REDIS_QUEUE_URL: z.url(),
-	REDIS_QUEUE_URL_DEV: z
-		.literal(["redis://localhost:6382", "redis://medinfo-redis-queue:6379"])
-		.default("redis://localhost:6382"),
+	REDIS_QUEUE_URL_DEV: z.literal("redis://localhost:6382").default("redis://localhost:6382"),
 	REFRESH_JWT_EXPIRES_IN: z.string().transform((value) => evaluateString<number>(value)),
 	REFRESH_SECRET: z.string(),
 	SEED_PASSWORD: z.string(),
